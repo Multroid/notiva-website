@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Document Sharing</title>
+  <style>
+    body {
+      font-family: system-ui;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .section {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    input, button {
+      padding: 8px 12px;
+      margin: 5px;
+    }
+    button {
+      background: #0070f3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0051cc;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 10px;
+      overflow-x: auto;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Document Sharing Test</h1>
+  
+  <div class="section">
+    <h2>Quick Test</h2>
+    <p>This will share a document and verify it works</p>
+    <div>
+      <input type="text" id="documentId" placeholder="Document ID" style="width: 300px;">
+      <input type="text" id="shareEmail" placeholder="Share with email" style="width: 300px;">
+      <button onclick="testSharing()">Test Share</button>
+    </div>
+    <pre id="result"></pre>
+  </div>
+
+  <div class="section">
+    <h2>Check Document State</h2>
+    <div>
+      <input type="text" id="checkDocId" placeholder="Document ID" style="width: 300px;">
+      <input type="text" id="checkUserId" placeholder="User ID (optional)" style="width: 300px;">
+      <button onclick="checkDocument()">Check</button>
+    </div>
+    <pre id="checkResult"></pre>
+  </div>
+
+  <script>
+    async function testSharing() {
+      const documentId = document.getElementById('documentId').value;
+      const shareEmail = document.getElementById('shareEmail').value;
+      const result = document.getElementById('result');
+
+      if (!documentId || !shareEmail) {
+        result.textContent = 'Please enter both document ID and email';
+        return;
+      }
+
+      result.textContent = 'Testing...';
+
+      try {
+        const response = await fetch('/api/test-sharing', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ documentId, shareWithEmail: shareEmail })
+        });
+
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+        
+        if (data.success && data.queryTest.thisDocumentWouldAppear) {
+          result.className = 'success';
+        } else {
+          result.className = 'error';
+        }
+      } catch (error) {
+        result.textContent = 'Error: ' + error.message;
+        result.className = 'error';
+      }
+    }
+
+    async function checkDocument() {
+      const documentId = document.getElementById('checkDocId').value;
+      const userId = document.getElementById('checkUserId').value;
+      const result = document.getElementById('checkResult');
+
+      if (!documentId) {
+        result.textContent = 'Please enter document ID';
+        return;
+      }
+
+      result.textContent = 'Checking...';
+
+      try {
+        const url = `/api/debug/document-sharing?documentId=${documentId}${userId ? '&userId=' + userId : ''}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        result.textContent = 'Error: ' + error.message;
+        result.className = 'error';
+      }
+    }
+  </script>
+</body>
+</html>
+

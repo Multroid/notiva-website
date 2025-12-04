@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { UserNav } from "@/components/user-nav";
 import { Button } from "@/components/ui/button";
-import { getMainAppLoginUrl, getMainAppRegisterUrl } from "@/lib/app-url";
+import { getMainAppLoginUrl, getMainAppRegisterUrl, getMainAppDashboardUrl } from "@/lib/app-url";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
 	Menu,
@@ -330,10 +330,10 @@ export default function MainLayout({
 							<div className="grid gap-2 pt-4 border-t">
 								{isAuthenticated ? (
 								<Button asChild>
-									<Link href="/home" onClick={closeMobile}>
+									<a href={getMainAppDashboardUrl()} onClick={closeMobile}>
 										<LayoutDashboard className="mr-2 size-4" />
 											Go to Dashboard
-										</Link>
+										</a>
 									</Button>
 								) : (
 									<>

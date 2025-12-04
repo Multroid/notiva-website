@@ -1,26 +1,52 @@
 /**
- * Get the main app URL (running on port 3000)
+ * Get the consumer app URL
+ * 
+ * Local: http://localhost:3000
+ * Production: https://app.notiva.de (transforms notiva.de → app.notiva.de)
  */
-export function getMainAppUrl(): string {
-  if (typeof window !== 'undefined') {
-    // Client-side: use current hostname with port 3000
-    return `${window.location.protocol}//${window.location.hostname}:3000`
+export function getConsumerAppUrl(): string {
+  // Use environment variable if set
+  const envUrl = process.env.NEXT_PUBLIC_CONSUMER_APP_URL
+  if (envUrl) {
+    return envUrl
   }
-  // Server-side: use environment variable or default
-  return process.env.NEXT_PUBLIC_MAIN_APP_URL || "http://localhost:3000"
+
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    const protocol = window.location.protocol
+
+    // Production: transform notiva.de or www.notiva.de → app.notiva.de
+    if (hostname === 'notiva.de' || hostname === 'www.notiva.de') {
+      return `${protocol}//app.notiva.de`
+    }
+
+    // Local development: use same hostname with port 3000
+    // e.g., localhost:3001 → localhost:3000
+    return `${protocol}//${hostname}:3000`
+  }
+
+  // Server-side fallback
+  return "http://localhost:3000"
 }
 
 /**
- * Get the main app login URL
+ * Get the consumer app login URL
  */
 export function getMainAppLoginUrl(): string {
-  return `${getMainAppUrl()}/login`
+  return `${getConsumerAppUrl()}/login`
 }
 
 /**
- * Get the main app register URL
+ * Get the consumer app register URL
  */
 export function getMainAppRegisterUrl(): string {
-  return `${getMainAppUrl()}/register`
+  return `${getConsumerAppUrl()}/register`
+}
+
+/**
+ * Get the consumer app dashboard URL
+ */
+export function getMainAppDashboardUrl(): string {
+  return `${getConsumerAppUrl()}/home`
 }
 

@@ -13,22 +13,19 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signOut, useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import {
     Settings,
     LayoutDashboard,
     LogOut,
-    User
 } from "lucide-react"
+import { getConsumerAppUrl } from "@/lib/app-url"
 
 export function UserNav() {
     const { data: session } = useSession()
-    const router = useRouter()
     
     if (!session?.user) return null
 
@@ -46,6 +43,8 @@ export function UserNav() {
             : 'U'
     }
 
+    const consumerAppUrl = getConsumerAppUrl()
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -57,32 +56,35 @@ export function UserNav() {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuItem 
-                    onClick={() => router.push("/settings/profile")}
-                    className="cursor-pointer p-3"
-                >
-                    <div className="flex items-center gap-3 w-full">
-                        <Avatar className="h-9 w-9 rounded-lg">
-                            <AvatarImage src={user.image || user.avatar || ""} alt={user.name || "User"} />
-                            <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-medium leading-none">{user.name || "User"}</p>
-                            <p className="text-xs leading-none text-muted-foreground">
-                                {user.email}
-                            </p>
+                <DropdownMenuItem asChild className="cursor-pointer p-3">
+                    <a href={`${consumerAppUrl}/settings/profile`}>
+                        <div className="flex items-center gap-3 w-full">
+                            <Avatar className="h-9 w-9 rounded-lg">
+                                <AvatarImage src={user.image || user.avatar || ""} alt={user.name || "User"} />
+                                <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex flex-col space-y-1">
+                                <p className="text-sm font-medium leading-none">{user.name || "User"}</p>
+                                <p className="text-xs leading-none text-muted-foreground">
+                                    {user.email}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={() => router.push("/home")}>
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>Dashboard</span>
+                    <DropdownMenuItem asChild>
+                        <a href={`${consumerAppUrl}/home`}>
+                            <LayoutDashboard className="mr-2 h-4 w-4" />
+                            <span>Dashboard</span>
+                        </a>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push("/settings")}>
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
+                    <DropdownMenuItem asChild>
+                        <a href={`${consumerAppUrl}/settings`}>
+                            <Settings className="mr-2 h-4 w-4" />
+                            <span>Settings</span>
+                        </a>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

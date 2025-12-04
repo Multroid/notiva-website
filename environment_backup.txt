@@ -6,10 +6,14 @@ DIRECT_URL="postgresql://postgres.szmkghtwzljudnicmmtv:sbmByWQLWDnBLwN2@aws-1-eu
 
 # ===== NextAuth =====
 NEXTAUTH_SECRET="86Lh+HDoTgxLiK2ntNUsoDFn//15HPxUf3V1T6L9xIY="
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="http://localhost:3001"
 COOKIE_DOMAIN=.notiva.de
-NEXT_PUBLIC_BUSINESS_APP_URL=https://business.notiva.de
+
+# ===== App URLs =====
+# Consumer app URL (for auth redirects)
+# Local: http://localhost:3000, Production: https://app.notiva.de
 NEXT_PUBLIC_CONSUMER_APP_URL=https://app.notiva.de
+NEXT_PUBLIC_BUSINESS_APP_URL=https://business.notiva.de
 
 # ===== Supabase API (optional) =====
 SUPABASE_URL="https://szmkghtwzljudnicmmtv.supabase.co"

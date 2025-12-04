@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "notiva-marketing",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -28,6 +28,7 @@
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-separator": "^1.1.8",
+    "@radix-ui/react-tabs": "^1.1.13",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.19",
     "@types/web-push": "^3.6.4",

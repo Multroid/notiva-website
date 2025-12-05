@@ -17,13 +17,8 @@ import {
 	Users,
 	Plug,
 	Shield,
-	User,
-	Home,
 	Building,
 	Briefcase,
-	BookOpen,
-	HelpCircle,
-	Link2,
 	FileText,
 	LayoutDashboard,
 } from "lucide-react";
@@ -43,7 +38,7 @@ export default function MainLayout({
 
 	return (
 		<>
-			<header className="w-full sticky top-0 z-40 supports-[backdrop-filter]:bg-background/70 bg-background border-b backdrop-blur">
+			<header className="w-full sticky top-0 z-40 bg-background/80 border-b border-border/50 backdrop-blur-md">
 				<div className="container mx-auto flex items-center justify-between py-4 px-4">
 					<Link href="/" className="inline-flex items-center gap-2 font-semibold tracking-tight">
 						<img
@@ -112,30 +107,16 @@ export default function MainLayout({
 
 						<Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
 
-						{/* Use Cases */}
+						{/* Business */}
 						<div className="relative group">
 							<button type="button" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
-								<span>Use Cases</span>
+								<span>Business</span>
 								<ChevronDown className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[640px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
 								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
 								<div className="absolute -top-1 left-0 right-0 h-1"></div>
 							<div className="grid grid-cols-2 gap-2 p-3 lg:p-4">
-								<Link href="/use-cases/individuals" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><User className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Individuals</span>
-										<span className="block text-xs text-muted-foreground">Personal subscription management.</span>
-									</span>
-								</Link>
-								<Link href="/use-cases/families" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Home className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Families</span>
-										<span className="block text-xs text-muted-foreground">Household plans and shared bills.</span>
-									</span>
-								</Link>
 								<Link href="/use-cases/teams-startups" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
 									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Users className="size-5" /></span>
 									<span>
@@ -148,48 +129,6 @@ export default function MainLayout({
 									<span>
 										<span className="block text-foreground font-medium">Enterprise</span>
 										<span className="block text-xs text-muted-foreground">Advanced controls and reporting.</span>
-									</span>
-								</Link>
-							</div>
-						</div>
-					</div>
-
-						{/* Resources */}
-						<div className="relative group">
-							<button type="button" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
-								<span>Resources</span>
-								<ChevronDown className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
-							</button>
-							<div className="absolute left-0 top-full mt-1 min-w-[640px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
-								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
-								<div className="absolute -top-1 left-0 right-0 h-1"></div>
-							<div className="grid grid-cols-2 gap-2 p-3 lg:p-4">
-								<Link href="/blog" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><BookOpen className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Blog</span>
-										<span className="block text-xs text-muted-foreground">Guides, tips, and news.</span>
-									</span>
-								</Link>
-								<Link href="/help" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><HelpCircle className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Help Center</span>
-										<span className="block text-xs text-muted-foreground">FAQs and product support.</span>
-									</span>
-								</Link>
-								<Link href="/compare" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Link2 className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Compare</span>
-										<span className="block text-xs text-muted-foreground">See how we stack up.</span>
-									</span>
-								</Link>
-								<Link href="/security" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Shield className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Security</span>
-										<span className="block text-xs text-muted-foreground">Our approach to safety.</span>
 									</span>
 								</Link>
 							</div>
@@ -238,8 +177,6 @@ export default function MainLayout({
 							</div>
 						</div>
 					</div>
-
-						<Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
 					</nav>
 					<div className="flex items-center gap-2">
 						<div className="hidden md:flex items-center gap-2">
@@ -286,26 +223,12 @@ export default function MainLayout({
 									</AccordionContent>
 								</AccordionItem>
 
-								<AccordionItem value="use-cases">
-									<AccordionTrigger>Use Cases</AccordionTrigger>
+								<AccordionItem value="business">
+									<AccordionTrigger>Business</AccordionTrigger>
 									<AccordionContent>
 										<ul className="grid gap-2">
-											<li><Link href="/use-cases/individuals" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Individuals</Link></li>
-											<li><Link href="/use-cases/families" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Families</Link></li>
 											<li><Link href="/use-cases/teams-startups" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Teams & Startups</Link></li>
 											<li><Link href="/use-cases/enterprise" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Enterprise</Link></li>
-										</ul>
-									</AccordionContent>
-								</AccordionItem>
-
-								<AccordionItem value="resources">
-									<AccordionTrigger>Resources</AccordionTrigger>
-									<AccordionContent>
-										<ul className="grid gap-2">
-											<li><Link href="/blog" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Blog</Link></li>
-											<li><Link href="/help" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Help Center</Link></li>
-											<li><Link href="/compare" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Compare</Link></li>
-											<li><Link href="/security" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Security</Link></li>
 										</ul>
 									</AccordionContent>
 								</AccordionItem>
@@ -324,7 +247,6 @@ export default function MainLayout({
 
 							<div className="grid gap-2 pt-1">
 								<Link href="/pricing" onClick={closeMobile} className="text-sm px-2 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Pricing</Link>
-								<Link href="/contact" onClick={closeMobile} className="text-sm px-2 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Contact</Link>
 							</div>
 
 							<div className="grid gap-2 pt-4 border-t">
@@ -350,7 +272,7 @@ export default function MainLayout({
 					</div>
 				)}
 			</header>
-			<main className="container mx-auto px-4 py-10">{children}</main>
+			<main>{children}</main>
 		</>
 	);
 }

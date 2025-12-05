@@ -1,54 +1,18 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { 
-  Slack, 
+  FileText,
+  ScanLine,
   Mail,
-  HardDrive,
-  Calendar,
-  PieChart,
-  Bell
+  CalendarPlus,
+  ArrowRight
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-// --- Sub-components for cleaner code ---
-
-// 1. The Logo Card (Left/Right Icons)
-interface LogoCardProps {
-  children: React.ReactNode;
-  label: string;
-  delay?: number;
-  position: 'left' | 'right';
-}
-
-const LogoCard = ({ children, label, delay = 0, position }: LogoCardProps) => (
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.8 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    transition={{ delay, duration: 0.5 }}
-    viewport={{ once: true }}
-    className="relative group"
-  >
-    {/* Arrow Connector (Hidden on mobile) - Length matches grid gap (w-24 = 6rem = 96px) */}
-    <div className={`hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 w-24 text-slate-300
-      ${position === 'left' ? 'right-0 translate-x-full pl-4' : 'left-0 -translate-x-full pr-4'}
-    `}>
-      <svg width="100%" height="12" viewBox="0 0 100 12" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-        <path d="M0 6H94" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M94 2L99 6L94 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </div>
-    
-    <div className="w-16 h-16 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center hover:shadow-md transition-shadow relative z-10">
-      {children}
-    </div>
-    <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-medium text-slate-400 uppercase tracking-wider opacity-100 transition-opacity whitespace-nowrap">
-      {label}
-    </span>
-  </motion.div>
-);
-
-// 2. The Highlighted Text (Simulates extraction)
+// Highlighted Text Component (Simulates extraction)
 const ExtractedData = ({ children, delay }: { children: React.ReactNode; delay: number }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
@@ -71,170 +35,221 @@ const ExtractedData = ({ children, delay }: { children: React.ReactNode; delay: 
   );
 };
 
+// Feature Item Component
+const FeatureItem = ({ 
+  icon: Icon, 
+  text, 
+  delay 
+}: { 
+  icon: React.ElementType
+  text: string
+  delay: number 
+}) => (
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ delay, duration: 0.4 }}
+    viewport={{ once: true }}
+    className="flex items-start gap-3"
+  >
+    <div className="flex-shrink-0 mt-0.5">
+      <Icon className="w-5 h-5 text-slate-500" strokeWidth={1.5} />
+    </div>
+    <span className="text-slate-600 dark:text-slate-400">{text}</span>
+  </motion.div>
+);
+
 // --- Main Component ---
 
 export default function BillingScanningSection() {
   return (
-    <section className="py-24 bg-slate-50 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4">
-        
-        {/* Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-6">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            Smart Extraction
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
-            From static files to <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-              smart reminders.
-            </span>
-          </h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-            Upload any contract, invoice, or receipt. Notiva instantly extracts renewal dates, 
-            amounts, and vendor details to keep your subscriptions organized.
-          </p>
-        </div>
-
-        {/* Animation Stage */}
-        <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-24 items-center">
+    <section className="py-24 md:py-32 bg-white dark:bg-slate-950 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
-          {/* Left Column: Sources */}
-          <div className="flex flex-row md:flex-col gap-6 md:gap-12 order-2 md:order-1 justify-center md:justify-self-end">
-            <LogoCard label="Email" delay={0.1} position="left">
-              <Mail className="w-8 h-8 text-slate-600" />
-            </LogoCard>
-            <LogoCard label="Drive" delay={0.2} position="left">
-              <HardDrive className="w-8 h-8 text-slate-600" />
-            </LogoCard>
-            <LogoCard label="Slack" delay={0.3} position="left">
-              <Slack className="w-8 h-8 text-[#4A154B]" />
-            </LogoCard>
+          {/* Left Content */}
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 tracking-wide">
+                Powerful
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.1] tracking-tight text-foreground">
+                Your documents, decoded automatically.
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+                Notiva analyzes any document you choose to upload or connect — 
+                contract, ID, invoice, or receipt. It extracts dates, deadlines, and key 
+                details automatically, so you don&apos;t have to enter anything manually.
+              </p>
+            </motion.div>
+
+            {/* Feature List */}
+            <div className="space-y-4 pt-2">
+              <FeatureItem 
+                icon={FileText} 
+                text="Extracts renewal dates, expirations, contract terms."
+                delay={0.2}
+              />
+              <FeatureItem 
+                icon={ScanLine} 
+                text="Reads PDFs, scans, photos, IDs, invoices."
+                delay={0.3}
+              />
+              <FeatureItem 
+                icon={Mail} 
+                text="Finds deadlines in email attachments."
+                delay={0.4}
+              />
+              <FeatureItem 
+                icon={CalendarPlus} 
+                text="Adds everything to your timeline automatically."
+                delay={0.5}
+              />
+            </div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              viewport={{ once: true }}
+              className="flex flex-wrap items-center gap-4 pt-4"
+            >
+              <Button 
+                size="lg" 
+                className="rounded-full px-6 font-medium"
+                asChild
+              >
+                <Link href="/features">
+                  Discover
+                </Link>
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="lg" 
+                className="group font-medium"
+                asChild
+              >
+                <Link href="/features/document-scanning">
+                  Details
+                  <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </motion.div>
           </div>
 
-          {/* Middle Column: The Document Scanner */}
-          <div className="order-1 md:order-2 w-full max-w-[440px] relative md:justify-self-center">
-            
-            {/* Background decorative blobs */}
-            <div className="absolute -top-10 -left-10 w-64 h-64 bg-blue-200 rounded-full blur-3xl opacity-20 animate-pulse" />
-            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-indigo-200 rounded-full blur-3xl opacity-20 animate-pulse delay-700" />
+          {/* Right Side: Document Mockup */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, x: 30 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            {/* Background decorative elements */}
+            <div className="absolute -top-10 -right-10 w-72 h-72 bg-indigo-100 dark:bg-indigo-900/20 rounded-full blur-3xl opacity-40" />
+            <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl opacity-30" />
 
             {/* The Document Card */}
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="relative bg-white rounded-lg shadow-2xl border border-slate-100 overflow-hidden"
-              style={{ aspectRatio: '0.75' }} // Document aspect ratio
-            >
+            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
               
-              {/* Document Header */}
-              <div className="bg-slate-50 p-4 border-b border-slate-100 flex justify-between items-center">
+              {/* Document Header - macOS style */}
+              <div className="bg-slate-100 dark:bg-slate-800 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-400" />
                   <div className="w-3 h-3 rounded-full bg-yellow-400" />
                   <div className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
-                <div className="text-[10px] text-slate-400 font-mono">SERVICE_AGREEMENT_V2.PDF</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono tracking-wide">
+                  SERVICE_AGREEMENT_V2.PDF
+                </div>
               </div>
 
+              {/* Gradient bar */}
+              <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-400" />
+
               {/* Document Content */}
-              <div className="p-8 text-[10px] md:text-xs leading-relaxed text-slate-400 font-mono space-y-4 relative z-0">
+              <div className="p-6 md:p-8 space-y-5 relative">
                 
-                <div className="font-bold text-slate-800 text-sm mb-4">SUBSCRIPTION CONTRACT</div>
+                <div className="font-bold text-slate-800 dark:text-slate-200 text-base tracking-wide border-b border-slate-200 dark:border-slate-700 pb-3">
+                  SUBSCRIPTION CONTRACT
+                </div>
                 
-                <p>
-                  This agreement is effective as of <ExtractedData delay={1000}>Nov 24, 2025</ExtractedData> between 
-                  <strong className="text-slate-700"> Acme Inc </strong> and 
-                  <strong className="text-slate-700"> Cloud Services Ltd </strong> (&quot;Vendor&quot;).
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                  This agreement is effective as of <ExtractedData delay={800}>Nov 24, 2025</ExtractedData>
+                  <br />
+                  between <strong className="text-slate-700 dark:text-slate-300">Acme Inc</strong> and <strong className="text-slate-700 dark:text-slate-300">Cloud Services Ltd</strong> (&quot;Vendor&quot;).
                 </p>
 
-                <div className="h-px bg-slate-100 my-2" />
-
-                <p className="font-semibold text-slate-700">1. PLAN DETAILS</p>
-                <div className="grid grid-cols-2 gap-4 pl-2">
-                  <div>
-                    <div className="text-[9px] uppercase text-slate-300">Product</div>
-                    <ExtractedData delay={2200}>Pro License</ExtractedData>
-                  </div>
-                  <div>
-                    <div className="text-[9px] uppercase text-slate-300">Billing</div>
-                    <ExtractedData delay={2400}>Monthly</ExtractedData>
+                <div className="border-t border-slate-100 dark:border-slate-800 pt-4">
+                  <p className="font-semibold text-slate-700 dark:text-slate-300 text-sm mb-3">1. PLAN DETAILS</p>
+                  <div className="grid grid-cols-2 gap-6 pl-2">
+                    <div>
+                      <div className="text-[10px] uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-1">Product</div>
+                      <div className="text-sm"><ExtractedData delay={1800}>Pro License</ExtractedData></div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-1">Billing</div>
+                      <div className="text-sm"><ExtractedData delay={2000}>Monthly</ExtractedData></div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="h-px bg-slate-100 my-2" />
-
-                <p className="font-semibold text-slate-700">2. PAYMENT SCHEDULE</p>
-                <div className="space-y-2 pl-2">
-                  <div className="flex justify-between">
-                    <span>Monthly Cost:</span>
-                    <ExtractedData delay={3500}>$49.00</ExtractedData>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Next Renewal:</span>
-                    <ExtractedData delay={3700}>Dec 24, 2025</ExtractedData>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Auto-Renew:</span>
-                    <ExtractedData delay={3900}>Active</ExtractedData>
+                <div className="border-t border-slate-100 dark:border-slate-800 pt-4">
+                  <p className="font-semibold text-slate-700 dark:text-slate-300 text-sm mb-3">2. PAYMENT SCHEDULE</p>
+                  <div className="space-y-2.5 pl-2 text-sm">
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
+                      <span>Monthly Cost:</span>
+                      <ExtractedData delay={2800}>$49.00</ExtractedData>
+                    </div>
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
+                      <span>Next Renewal:</span>
+                      <ExtractedData delay={3000}>Dec 24, 2025</ExtractedData>
+                    </div>
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
+                      <span>Auto-Renew:</span>
+                      <ExtractedData delay={3200}>Active</ExtractedData>
+                    </div>
                   </div>
                 </div>
                 
                 {/* Faux Text Lines for filler */}
-                <div className="space-y-1.5 pt-4 opacity-30">
-                  <div className="h-1.5 bg-slate-300 rounded w-full" />
-                  <div className="h-1.5 bg-slate-300 rounded w-5/6" />
-                  <div className="h-1.5 bg-slate-300 rounded w-4/6" />
+                <div className="space-y-2 pt-4 opacity-30">
+                  <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded w-full" />
+                  <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded w-5/6" />
+                  <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded w-4/6" />
+                </div>
+
+                {/* Extracting Data Button */}
+                <div className="flex justify-center pt-4">
+                  <motion.div 
+                    initial={{ y: 10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                    className="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-2.5 rounded-full text-sm font-medium flex items-center gap-2.5 shadow-lg"
+                  >
+                    <div className="w-4 h-4 border-2 border-white/30 dark:border-slate-900/30 border-t-white dark:border-t-slate-900 rounded-full animate-spin" />
+                    Extracting Data points...
+                  </motion.div>
                 </div>
 
               </div>
-
-              {/* THE SCANNING BEAM */}
-              <motion.div
-                animate={{ top: ["-10%", "110%"] }}
-                transition={{ 
-                  duration: 4, 
-                  ease: "linear", 
-                  repeat: Infinity,
-                  repeatDelay: 1 
-                }}
-                className="absolute left-0 right-0 h-24 bg-gradient-to-b from-indigo-500/0 via-indigo-500/10 to-indigo-500/20 border-b-2 border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.3)] z-20 pointer-events-none w-full"
-              />
-
-              {/* Floating 'Extracted' Label at bottom */}
-              <div className="absolute bottom-6 left-0 right-0 flex justify-center z-30">
-                <motion.div 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="bg-slate-900/90 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs font-medium flex items-center gap-2 shadow-lg"
-                >
-                  <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Extracting Data points...
-                </motion.div>
-              </div>
-
-            </motion.div>
-
-          </div>
-
-          {/* Right Column: Destinations */}
-          <div className="flex flex-row md:flex-col gap-6 md:gap-12 order-3 md:order-3 justify-center md:justify-self-start">
-             <LogoCard label="Calendar" delay={0.4} position="right">
-               <Calendar className="w-8 h-8 text-blue-600" />
-             </LogoCard>
-             <LogoCard label="Reports" delay={0.5} position="right">
-               <PieChart className="w-8 h-8 text-indigo-600" />
-             </LogoCard>
-             <LogoCard label="Alerts" delay={0.6} position="right">
-               <Bell className="w-8 h-8 text-amber-500" />
-             </LogoCard>
-          </div>
+            </div>
+          </motion.div>
 
         </div>
       </div>

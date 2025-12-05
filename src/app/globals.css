@@ -201,3 +201,247 @@
   }
 }
 
+/* =========================================
+   HERO SECTION - Pastel Sky Background
+   ========================================= */
+
+.hero-sky-bg {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #B5A0DB 0%,
+    #CCA9D8 30%,
+    #DFBBDC 50%,
+    #E4A8B7 75%,
+    #FEBEA4 100%
+  );
+  background-size: 100% 200%;
+  animation: heroGradientShift 16s ease-in-out infinite alternate;
+}
+
+.hero-sky-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 30%, rgba(181, 160, 219, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(223, 187, 220, 0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 40% 70%, rgba(254, 190, 164, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 35% at 70% 60%, rgba(228, 168, 183, 0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 60% at 50% 40%, rgba(204, 169, 216, 0.35) 0%, transparent 60%);
+  filter: blur(40px);
+  opacity: 0.9;
+  animation: heroCloudDrift 20s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.hero-sky-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+@keyframes heroGradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes heroCloudDrift {
+  0% {
+    transform: translateX(-2%) translateY(-1%);
+  }
+  50% {
+    transform: translateX(2%) translateY(1%);
+  }
+  100% {
+    transform: translateX(-1%) translateY(0%);
+  }
+}
+
+/* Reduced motion: disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .hero-sky-bg {
+    animation: none;
+    background-position: 0% 25%;
+  }
+  .hero-sky-bg::before {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* =========================================
+   HERO TYPOGRAPHY
+   ========================================= */
+
+.hero-headline {
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.hero-body {
+  font-size: clamp(0.95rem, 2vw, 1.125rem);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* =========================================
+   HERO CTA BUTTON
+   ========================================= */
+
+.hero-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #1a1a1a;
+  border-radius: 9999px;
+  padding: 0.625rem 0.625rem 0.625rem 1.5rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.hero-cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-cta-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.hero-cta-text {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hero-cta-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #f5e6d3 0%, #ffe4d6 50%, #ffd4c4 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.hero-cta-button:hover .hero-cta-chip {
+  background: linear-gradient(135deg, #fff0e6 0%, #ffe8dc 50%, #ffddd0 100%);
+}
+
+/* Reduced motion: disable hover transforms */
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-button:hover {
+    transform: none;
+  }
+}
+
+/* Transparent header for hero pages */
+.hero-transparent-header {
+  background: transparent !important;
+  border-color: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* =========================================
+   INFINITE MARQUEE - Integration Cards
+   ========================================= */
+
+.marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Fade edges for smooth appearance */
+.marquee-container::before,
+.marquee-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.marquee-container::before {
+  left: 0;
+  background: linear-gradient(to right, oklch(1 0 0) 0%, transparent 100%);
+}
+
+.marquee-container::after {
+  right: 0;
+  background: linear-gradient(to left, oklch(1 0 0) 0%, transparent 100%);
+}
+
+/* Muted background variant (light mode) */
+.marquee-container.marquee-muted::before {
+  background: linear-gradient(to right, oklch(0.967 0.001 286.375) 0%, transparent 100%);
+}
+
+.marquee-container.marquee-muted::after {
+  background: linear-gradient(to left, oklch(0.967 0.001 286.375) 0%, transparent 100%);
+}
+
+/* Dark mode overrides */
+.dark .marquee-container::before {
+  background: linear-gradient(to right, oklch(0.141 0.005 285.823) 0%, transparent 100%);
+}
+
+.dark .marquee-container::after {
+  background: linear-gradient(to left, oklch(0.141 0.005 285.823) 0%, transparent 100%);
+}
+
+.dark .marquee-container.marquee-muted::before {
+  background: linear-gradient(to right, oklch(0.141 0.005 285.823) 0%, transparent 100%);
+}
+
+.dark .marquee-container.marquee-muted::after {
+  background: linear-gradient(to left, oklch(0.141 0.005 285.823) 0%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: marquee-scroll var(--marquee-duration, 35s) linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover for better UX */
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion: disable marquee animation */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+

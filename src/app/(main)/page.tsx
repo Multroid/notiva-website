@@ -11,6 +11,9 @@ import BillingScanningSection from '@/components/BillingScanningSection'
 import HeroSection from '@/components/HeroSection'
 import EverythingInOnePlaceSection from '@/components/EverythingInOnePlaceSection'
 import MeetNoviSection from '@/components/MeetNoviSection'
+import HowNotivaWorksSection from '@/components/HowNotivaWorksSection'
+import ComparisonSection from '@/components/ComparisonSection'
+import PricingSection from '@/components/PricingSection'
 
 export default function Home() {
     const { data: session } = useSession()
@@ -68,6 +71,21 @@ export default function Home() {
                 {/* Meet Novi Section */}
                 <section id="meet-novi" data-section="meet-novi">
                     <MeetNoviSection />
+                </section>
+
+                {/* How Notiva Works Section */}
+                <section id="how-it-works" data-section="how-it-works">
+                    <HowNotivaWorksSection />
+                </section>
+
+                {/* Comparison Section */}
+                <section id="comparison" data-section="comparison">
+                    <ComparisonSection />
+                </section>
+
+                {/* Pricing Section */}
+                <section id="pricing" data-section="pricing">
+                    <PricingSection />
                 </section>
 
                 {/* Final CTA Section */}

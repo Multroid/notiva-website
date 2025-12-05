@@ -18,6 +18,20 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  // Server-side environment variables for AWS Amplify Lambda runtime
+  // These are bundled at build time and available at runtime
+  env: {
+    DATABASE_URL: process.env.DATABASE_URL,
+    DIRECT_URL: process.env.DIRECT_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    EMAIL_FROM: process.env.EMAIL_FROM,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+  },
+
   // Optimize images for AWS Amplify
   images: {
     unoptimized: true,

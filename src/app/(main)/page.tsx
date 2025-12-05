@@ -21,11 +21,6 @@ export default function Home() {
                 {/* Hero Section - Pastel Sky */}
                 <HeroSection />
 
-                {/* Meet Novi Section */}
-                <section id="meet-novi" data-section="meet-novi">
-                    <MeetNoviSection />
-                </section>
-
                 {/* Integrations Section */}
                 <section id="integrations" data-section="integrations" className="bg-muted dark:bg-background py-24 md:py-32 overflow-hidden">
                     <div className="mx-auto max-w-5xl px-6 mb-12">
@@ -68,6 +63,11 @@ export default function Home() {
                 {/* Billing Scanning Section */}
                 <section id="billing-scanning" data-section="billing-scanning">
                     <BillingScanningSection />
+                </section>
+
+                {/* Meet Novi Section */}
+                <section id="meet-novi" data-section="meet-novi">
+                    <MeetNoviSection />
                 </section>
 
                 {/* Final CTA Section */}

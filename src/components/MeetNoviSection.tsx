@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useEffect, useCallback, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRive, Layout, Fit, Alignment, EventType } from '@rive-app/react-canvas'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { getMainAppRegisterUrl } from '@/lib/app-url'
 
-// Animation names in the novi.riv file - adjust these if they're named differently
+// Animation names in the novi.riv file
 const IDLE_ANIMATION = 'Idle'
 const GREETING_ANIMATION = 'Greeting'
 const IDLE_CYCLES_BEFORE_GREETING = 2
@@ -26,37 +26,44 @@ export default function MeetNoviSection() {
     }),
   })
 
-  const handleLoop = useCallback(() => {
-    if (!rive) return
-
-    if (currentAnimationRef.current === 'idle') {
-      loopCountRef.current += 1
-      
-      if (loopCountRef.current >= IDLE_CYCLES_BEFORE_GREETING) {
-        // Switch to greeting animation
-        loopCountRef.current = 0
-        currentAnimationRef.current = 'greeting'
-        rive.stop(IDLE_ANIMATION)
-        rive.play(GREETING_ANIMATION)
-      }
-    } else if (currentAnimationRef.current === 'greeting') {
-      // Greeting finished, switch back to idle
-      currentAnimationRef.current = 'idle'
-      rive.stop(GREETING_ANIMATION)
-      rive.play(IDLE_ANIMATION)
-    }
-  }, [rive])
-
   useEffect(() => {
     if (!rive) return
 
-    // Subscribe to loop events using the proper EventType
+    // Handle loop events (fires when looping animations complete a cycle)
+    const handleLoop = () => {
+      if (currentAnimationRef.current === 'idle') {
+        loopCountRef.current += 1
+        
+        if (loopCountRef.current >= IDLE_CYCLES_BEFORE_GREETING) {
+          // Switch to greeting animation
+          loopCountRef.current = 0
+          currentAnimationRef.current = 'greeting'
+          rive.stop(IDLE_ANIMATION)
+          rive.play(GREETING_ANIMATION)
+        }
+      }
+    }
+
+    // Handle stop events (fires when one-shot animations like Greeting complete)
+    const handleStop = () => {
+      // If greeting just finished, switch back to idle
+      if (currentAnimationRef.current === 'greeting') {
+        currentAnimationRef.current = 'idle'
+        loopCountRef.current = 0
+        rive.stop(GREETING_ANIMATION)
+        rive.play(IDLE_ANIMATION)
+      }
+    }
+
+    // Subscribe to events
     rive.on(EventType.Loop, handleLoop)
+    rive.on(EventType.Stop, handleStop)
 
     return () => {
       rive.off(EventType.Loop, handleLoop)
+      rive.off(EventType.Stop, handleStop)
     }
-  }, [rive, handleLoop])
+  }, [rive])
 
   return (
     <section className="relative bg-white dark:bg-slate-950 py-24 md:py-32 overflow-hidden">

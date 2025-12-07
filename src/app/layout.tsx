@@ -13,7 +13,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: "Notiva - Stay ahead of every deadline",
+	title: {
+		default: "Notiva",
+		template: "Notiva - %s",
+	},
 	description: "The smartest way to track document expirations, subscription renewals, and important payments.",
 };
 

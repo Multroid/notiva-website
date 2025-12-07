@@ -77,19 +77,15 @@ export function DynamicTitle() {
     const updateTitle = () => {
       // Don't update if pathname isn't ready
       if (!pathname) {
-        console.log('[DynamicTitle] Pathname not ready')
         return
       }
-
-      console.log('[DynamicTitle] Pathname changed:', pathname)
 
       // Split pathname and filter out empty strings
       const segments = pathname.split('/').filter(Boolean)
       
-      // Home page - keep it as just "Notiva"
+      // Root "/" page - keep it as just "Notiva"
       if (segments.length === 0 || pathname === '/') {
         document.title = "Notiva"
-        console.log('[DynamicTitle] Set title to: Notiva')
         return
       }
 
@@ -110,15 +106,19 @@ export function DynamicTitle() {
         pageName = pathMap[lastSegment] || lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)
       }
 
-      // Only update if we have a valid page name
+      // Update title with page name
       if (pageName) {
-        const newTitle = `Notiva - ${pageName}`
-        document.title = newTitle
-        console.log('[DynamicTitle] Set title to:', newTitle)
+        document.title = `Notiva - ${pageName}`
       }
     }
 
+    // Run immediately
     updateTitle()
+    
+    // Also run after a short delay to ensure it runs after any Next.js metadata hydration
+    const timeoutId = setTimeout(updateTitle, 100)
+    
+    return () => clearTimeout(timeoutId)
   }, [pathname])
 
   return null

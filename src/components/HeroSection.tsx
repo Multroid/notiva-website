@@ -7,9 +7,9 @@ import Iridescence from '@/components/Iridescence'
 
 export default function HeroSection() {
     return (
-        <section className="relative px-4 md:px-6 py-4 md:py-6">
+        <section className="relative px-4 md:px-6 py-4 md:py-6 ">
             {/* Iridescence Background Container - Contains everything and clips content */}
-            <div className="relative w-full rounded-[2.5rem] overflow-hidden">
+            <div className="relative w-full rounded-[2.5rem] overflow-hidden border border-blue">
                 {/* Iridescence layer */}
                 <div className="absolute inset-0 z-0">
                     <Iridescence 
@@ -27,14 +27,25 @@ export default function HeroSection() {
                     {/* Text Content */}
                     <div className="flex flex-col items-center px-4 md:px-8 max-w-4xl mx-auto">
                         {/* Headline */}
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#1a1a1a] leading-[1.05]">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white leading-[1.2] [-webkit-text-stroke:0.5px_rgba(0,0,0,1)] dark:hidden">
+                            Never miss a
+                            <br />
+                            deadline again
+                        </h1>
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white leading-[1.2] [-webkit-text-stroke:0.5px_rgba(0,0,0,1)] hidden dark:block">
                             Never miss a
                             <br />
                             deadline again
                         </h1>
 
                         {/* Body copy */}
-                        <p className="text-base sm:text-[17px] md:text-[18px] font-medium text-[#1a1a1a]/70 mt-4 sm:mt-6 md:mt-8 max-w-[600px] leading-relaxed">
+                        <p className="text-base sm:text-[16px] md:text-[18px] font-montserrat font-medium text-white mt-4 sm:mt-6 md:mt-10 max-w-[600px] leading-relaxed dark:hidden">
+                            With Notiva, you don&apos;t track deadlines — our AI, Novi, does.
+                            It scans your connected accounts for bills, subscriptions and
+                            important documents (like IDs and contracts), then automatically
+                            reminds you before anything expires.
+                        </p>
+                        <p className="text-base sm:text-[16px] md:text-[18px] font-medium text-white mt-4 sm:mt-6 md:mt-10 max-w-[600px] leading-relaxed hidden dark:block">
                             With Notiva, you don&apos;t track deadlines — our AI, Novi, does.
                             It scans your connected accounts for bills, subscriptions and
                             important documents (like IDs and contracts), then automatically

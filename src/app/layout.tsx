@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/theme-provider";
 import { SessionProvider } from "@/components/session-provider";
@@ -9,6 +9,13 @@ import { DynamicTitle } from "@/components/dynamic-title";
 const inter = Inter({
 	subsets: ["latin"],
 	variable: "--font-inter",
+	display: 'swap',
+});
+
+const montserrat = Montserrat({
+	subsets: ["latin"],
+	variable: "--font-montserrat",
+	weight: ["500", "600"],
 	display: 'swap',
 });
 
@@ -31,7 +38,7 @@ export default function RootLayout({
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 			</head>
-			<body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
+			<body className={`${inter.variable} ${montserrat.variable} antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
 				<DynamicTitle />
 				<SessionProvider>
 					<ThemeProvider attribute="class" defaultTheme="light" enableSystem>

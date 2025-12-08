@@ -41,17 +41,21 @@ export default function MainLayout({
 			<header className="w-full sticky top-0 z-40 bg-background/80 border-b border-border/50 backdrop-blur-md">
 				<div className="container mx-auto flex items-center justify-between py-4 px-4">
 					<Link href="/" className="inline-flex items-center gap-2 font-semibold tracking-tight">
-						<img
+						<Image
 							src="/Logo/Notiva Logo transparent normal.svg"
 							alt="Notiva"
+							width={32}
+							height={32}
 							className="size-8 dark:hidden"
 						/>
-						<img
+						<Image
 							src="/Logo/Notiva Logo transparent white.svg"
 							alt="Notiva"
+							width={32}
+							height={32}
 							className="size-8 hidden dark:block"
 						/>
-						<span className="dark:text-white">Notiva</span>
+						<span className="font-montserrat font-semibold text-[26px] text-[#4a5c9a] uppercase tracking-[2px] dark:text-white leading-none">Notiva</span>
 					</Link>
 					<nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
 						{/* Features */}

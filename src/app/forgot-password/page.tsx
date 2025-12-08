@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
               className="group-hover:scale-110 transition-transform duration-200 rounded-lg"
             />
           </div>
-          <span className="text-3xl font-bold text-white">
+          <span className="font-montserrat font-semibold text-[26px] uppercase tracking-[2px] text-white leading-none">
             Notiva
           </span>
         </Link>

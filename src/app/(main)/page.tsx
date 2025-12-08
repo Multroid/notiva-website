@@ -25,7 +25,7 @@ export default function Home() {
                 <HeroSection />
 
                 {/* Integrations Section */}
-                <section id="integrations" data-section="integrations" className="bg-muted dark:bg-background py-24 md:py-32 overflow-hidden">
+                <section id="integrations" data-section="integrations" className="py-12 md:py-16 overflow-hidden">
                     <div className="mx-auto max-w-5xl px-6 mb-12">
                         <div className="text-center space-y-4">
                             <h2 className="text-balance text-3xl font-semibold md:text-4xl lg:text-5xl">
@@ -160,7 +160,7 @@ export default function Home() {
                                     height={32}
                                     className="size-8 hidden dark:block"
                                 />
-                                <span>Notiva</span>
+                                <span className="font-montserrat font-semibold text-[26px] text-[#4a5c9a] uppercase tracking-[2px] dark:text-white leading-none">Notiva</span>
                             </Link>
                             <div className="flex gap-3">
                                 <Link href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-muted-foreground hover:text-primary block">
@@ -280,32 +280,32 @@ const integrations = [
 
 const IntegrationCard = ({ logo, name }: { logo: string; name: string }) => {
     return (
-        <div className="group bg-background dark:bg-card hover:bg-muted/50 dark:hover:bg-muted/30 w-[160px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl border p-4 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
-            <div className="flex items-center justify-center mb-3">
+        <div className="group w-[140px] flex-shrink-0 flex flex-col items-center justify-center p-3 transition-all duration-300 hover:-translate-y-0.5">
+            <div className="flex items-center justify-center mb-2">
                 <Image
                     src={getLogoUrl({ domain: logo, size: 120 })}
                     alt={`${name} logo`}
-                    width={56}
-                    height={56}
-                    className="object-contain grayscale"
+                    width={48}
+                    height={48}
+                    className="object-contain grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300"
                 />
             </div>
-            <h3 className="text-sm font-semibold text-center leading-tight">{name}</h3>
+            <h3 className="text-xs font-medium text-muted-foreground group-hover:text-foreground text-center leading-tight transition-colors duration-300">{name}</h3>
         </div>
     )
 }
 
 const IntegrationMarquee = () => {
+    // Create 4 sets of items for truly seamless infinite loop on all screen sizes
+    const sets = ['first', 'second', 'third', 'fourth']
+    
     return (
-        <div className="marquee-container marquee-muted py-4">
-            <div className="marquee-track">
-                {/* First set of cards */}
-                {integrations.map((integration, index) => (
-                    <IntegrationCard key={`first-${index}`} logo={integration.logo} name={integration.name} />
-                ))}
-                {/* Duplicate set for seamless loop */}
-                {integrations.map((integration, index) => (
-                    <IntegrationCard key={`second-${index}`} logo={integration.logo} name={integration.name} />
+        <div className="marquee-container py-4">
+            <div className="marquee-track" style={{ '--marquee-duration': '45s' } as React.CSSProperties}>
+                {sets.map((setKey) => (
+                    integrations.map((integration, index) => (
+                        <IntegrationCard key={`${setKey}-${index}`} logo={integration.logo} name={integration.name} />
+                    ))
                 ))}
             </div>
         </div>

@@ -28,6 +28,9 @@ module.exports = {
       ],
     },
     extend: {
+      fontFamily: {
+        montserrat: ['var(--font-montserrat)', 'Montserrat', 'sans-serif'],
+      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import ThemeProvider from "@/components/theme-provider";
 import { SessionProvider } from "@/components/session-provider";
@@ -39,6 +40,19 @@ export default function RootLayout({
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 			</head>
 			<body className={`${inter.variable} ${montserrat.variable} antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
+				{/* Google Analytics */}
+				<Script
+					src="https://www.googletagmanager.com/gtag/js?id=G-BF5YGPRDQ7"
+					strategy="afterInteractive"
+				/>
+				<Script id="google-analytics" strategy="afterInteractive">
+					{`
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-BF5YGPRDQ7');
+					`}
+				</Script>
 				<DynamicTitle />
 				<SessionProvider>
 					<ThemeProvider attribute="class" defaultTheme="light" enableSystem>

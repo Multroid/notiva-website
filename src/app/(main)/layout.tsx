@@ -42,9 +42,14 @@ export default function MainLayout({
 				<div className="container mx-auto flex items-center justify-between py-4 px-4">
 					<Link href="/" className="inline-flex items-center gap-2 font-semibold tracking-tight">
 						<img
-							src="/Notiva-Logo.svg"
+							src="/Logo/Notiva Logo transparent normal.svg"
 							alt="Notiva"
-							className="size-8 rounded-lg"
+							className="size-8 dark:hidden"
+						/>
+						<img
+							src="/Logo/Notiva Logo transparent white.svg"
+							alt="Notiva"
+							className="size-8 hidden dark:block"
 						/>
 						<span className="dark:text-white">Notiva</span>
 					</Link>

@@ -147,11 +147,18 @@ export default function Home() {
                         <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-8">
                             <Link href="/" aria-label="go home" className="inline-flex items-center gap-2 font-semibold tracking-tight">
                                 <Image
-                                    src="/Notiva-Logo.svg"
+                                    src="/Logo/Notiva Logo transparent normal.svg"
                                     alt="Notiva"
                                     width={32}
                                     height={32}
-                                    className="size-8 rounded-lg"
+                                    className="size-8 dark:hidden"
+                                />
+                                <Image
+                                    src="/Logo/Notiva Logo transparent white.svg"
+                                    alt="Notiva"
+                                    width={32}
+                                    height={32}
+                                    className="size-8 hidden dark:block"
                                 />
                                 <span>Notiva</span>
                             </Link>

@@ -10,7 +10,9 @@
     "dev": "next dev --turbopack -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy:env": "node scripts/deploy-env-vars.js",
+    "export:env": "bash scripts/export-env-vars.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -58,6 +60,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@aws-sdk/client-amplify": "^3.709.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

@@ -1,0 +1,35 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "🚀 Building Notiva Marketing Site..."
+        - npm ci --legacy-peer-deps
+    build:
+      commands:
+        - echo "🏗️ Building Next.js app..."
+        - npm run build
+        - echo "✅ Build complete"
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*
+  customHeaders:
+    - pattern: '**/*'
+      headers:
+        - key: Cache-Control
+          value: public, max-age=0, must-revalidate
+        - key: X-Content-Type-Options
+          value: nosniff
+        - key: X-Frame-Options
+          value: DENY
+        - key: X-XSS-Protection
+          value: 1; mode=block
+
+
+
+

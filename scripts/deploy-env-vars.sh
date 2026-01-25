@@ -94,7 +94,7 @@ aws amplify update-branch \
     --app-id "$APP_ID" \
     --branch-name "$BRANCH_NAME" \
     --environment-variables file://"$TEMP_JSON" \
-    --region us-east-1 \
+    --region eu-central-1 \
     --output json > /dev/null
 
 if [ $? -eq 0 ]; then

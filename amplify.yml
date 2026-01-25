@@ -3,11 +3,18 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "🚀 Building Notiva Marketing Site..."
+        - echo "🚀 Building Notiva Marketing Website..."
+        - echo "Node version:"
+        - node --version
+        - echo "NPM version:"
+        - npm --version
+        - echo "Installing dependencies..."
         - npm ci --legacy-peer-deps
+        - echo "✅ Dependencies installed"
     build:
       commands:
         - echo "🏗️ Building Next.js app..."
+        - echo "Environment variables configured"
         - npm run build
         - echo "✅ Build complete"
   artifacts:
@@ -19,16 +26,37 @@ frontend:
       - node_modules/**/*
       - .next/cache/**/*
   customHeaders:
+    # Security headers
     - pattern: '**/*'
       headers:
-        - key: Cache-Control
-          value: public, max-age=0, must-revalidate
         - key: X-Content-Type-Options
           value: nosniff
         - key: X-Frame-Options
           value: DENY
         - key: X-XSS-Protection
           value: 1; mode=block
+        - key: Referrer-Policy
+          value: strict-origin-when-cross-origin
+        - key: Permissions-Policy
+          value: camera=(), microphone=(), geolocation=()
+    
+    # Cache static assets aggressively
+    - pattern: '/_next/static/**/*'
+      headers:
+        - key: Cache-Control
+          value: public, max-age=31536000, immutable
+    
+    # Cache images
+    - pattern: '/images/**/*'
+      headers:
+        - key: Cache-Control
+          value: public, max-age=31536000, immutable
+    
+    # No cache for HTML pages
+    - pattern: '*.html'
+      headers:
+        - key: Cache-Control
+          value: public, max-age=0, must-revalidate
 
 
 

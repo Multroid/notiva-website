@@ -33,7 +33,7 @@ const comparisonData: ComparisonRow[] = [
   },
   {
     icon: Mail,
-    capability: 'AUtomated Email and attachment scanning',
+    capability: 'Automated Email and attachment scanning',
     withNotiva: true,
     withoutNotiva: true,
   },

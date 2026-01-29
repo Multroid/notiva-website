@@ -2,14 +2,14 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, CalendarDays, LayoutDashboard } from 'lucide-react'
+import { ArrowRight, LayoutDashboard } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useSession } from 'next-auth/react'
 import { getLogoUrl } from '@/lib/logo-dev'
 import { getMainAppRegisterUrl } from '@/lib/app-url'
 import BillingScanningSection from '@/components/BillingScanningSection'
 import HeroSection from '@/components/HeroSection'
-import EverythingInOnePlaceSection from '@/components/EverythingInOnePlaceSection'
+import FeaturesGridSection from '@/components/FeaturesGridSection'
 import MeetNoviSection from '@/components/MeetNoviSection'
 import HowNotivaWorksSection from '@/components/HowNotivaWorksSection'
 import ComparisonSection from '@/components/ComparisonSection'
@@ -25,52 +25,45 @@ export default function Home() {
                 <HeroSection />
 
                 {/* Integrations Section */}
-                <section id="integrations" data-section="integrations" className="py-12 md:py-16 overflow-hidden">
-                    <div className="mx-auto max-w-5xl px-6 mb-12">
-                        <div className="text-center space-y-4">
-                            <h2 className="text-balance text-3xl font-semibold md:text-4xl lg:text-5xl">
-                                Integrate with tools you already use
-                            </h2>
-                            <p className="text-muted-foreground max-w-2xl mx-auto">
-                                Connect seamlessly with popular calendars, cloud storage, and communication platforms to keep everything in sync.
-                            </p>
-                        </div>
+                <section id="integrations" data-section="integrations" className="py-[64px] overflow-hidden">
+                    <div className="flex flex-col gap-[32px] items-center px-6">
+                        <h2 
+                            className="text-center font-medium"
+                            style={{
+                                fontSize: '48px',
+                                lineHeight: '48px',
+                                color: '#09090B',
+                            }}
+                        >
+                            Works with tools you already use
+                        </h2>
+                        <p 
+                            className="text-center max-w-[759px]"
+                            style={{
+                                fontSize: '16px',
+                                lineHeight: '24px',
+                                color: '#54545E',
+                            }}
+                        >
+                            Connect your inbox or calendars today. More connectors (banks, storage) coming next.
+                        </p>
+                        <IntegrationMarquee />
                     </div>
-
-                    {/* Infinite Marquee */}
-                    <IntegrationMarquee />
-
-                    <div className="mx-auto max-w-5xl px-6 mt-12">
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-background flex aspect-square items-center justify-center border rounded-lg p-3">
-                                    <CalendarDays className="size-6 text-primary" />
-                                </div>
-                                <blockquote className="text-left">
-                                    <p className="text-sm">&quot;The calendar integration is seamless.&quot;</p>
-                                    <cite className="text-xs text-muted-foreground not-italic">Sarah Johnson, Product Manager</cite>
-                                </blockquote>
-                            </div>
-                            <Button variant="outline" size="sm" asChild>
-                                <Link href="/integrations">View All Integrations</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Everything in One Place Section */}
-                <section id="everything-in-one-place" data-section="everything-in-one-place">
-                    <EverythingInOnePlaceSection />
-                </section>
-
-                {/* Billing Scanning Section */}
-                <section id="billing-scanning" data-section="billing-scanning">
-                    <BillingScanningSection />
                 </section>
 
                 {/* Meet Novi Section */}
                 <section id="meet-novi" data-section="meet-novi">
                     <MeetNoviSection />
+                </section>
+
+                {/* Features Grid Section - Everything in One Place */}
+                <section id="features" data-section="features">
+                    <FeaturesGridSection />
+                </section>
+
+                {/* Billing Scanning Section */}
+                <section id="billing-scanning" data-section="billing-scanning">
+                    <BillingScanningSection />
                 </section>
 
                 {/* How Notiva Works Section */}
@@ -281,16 +274,33 @@ const integrations = [
 const IntegrationCard = ({ logo, name }: { logo: string; name: string }) => {
     return (
         <div className="group w-[140px] flex-shrink-0 flex flex-col items-center justify-center p-3 transition-all duration-300 hover:-translate-y-0.5">
-            <div className="flex items-center justify-center mb-2">
+            <div className="flex items-center justify-center mb-2 relative">
+                {/* Blue-tinted logo (default state) */}
                 <Image
                     src={getLogoUrl({ domain: logo, size: 120 })}
                     alt={`${name} logo`}
                     width={48}
                     height={48}
-                    className="object-contain grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300"
+                    className="object-contain opacity-70 group-hover:opacity-0 transition-all duration-300"
+                    style={{
+                        filter: 'grayscale(100%) sepia(100%) saturate(200%) hue-rotate(180deg) brightness(0.85)',
+                    }}
+                />
+                {/* Full color logo (hover state) */}
+                <Image
+                    src={getLogoUrl({ domain: logo, size: 120 })}
+                    alt={`${name} logo`}
+                    width={48}
+                    height={48}
+                    className="object-contain absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300"
                 />
             </div>
-            <h3 className="text-xs font-medium text-muted-foreground group-hover:text-foreground text-center leading-tight transition-colors duration-300">{name}</h3>
+            <h3 
+                className="text-[12px] text-center leading-tight transition-colors duration-300"
+                style={{ color: '#0047BA' }}
+            >
+                {name}
+            </h3>
         </div>
     )
 }

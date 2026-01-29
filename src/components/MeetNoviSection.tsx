@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRive, Layout, Fit, Alignment, EventType } from '@rive-app/react-canvas'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
 import { getMainAppRegisterUrl } from '@/lib/app-url'
 
 // Animation names in the novi.riv file
@@ -65,20 +64,41 @@ export default function MeetNoviSection() {
     }
   }, [rive])
 
+  // Example questions for Novi
+  const exampleQuestions = [
+    '"What subscriptions increased this month?"',
+    '"Which bills are due next week?"',
+    '"Show me all invoices from Amazon."',
+  ]
+
   return (
-    <section className="relative bg-white dark:bg-slate-950 py-24 md:py-32 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="relative py-16 md:py-24 overflow-hidden">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left - Novi Animation */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: -30 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
             viewport={{ once: true }}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center order-1 lg:order-1"
           >
-            <div className="relative w-full max-w-[400px] aspect-square">
-              <RiveComponent className="w-full h-full" />
+            <div 
+              className="relative"
+              style={{ 
+                width: '350px', 
+                height: '350px',
+                minWidth: '350px',
+                minHeight: '350px',
+              }}
+            >
+              <RiveComponent 
+                style={{ 
+                  width: '100%', 
+                  height: '100%',
+                  display: 'block',
+                }} 
+              />
             </div>
           </motion.div>
 
@@ -88,24 +108,59 @@ export default function MeetNoviSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="space-y-6 text-center lg:text-left"
+            className="space-y-6 text-center lg:text-left order-2 lg:order-2"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.1] tracking-tight text-foreground">
-              Meet Novi
-            </h2>
-            
-            <div className="space-y-4 max-w-lg mx-auto lg:mx-0">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Notiva takes care of things behind the scenes.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Novi, your intelligent assistant, sends friendly reminders when 
-                something important is coming up like: &apos;Your driver&apos;s license needs 
-                renewing soon&apos;.
+            {/* Title */}
+            <div>
+              <h2 
+                className="text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight"
+                style={{ color: '#09090B' }}
+              >
+                Meet <span style={{ color: '#0047BA', fontWeight: 700 }}>Novi</span>
+              </h2>
+              {/* Subtitle */}
+              <p 
+                className="mt-2 text-lg"
+                style={{ color: '#54545E' }}
+              >
+                your finance co-pilot
               </p>
             </div>
+            
+            {/* Description */}
+            <div className="space-y-4 max-w-lg mx-auto lg:mx-0">
+              <p 
+                className="text-base leading-relaxed"
+                style={{ color: '#54545E' }}
+              >
+                Novi runs quietly in the background to spot what matters: 
+                upcoming renewals, unexpected charges, and documents 
+                that need action. Ask questions like:
+              </p>
+              
+              {/* Bullet Points */}
+              <ul className="space-y-2 text-left">
+                {exampleQuestions.map((question, index) => (
+                  <li 
+                    key={index}
+                    className="flex items-start gap-2"
+                  >
+                    <span 
+                      className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: '#0047BA' }}
+                    />
+                    <span 
+                      className="text-base italic"
+                      style={{ color: '#54545E' }}
+                    >
+                      {question}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons - Double Layer Design */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -113,25 +168,78 @@ export default function MeetNoviSection() {
               viewport={{ once: true }}
               className="flex flex-wrap items-center gap-4 pt-4 justify-center lg:justify-start"
             >
-              <Button 
-                size="lg" 
-                className="rounded-full px-8 font-medium"
-                asChild
+              {/* Ask Novi - Primary Button */}
+              <a
+                href={getMainAppRegisterUrl()}
+                className="flex flex-col items-center justify-center overflow-hidden"
+                style={{
+                  height: '44px',
+                  padding: '4px',
+                  backgroundColor: '#D9E3F5',
+                  border: '1px solid #0033A1',
+                  borderRadius: '4px',
+                }}
               >
-                <a href={getMainAppRegisterUrl()}>
-                  Start
-                </a>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="rounded-full px-8 font-medium"
-                asChild
+                <span
+                  className="flex flex-col items-center justify-center flex-1 min-h-0 min-w-0 overflow-hidden"
+                  style={{
+                    backgroundColor: '#0047BA',
+                    borderRadius: '8px',
+                    paddingLeft: '32px',
+                    paddingRight: '32px',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontWeight: 400,
+                      fontSize: '16px',
+                      lineHeight: '18px',
+                      color: '#F0EEE9',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Ask Novi
+                  </span>
+                </span>
+              </a>
+
+              {/* See examples - Secondary Button */}
+              <Link
+                href="#how-it-works"
+                className="flex flex-col items-center justify-center overflow-hidden"
+                style={{
+                  height: '44px',
+                  padding: '4px',
+                  backgroundColor: '#D9E3F5',
+                  border: '1px solid #0047BA',
+                  borderRadius: '4px',
+                }}
               >
-                <Link href="#how-it-works">
-                  See how it works
-                </Link>
-              </Button>
+                <span
+                  className="flex flex-col items-center justify-center flex-1 min-h-0 min-w-0 overflow-hidden"
+                  style={{
+                    backgroundColor: '#F3F4F4',
+                    border: '1px solid #0047BA',
+                    borderRadius: '8px',
+                    paddingLeft: '32px',
+                    paddingRight: '32px',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontWeight: 400,
+                      fontSize: '16px',
+                      lineHeight: '18px',
+                      color: '#0047BA',
+                      textAlign: 'center',
+                    }}
+                  >
+                    See examples
+                  </span>
+                </span>
+              </Link>
             </motion.div>
           </motion.div>
         </div>

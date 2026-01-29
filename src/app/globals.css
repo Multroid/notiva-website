@@ -6,7 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
+  --font-sans: var(--font-montserrat);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -41,6 +41,74 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* =========================================
+   NOTIVA DESIGN SYSTEM - Color Palette
+   ========================================= */
+
+:root {
+  /* Notiva Blue */
+  --notiva-blue-light: #E6EDF8;
+  --notiva-blue-light-hover: #D9E3F5;
+  --notiva-blue-light-active: #CCD9EA;
+  --notiva-blue: #0047BA;
+  --notiva-blue-hover: #0040A7;
+  --notiva-blue-active: #003995;
+  --notiva-blue-dark: #00336C;
+  --notiva-blue-dark-hover: #002B70;
+  --notiva-blue-dark-active: #002354;
+  --notiva-blue-darker: #001941;
+
+  /* Multroid Blue (borders) */
+  --multroid-blue: #0033A1;
+
+  /* Multroid White */
+  --multroid-white-light: #FEFDFD;
+  --multroid-white: #F0EEE9;
+  --multroid-white-hover: #D8D6D2;
+  --multroid-white-active: #C0BEB4;
+  --multroid-white-dark: #B4B3AF;
+
+  /* Multroid Grey */
+  --multroid-grey-light: #F3F4F4;
+  --multroid-grey-light-hover: #EDEFEF;
+  --multroid-grey-light-active: #DADBDC;
+  --multroid-grey: #898C8E;
+  --multroid-grey-hover: #7B7E80;
+  --multroid-grey-dark: #676B6B;
+  --multroid-grey-darker: #303132;
+
+  /* Multroid Red */
+  --multroid-red-light: #FEE9EB;
+  --multroid-red-light-hover: #FDD9DC;
+  --multroid-red-light-active: #FEB9C0;
+  --multroid-red: #F32735;
+  --multroid-red-hover: #DB2330;
+  --multroid-red-active: #C21F2A;
+  --multroid-red-dark: #B61D28;
+
+  /* Multroid Black (Ruined Smores) */
+  --multroid-black-light: #E7E7E7;
+  --multroid-black: #101113;
+  --multroid-black-hover: #0E0F11;
+  --multroid-black-active: #0D0E0F;
+  --multroid-black-dark: #0C0D0E;
+
+  /* Notiva Orange */
+  --notiva-orange-50: #FEEEE9;
+  --notiva-orange-100: #FACBC8;
+  --notiva-orange-200: #F8B19C;
+  --notiva-orange-300: #F58E8C;
+  --notiva-orange-400: #F37852;
+  --notiva-orange-500: #F05627;
+  --notiva-orange-600: #E34E23;
+  --notiva-orange-700: #AA3A1C;
+  --notiva-orange-800: #842F15;
+  --notiva-orange-900: #65240F;
+
+  /* Pricing Section Background */
+  --pricing-bg: #F5F3EF;
 }
 
 /* Shadcn Blue Theme */
@@ -443,5 +511,256 @@
   .marquee-track {
     animation: none;
   }
+}
+
+/* =========================================
+   NOTIVA BUTTON DESIGN SYSTEM
+   Double-layer button design with outer + inner
+   ========================================= */
+
+/* Base button wrapper - all Notiva buttons share this */
+.notiva-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.notiva-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inner button - shared styles */
+.notiva-btn-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
+  border-radius: 8px;
+  min-height: 44px;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+/* ---- Primary Button (Blue) ---- */
+.notiva-btn-primary {
+  background: var(--notiva-blue-light-hover);
+  border: 1px solid var(--multroid-blue);
+}
+
+.notiva-btn-primary:hover {
+  background: var(--notiva-blue-light);
+}
+
+.notiva-btn-primary .notiva-btn-inner {
+  background: var(--notiva-blue);
+  color: var(--multroid-white);
+}
+
+.notiva-btn-primary:hover .notiva-btn-inner {
+  background: var(--notiva-blue-hover);
+}
+
+.notiva-btn-primary:active .notiva-btn-inner {
+  background: var(--notiva-blue-active);
+}
+
+/* ---- Primary Button (Black) ---- */
+.notiva-btn-primary-black {
+  background: var(--notiva-blue-light-hover);
+  border: 1px solid var(--multroid-blue);
+}
+
+.notiva-btn-primary-black:hover {
+  background: var(--notiva-blue-light);
+}
+
+.notiva-btn-primary-black .notiva-btn-inner {
+  background: var(--multroid-black);
+  color: var(--multroid-white);
+}
+
+.notiva-btn-primary-black:hover .notiva-btn-inner {
+  background: var(--multroid-black-hover);
+}
+
+.notiva-btn-primary-black:active .notiva-btn-inner {
+  background: var(--multroid-black-active);
+}
+
+/* ---- Secondary Button ---- */
+.notiva-btn-secondary {
+  background: var(--notiva-blue-light-hover);
+  border: 1px solid var(--notiva-blue);
+}
+
+.notiva-btn-secondary:hover {
+  background: var(--notiva-blue-light);
+}
+
+.notiva-btn-secondary .notiva-btn-inner {
+  background: var(--multroid-grey-light);
+  border: 1px solid var(--notiva-blue);
+  color: var(--notiva-blue);
+}
+
+.notiva-btn-secondary:hover .notiva-btn-inner {
+  background: var(--multroid-grey-light-hover);
+}
+
+.notiva-btn-secondary:active .notiva-btn-inner {
+  background: var(--multroid-grey-light-active);
+}
+
+/* ---- Important Button (Orange) ---- */
+.notiva-btn-important {
+  background: var(--multroid-red-light);
+  border: 1px solid var(--notiva-orange-500);
+}
+
+.notiva-btn-important:hover {
+  background: var(--multroid-red-light-hover);
+}
+
+.notiva-btn-important .notiva-btn-inner {
+  background: var(--notiva-orange-500);
+  color: var(--multroid-white);
+}
+
+.notiva-btn-important:hover .notiva-btn-inner {
+  background: var(--notiva-orange-600);
+}
+
+.notiva-btn-important:active .notiva-btn-inner {
+  background: var(--notiva-orange-700);
+}
+
+/* ---- Danger Button (Red) ---- */
+.notiva-btn-danger {
+  background: var(--multroid-red-light);
+  border: 1px solid var(--multroid-red);
+}
+
+.notiva-btn-danger:hover {
+  background: var(--multroid-red-light-hover);
+}
+
+.notiva-btn-danger .notiva-btn-inner {
+  background: var(--multroid-red);
+  color: var(--multroid-white);
+}
+
+.notiva-btn-danger:hover .notiva-btn-inner {
+  background: var(--multroid-red-hover);
+}
+
+.notiva-btn-danger:active .notiva-btn-inner {
+  background: var(--multroid-red-active);
+}
+
+/* ---- CTA Button (with Arrow) ---- */
+.notiva-btn-cta {
+  flex-direction: row;
+  padding: 4px 4px 4px 16px;
+  gap: 16px;
+  background: var(--notiva-blue-light-hover);
+  border: 2px solid var(--notiva-orange-500);
+}
+
+.notiva-btn-cta:hover {
+  background: var(--notiva-blue-light);
+}
+
+.notiva-btn-cta-text {
+  font-family: 'Nimbus Sans', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--notiva-orange-500);
+  text-align: center;
+}
+
+.notiva-btn-cta-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--notiva-orange-500);
+  border-radius: 8px;
+  box-shadow: 0px -2px 9.4px rgba(232, 232, 232, 0.31);
+  transition: all 0.2s ease;
+}
+
+.notiva-btn-cta:hover .notiva-btn-cta-arrow {
+  background: var(--notiva-orange-600);
+}
+
+.notiva-btn-cta-arrow svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--multroid-white);
+  stroke-width: 2.5px;
+}
+
+/* =========================================
+   NOTIVA FOOTER STYLES
+   ========================================= */
+
+.notiva-footer {
+  background: var(--notiva-blue);
+}
+
+.notiva-footer-text {
+  color: var(--multroid-white);
+}
+
+.notiva-footer-large-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--notiva-blue-light);
+  opacity: 0.3;
+}
+
+/* =========================================
+   PRICING SECTION STYLES
+   ========================================= */
+
+.notiva-pricing-bg {
+  background: var(--pricing-bg);
+}
+
+.notiva-pricing-card {
+  background: white;
+  border: 2px dashed var(--multroid-grey);
+  border-radius: 16px;
+}
+
+.notiva-pricing-badge {
+  background: var(--notiva-orange-500);
+  color: var(--multroid-white);
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 9999px;
+}
+
+.notiva-pricing-check {
+  color: var(--notiva-blue);
+}
+
+.notiva-pricing-trial-text {
+  color: var(--notiva-orange-500);
 }
 

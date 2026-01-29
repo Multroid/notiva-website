@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import ThemeProvider from "@/components/theme-provider";
@@ -7,16 +7,10 @@ import { SessionProvider } from "@/components/session-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { DynamicTitle } from "@/components/dynamic-title";
 
-const inter = Inter({
-	subsets: ["latin"],
-	variable: "--font-inter",
-	display: 'swap',
-});
-
 const montserrat = Montserrat({
 	subsets: ["latin"],
 	variable: "--font-montserrat",
-	weight: ["500", "600"],
+	weight: ["400", "500", "600", "700", "800", "900"],
 	display: 'swap',
 });
 
@@ -39,7 +33,7 @@ export default function RootLayout({
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 			</head>
-			<body className={`${inter.variable} ${montserrat.variable} antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
+			<body className={`${montserrat.variable} font-montserrat antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
 				{/* Google Analytics */}
 				<Script
 					src="https://www.googletagmanager.com/gtag/js?id=G-BF5YGPRDQ7"

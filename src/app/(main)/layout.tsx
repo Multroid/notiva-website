@@ -38,31 +38,56 @@ export default function MainLayout({
 
 	return (
 		<>
-			<header className="w-full sticky top-0 z-40 bg-background/80 border-b border-border/50 backdrop-blur-md">
-				<div className="container mx-auto flex items-center justify-between py-4 px-4">
-					<Link href="/" className="inline-flex items-center gap-2 font-semibold tracking-tight">
-						<Image
-							src="/Logo/Notiva Logo transparent normal.svg"
-							alt="Notiva"
-							width={32}
-							height={32}
-							className="size-8 dark:hidden"
-						/>
-						<Image
-							src="/Logo/Notiva Logo transparent white.svg"
-							alt="Notiva"
-							width={32}
-							height={32}
-							className="size-8 hidden dark:block"
-						/>
-						<span className="font-montserrat font-semibold text-[26px] text-[#4a5c9a] uppercase tracking-[2px] dark:text-white leading-none">Notiva</span>
+			<header 
+				className="w-full sticky top-0 z-40 px-6"
+				style={{ 
+					backdropFilter: 'blur(6px)',
+					backgroundColor: 'rgba(255, 255, 255, 0.8)',
+				}}
+			>
+				<div className="container mx-auto flex items-center justify-between py-[18px] px-4">
+					{/* Logo */}
+					<Link href="/" className="inline-flex items-center gap-[8px]">
+						<div className="relative size-[32px] overflow-hidden">
+							<Image
+								src="/Logo/Notiva-Logo-Blue.svg"
+								alt="Notiva"
+								width={32}
+								height={32}
+								className="size-[32px] dark:hidden"
+							/>
+							<Image
+								src="/Logo/Notiva Logo transparent white.svg"
+								alt="Notiva"
+								width={32}
+								height={32}
+								className="size-[32px] hidden dark:block"
+							/>
+						</div>
+						<span 
+							className="uppercase dark:text-white"
+							style={{ 
+								fontFamily: "'Montserrat', sans-serif",
+								fontWeight: 700,
+								fontSize: '24px',
+								lineHeight: '26px',
+								letterSpacing: '2px',
+								color: '#0047BA'
+							}}
+						>
+							Notiva
+						</span>
 					</Link>
-					<nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
+					<nav className="hidden md:flex items-center gap-6 text-[14px]" style={{ fontFamily: "'Nimbus Sans', system-ui, sans-serif" }}>
 						{/* Features */}
 						<div className="relative group">
-							<button type="button" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+							<button 
+								type="button" 
+								className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+								style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
+							>
 								<span>Features</span>
-								<ChevronDown className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+								<ChevronDown className="size-3" style={{ color: 'var(--multroid-grey-dark, #67696B)' }} />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[720px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
 								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
@@ -114,13 +139,23 @@ export default function MainLayout({
 						</div>
 					</div>
 
-						<Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
+						<Link 
+							href="/pricing" 
+							className="hover:text-foreground transition-colors"
+							style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
+						>
+							Pricing
+						</Link>
 
 						{/* Business */}
 						<div className="relative group">
-							<button type="button" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+							<button 
+								type="button" 
+								className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+								style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
+							>
 								<span>Business</span>
-								<ChevronDown className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+								<ChevronDown className="size-3" style={{ color: 'var(--multroid-grey-dark, #67696B)' }} />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[640px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
 								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
@@ -146,9 +181,13 @@ export default function MainLayout({
 
 						{/* About */}
 						<div className="relative group">
-							<button type="button" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+							<button 
+								type="button" 
+								className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+								style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
+							>
 								<span>About</span>
-								<ChevronDown className="size-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+								<ChevronDown className="size-3" style={{ color: 'var(--multroid-grey-dark, #67696B)' }} />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[560px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
 								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
@@ -187,20 +226,88 @@ export default function MainLayout({
 						</div>
 					</div>
 					</nav>
-					<div className="flex items-center gap-2">
-						<div className="hidden md:flex items-center gap-2">
+					<div className="flex items-center gap-[16px]">
+						<ThemeToggle />
+						<div className="hidden md:flex items-center gap-[16px]">
 							{isAuthenticated ? (
 								<UserNav />
 							) : (
 								<>
-									<a href={getMainAppLoginUrl()} className="text-sm px-3 py-1.5 rounded-md border hover:bg-accent hover:text-accent-foreground">Login</a>
-									<Button asChild size="sm">
-										<a href={getMainAppRegisterUrl()}>Get Started Free</a>
-									</Button>
+									{/* Login Button - Primary */}
+									<a
+										href={getMainAppLoginUrl()}
+										className="flex flex-col items-center justify-center overflow-hidden"
+										style={{
+											height: '40px',
+											padding: '4px',
+											backgroundColor: '#D9E3F5',
+											border: '1px solid #0033A1',
+											borderRadius: '4px',
+										}}
+									>
+										<span
+											className="flex flex-col items-center justify-center flex-1 min-h-0 min-w-0 overflow-hidden"
+											style={{
+												backgroundColor: '#0047BA',
+												borderRadius: '8px',
+												paddingLeft: '24px',
+												paddingRight: '24px',
+											}}
+										>
+											<span
+												style={{
+													fontFamily: "'Montserrat', sans-serif",
+													fontWeight: 400,
+													fontSize: '16px',
+													lineHeight: '18px',
+													color: '#F0EEE9',
+													textAlign: 'center',
+												}}
+											>
+												Login
+											</span>
+										</span>
+									</a>
+									
+									{/* Get Started Button - Secondary */}
+									<a
+										href={getMainAppRegisterUrl()}
+										className="flex flex-col items-center justify-center overflow-hidden"
+										style={{
+											height: '40px',
+											padding: '4px',
+											backgroundColor: '#D9E3F5',
+											border: '1px solid #0047BA',
+											borderRadius: '4px',
+										}}
+									>
+										<span
+											className="flex flex-col items-center justify-center flex-1 min-h-0 min-w-0 overflow-hidden"
+											style={{
+												backgroundColor: '#F3F4F4',
+												border: '1px solid #0047BA',
+												borderRadius: '8px',
+												paddingLeft: '24px',
+												paddingRight: '24px',
+											}}
+										>
+											<span
+												style={{
+													fontFamily: "'Montserrat', sans-serif",
+													fontWeight: 400,
+													fontSize: '16px',
+													lineHeight: '18px',
+													color: '#0047BA',
+													textAlign: 'center',
+												}}
+											>
+												Get Started
+											</span>
+										</span>
+									</a>
 								</>
 							)}
 						</div>
-						<ThemeToggle />
 						<Button
 							variant="ghost"
 							size="icon"

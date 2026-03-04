@@ -3,33 +3,19 @@ import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 
-/**
- * Notiva Button Design System
- * 
- * Double-layer button design matching Figma specifications:
- * - Outer container with background, border, and padding
- * - Inner button with the actual button background
- * 
- * Variants:
- * - primary: Blue inner button (default)
- * - primaryBlack: Black inner button
- * - secondary: Grey inner with blue border
- * - important: Orange inner button
- * - danger: Red inner button
- * - cta: CTA button with arrow icon
- */
-
 export interface NotivaButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "primaryBlack" | "secondary" | "important" | "danger" | "cta"
-  size?: "default" | "sm" | "lg"
+  variant?: "primary" | "primaryBlack" | "primaryDark" | "secondary" | "important" | "danger" | "cta"
+  size?: "sm" | "lg"
   asChild?: boolean
-  ctaText?: string // For CTA variant
+  fullWidth?: boolean
+  ctaText?: string
 }
 
 const variantClasses = {
   primary: "notiva-btn-primary",
   primaryBlack: "notiva-btn-primary-black",
+  primaryDark: "notiva-btn-primary-dark",
   secondary: "notiva-btn-secondary",
   important: "notiva-btn-important",
   danger: "notiva-btn-danger",
@@ -37,9 +23,8 @@ const variantClasses = {
 }
 
 const sizeClasses = {
-  default: "",
-  sm: "text-sm",
-  lg: "text-lg",
+  sm: "notiva-btn-sm",
+  lg: "notiva-btn-lg",
 }
 
 const NotivaButton = React.forwardRef<HTMLButtonElement, NotivaButtonProps>(
@@ -47,23 +32,25 @@ const NotivaButton = React.forwardRef<HTMLButtonElement, NotivaButtonProps>(
     {
       className,
       variant = "primary",
-      size = "default",
+      size = "lg",
       asChild = false,
+      fullWidth = false,
       ctaText,
       children,
       ...props
     },
     ref
   ) => {
-    // CTA variant has different structure
+    const Comp = asChild ? Slot : "button"
+
     if (variant === "cta") {
-      const Comp = asChild ? Slot : "button"
       return (
         <Comp
           className={cn(
             "notiva-btn",
             variantClasses[variant],
             sizeClasses[size],
+            fullWidth && "notiva-btn-full",
             className
           )}
           ref={ref}
@@ -77,19 +64,19 @@ const NotivaButton = React.forwardRef<HTMLButtonElement, NotivaButtonProps>(
       )
     }
 
-    // Standard double-layer button
-    const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(
           "notiva-btn",
           variantClasses[variant],
+          sizeClasses[size],
+          fullWidth && "notiva-btn-full",
           className
         )}
         ref={ref}
         {...props}
       >
-        <span className={cn("notiva-btn-inner", sizeClasses[size])}>
+        <span className="notiva-btn-inner">
           {children}
         </span>
       </Comp>
@@ -98,14 +85,11 @@ const NotivaButton = React.forwardRef<HTMLButtonElement, NotivaButtonProps>(
 )
 NotivaButton.displayName = "NotivaButton"
 
-/**
- * NotivaButtonLink - For use with Next.js Link or anchor tags
- * Uses the asChild pattern to wrap links
- */
 export interface NotivaButtonLinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  variant?: "primary" | "primaryBlack" | "secondary" | "important" | "danger" | "cta"
-  size?: "default" | "sm" | "lg"
+  variant?: "primary" | "primaryBlack" | "primaryDark" | "secondary" | "important" | "danger" | "cta"
+  size?: "sm" | "lg"
+  fullWidth?: boolean
   ctaText?: string
 }
 
@@ -114,14 +98,14 @@ const NotivaButtonLink = React.forwardRef<HTMLAnchorElement, NotivaButtonLinkPro
     {
       className,
       variant = "primary",
-      size = "default",
+      size = "lg",
+      fullWidth = false,
       ctaText,
       children,
       ...props
     },
     ref
   ) => {
-    // CTA variant has different structure
     if (variant === "cta") {
       return (
         <a
@@ -129,6 +113,7 @@ const NotivaButtonLink = React.forwardRef<HTMLAnchorElement, NotivaButtonLinkPro
             "notiva-btn",
             variantClasses[variant],
             sizeClasses[size],
+            fullWidth && "notiva-btn-full",
             "no-underline",
             className
           )}
@@ -143,19 +128,20 @@ const NotivaButtonLink = React.forwardRef<HTMLAnchorElement, NotivaButtonLinkPro
       )
     }
 
-    // Standard double-layer button
     return (
       <a
         className={cn(
           "notiva-btn",
           variantClasses[variant],
+          sizeClasses[size],
+          fullWidth && "notiva-btn-full",
           "no-underline",
           className
         )}
         ref={ref}
         {...props}
       >
-        <span className={cn("notiva-btn-inner", sizeClasses[size])}>
+        <span className="notiva-btn-inner">
           {children}
         </span>
       </a>

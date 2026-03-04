@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { UserNav } from "@/components/user-nav";
 import { Button } from "@/components/ui/button";
+import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { getMainAppLoginUrl, getMainAppRegisterUrl, getMainAppDashboardUrl } from "@/lib/app-url";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
@@ -38,51 +39,47 @@ export default function MainLayout({
 
 	return (
 		<>
-			<header 
+			<header
 				className="w-full sticky top-0 z-40 px-6"
-				style={{ 
+				style={{
+					height: '84px',
 					backdropFilter: 'blur(6px)',
 					backgroundColor: 'rgba(255, 255, 255, 0.8)',
 				}}
 			>
-				<div className="container mx-auto flex items-center justify-between py-[18px] px-4">
-					{/* Logo */}
-					<Link href="/" className="inline-flex items-center gap-[8px]">
+				<div className="container mx-auto flex items-center justify-between h-full px-4">
+					{/* Logo in blue pill */}
+					<Link href="/" className="inline-flex items-center gap-[8px] bg-[#0047BA] rounded-[8px] px-[16px] py-[8px]">
 						<div className="relative size-[32px] overflow-hidden">
-							<Image
-								src="/Logo/Notiva-Logo-Blue.svg"
-								alt="Notiva"
-								width={32}
-								height={32}
-								className="size-[32px] dark:hidden"
-							/>
 							<Image
 								src="/Logo/Notiva Logo transparent white.svg"
 								alt="Notiva"
 								width={32}
 								height={32}
-								className="size-[32px] hidden dark:block"
+								className="size-[32px]"
 							/>
 						</div>
-						<span 
-							className="uppercase dark:text-white"
-							style={{ 
+						<span
+							className="uppercase"
+							style={{
 								fontFamily: "'Montserrat', sans-serif",
 								fontWeight: 700,
 								fontSize: '24px',
 								lineHeight: '26px',
 								letterSpacing: '2px',
-								color: '#0047BA'
+								color: '#F0EEE9'
 							}}
 						>
 							Notiva
 						</span>
 					</Link>
-					<nav className="hidden md:flex items-center gap-6 text-[14px]" style={{ fontFamily: "'Nimbus Sans', system-ui, sans-serif" }}>
+
+					{/* Desktop Nav */}
+					<nav className="hidden md:flex items-center gap-6 text-[14px]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
 						{/* Features */}
 						<div className="relative group">
-							<button 
-								type="button" 
+							<button
+								type="button"
 								className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
 								style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
 							>
@@ -90,57 +87,56 @@ export default function MainLayout({
 								<ChevronDown className="size-3" style={{ color: 'var(--multroid-grey-dark, #67696B)' }} />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[720px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
-								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
 								<div className="absolute -top-1 left-0 right-0 h-1"></div>
-							<div className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-3 lg:p-4">
-								<Link href="/features/reminders" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Bell className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Reminders</span>
-										<span className="block text-xs text-muted-foreground">Never miss renewals or due dates.</span>
-									</span>
-								</Link>
-								<Link href="/features/document-vault" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><FolderLock className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Document Vault</span>
-										<span className="block text-xs text-muted-foreground">Securely store bills and contracts.</span>
-									</span>
-								</Link>
-								<Link href="/features/calendar-sync" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><CalendarDays className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Calendar Sync</span>
-										<span className="block text-xs text-muted-foreground">Sync key dates to your calendar.</span>
-									</span>
-								</Link>
-								<Link href="/features/collaboration" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Users className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Collaboration</span>
-										<span className="block text-xs text-muted-foreground">Share and work with your team.</span>
-									</span>
-								</Link>
-								<Link href="/features/integrations" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Plug className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Integrations</span>
-										<span className="block text-xs text-muted-foreground">Connect tools you already use.</span>
-									</span>
-								</Link>
-								<Link href="/features/security" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Shield className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Security</span>
-										<span className="block text-xs text-muted-foreground">Enterprise‑grade privacy and access.</span>
-									</span>
-								</Link>
+								<div className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-3 lg:p-4">
+									<Link href="/features/reminders" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Bell className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Reminders</span>
+											<span className="block text-xs text-muted-foreground">Never miss renewals or due dates.</span>
+										</span>
+									</Link>
+									<Link href="/features/document-vault" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><FolderLock className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Document Vault</span>
+											<span className="block text-xs text-muted-foreground">Securely store bills and contracts.</span>
+										</span>
+									</Link>
+									<Link href="/features/calendar-sync" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><CalendarDays className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Calendar Sync</span>
+											<span className="block text-xs text-muted-foreground">Sync key dates to your calendar.</span>
+										</span>
+									</Link>
+									<Link href="/features/collaboration" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Users className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Collaboration</span>
+											<span className="block text-xs text-muted-foreground">Share and work with your team.</span>
+										</span>
+									</Link>
+									<Link href="/features/integrations" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Plug className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Integrations</span>
+											<span className="block text-xs text-muted-foreground">Connect tools you already use.</span>
+										</span>
+									</Link>
+									<Link href="/features/security" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Shield className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Security</span>
+											<span className="block text-xs text-muted-foreground">Enterprise-grade privacy and access.</span>
+										</span>
+									</Link>
+								</div>
 							</div>
 						</div>
-					</div>
 
-						<Link 
-							href="/pricing" 
+						<Link
+							href="/pricing"
 							className="hover:text-foreground transition-colors"
 							style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
 						>
@@ -149,40 +145,39 @@ export default function MainLayout({
 
 						{/* Business */}
 						<div className="relative group">
-							<button 
-								type="button" 
+							<button
+								type="button"
 								className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
 								style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
 							>
-								<span>Business</span>
+								<span>For Business</span>
 								<ChevronDown className="size-3" style={{ color: 'var(--multroid-grey-dark, #67696B)' }} />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[640px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
-								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
 								<div className="absolute -top-1 left-0 right-0 h-1"></div>
-							<div className="grid grid-cols-2 gap-2 p-3 lg:p-4">
-								<Link href="/use-cases/teams-startups" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Users className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Teams & Startups</span>
-										<span className="block text-xs text-muted-foreground">Collaborate and track budgets.</span>
-									</span>
-								</Link>
-								<Link href="/use-cases/enterprise" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Building className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Enterprise</span>
-										<span className="block text-xs text-muted-foreground">Advanced controls and reporting.</span>
-									</span>
-								</Link>
+								<div className="grid grid-cols-2 gap-2 p-3 lg:p-4">
+									<Link href="/use-cases/teams-startups" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Users className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Teams & Startups</span>
+											<span className="block text-xs text-muted-foreground">Collaborate and track budgets.</span>
+										</span>
+									</Link>
+									<Link href="/use-cases/enterprise" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Building className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Enterprise</span>
+											<span className="block text-xs text-muted-foreground">Advanced controls and reporting.</span>
+										</span>
+									</Link>
+								</div>
 							</div>
 						</div>
-					</div>
 
 						{/* About */}
 						<div className="relative group">
-							<button 
-								type="button" 
+							<button
+								type="button"
 								className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
 								style={{ color: 'var(--multroid-grey-dark, #67696B)' }}
 							>
@@ -190,122 +185,56 @@ export default function MainLayout({
 								<ChevronDown className="size-3" style={{ color: 'var(--multroid-grey-dark, #67696B)' }} />
 							</button>
 							<div className="absolute left-0 top-full mt-1 min-w-[560px] rounded-lg border bg-background shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 delay-100 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0">
-								{/* Invisible bridge to prevent dropdown from closing when moving mouse */}
 								<div className="absolute -top-1 left-0 right-0 h-1"></div>
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 lg:p-4">
-								<Link href="/about/company" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20 overflow-hidden">
-										<Image 
-											src="/Logo/multroid-logo.svg" 
-											alt="Multroid Logo" 
-											width={36} 
-											height={36}
-											className="size-9 rounded-md"
-										/>
-									</span>
-									<span>
-										<span className="block text-foreground font-medium">Company</span>
-										<span className="block text-xs text-muted-foreground">Mission, values, and leadership.</span>
-									</span>
-								</Link>
-								<Link href="/about/careers" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Briefcase className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Careers</span>
-										<span className="block text-xs text-muted-foreground">Join our growing team.</span>
-									</span>
-								</Link>
-								<Link href="/about/press" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
-									<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><FileText className="size-5" /></span>
-									<span>
-										<span className="block text-foreground font-medium">Press</span>
-										<span className="block text-xs text-muted-foreground">Brand assets and announcements.</span>
-									</span>
-								</Link>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 lg:p-4">
+									<Link href="/about/company" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20 overflow-hidden">
+											<Image
+												src="/Logo/multroid-logo.svg"
+												alt="Multroid Logo"
+												width={36}
+												height={36}
+												className="size-9 rounded-md"
+											/>
+										</span>
+										<span>
+											<span className="block text-foreground font-medium">Company</span>
+											<span className="block text-xs text-muted-foreground">Mission, values, and leadership.</span>
+										</span>
+									</Link>
+									<Link href="/about/careers" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><Briefcase className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Careers</span>
+											<span className="block text-xs text-muted-foreground">Join our growing team.</span>
+										</span>
+									</Link>
+									<Link href="/about/press" className="flex gap-3 rounded-md p-3 hover:bg-accent/50 transition-colors">
+										<span className="size-9 grid place-items-center rounded-md bg-primary/10 text-primary ring-1 ring-primary/20"><FileText className="size-5" /></span>
+										<span>
+											<span className="block text-foreground font-medium">Press</span>
+											<span className="block text-xs text-muted-foreground">Brand assets and announcements.</span>
+										</span>
+									</Link>
+								</div>
 							</div>
 						</div>
-					</div>
 					</nav>
+
+					{/* Right Controls */}
 					<div className="flex items-center gap-[16px]">
 						<ThemeToggle />
 						<div className="hidden md:flex items-center gap-[16px]">
 							{isAuthenticated ? (
 								<UserNav />
 							) : (
-								<>
-									{/* Login Button - Primary */}
-									<a
-										href={getMainAppLoginUrl()}
-										className="flex flex-col items-center justify-center overflow-hidden"
-										style={{
-											height: '40px',
-											padding: '4px',
-											backgroundColor: '#D9E3F5',
-											border: '1px solid #0033A1',
-											borderRadius: '4px',
-										}}
-									>
-										<span
-											className="flex flex-col items-center justify-center flex-1 min-h-0 min-w-0 overflow-hidden"
-											style={{
-												backgroundColor: '#0047BA',
-												borderRadius: '8px',
-												paddingLeft: '24px',
-												paddingRight: '24px',
-											}}
-										>
-											<span
-												style={{
-													fontFamily: "'Montserrat', sans-serif",
-													fontWeight: 400,
-													fontSize: '16px',
-													lineHeight: '18px',
-													color: '#F0EEE9',
-													textAlign: 'center',
-												}}
-											>
-												Login
-											</span>
-										</span>
-									</a>
-									
-									{/* Get Started Button - Secondary */}
-									<a
-										href={getMainAppRegisterUrl()}
-										className="flex flex-col items-center justify-center overflow-hidden"
-										style={{
-											height: '40px',
-											padding: '4px',
-											backgroundColor: '#D9E3F5',
-											border: '1px solid #0047BA',
-											borderRadius: '4px',
-										}}
-									>
-										<span
-											className="flex flex-col items-center justify-center flex-1 min-h-0 min-w-0 overflow-hidden"
-											style={{
-												backgroundColor: '#F3F4F4',
-												border: '1px solid #0047BA',
-												borderRadius: '8px',
-												paddingLeft: '24px',
-												paddingRight: '24px',
-											}}
-										>
-											<span
-												style={{
-													fontFamily: "'Montserrat', sans-serif",
-													fontWeight: 400,
-													fontSize: '16px',
-													lineHeight: '18px',
-													color: '#0047BA',
-													textAlign: 'center',
-												}}
-											>
-												Get Started
-											</span>
-										</span>
-									</a>
-								</>
+								<NotivaButtonLink
+									href={getMainAppLoginUrl()}
+									variant="primary"
+									size="sm"
+								>
+									Login / Register
+								</NotivaButtonLink>
 							)}
 						</div>
 						<Button
@@ -340,7 +269,7 @@ export default function MainLayout({
 								</AccordionItem>
 
 								<AccordionItem value="business">
-									<AccordionTrigger>Business</AccordionTrigger>
+									<AccordionTrigger>For Business</AccordionTrigger>
 									<AccordionContent>
 										<ul className="grid gap-2">
 											<li><Link href="/use-cases/teams-startups" onClick={closeMobile} className="block rounded px-2 py-1.5 hover:bg-accent hover:text-accent-foreground">Teams & Startups</Link></li>
@@ -367,9 +296,9 @@ export default function MainLayout({
 
 							<div className="grid gap-2 pt-4 border-t">
 								{isAuthenticated ? (
-								<Button asChild>
-									<a href={getMainAppDashboardUrl()} onClick={closeMobile}>
-										<LayoutDashboard className="mr-2 size-4" />
+									<Button asChild>
+										<a href={getMainAppDashboardUrl()} onClick={closeMobile}>
+											<LayoutDashboard className="mr-2 size-4" />
 											Go to Dashboard
 										</a>
 									</Button>

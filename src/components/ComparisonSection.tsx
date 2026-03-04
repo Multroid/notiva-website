@@ -1,24 +1,7 @@
-'use client'
-
-import React from 'react'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
-import { 
-  FileSearch,
-  Mail,
-  Settings2,
-  MousePointerClick,
-  CalendarClock,
-  Check,
-  X,
-  Zap,
-  Clock,
-  ArrowRight
-} from 'lucide-react'
+import Image from 'next/image'
+import { NotivaButtonLink } from '@/components/ui/notiva-button'
 
 interface ComparisonRow {
-  icon: React.ElementType
   capability: string
   withNotiva: string | boolean
   withoutNotiva: string | boolean
@@ -26,212 +9,134 @@ interface ComparisonRow {
 
 const comparisonData: ComparisonRow[] = [
   {
-    icon: FileSearch,
     capability: 'Document deadline extraction',
     withNotiva: 'Automatic',
     withoutNotiva: 'Manual',
   },
   {
-    icon: Mail,
     capability: 'Automated Email and attachment scanning',
     withNotiva: true,
-    withoutNotiva: true,
+    withoutNotiva: false,
   },
   {
-    icon: Settings2,
     capability: 'Background processing',
     withNotiva: true,
-    withoutNotiva: true,
+    withoutNotiva: false,
   },
   {
-    icon: MousePointerClick,
-    capability: 'Manual input required',
-    withNotiva: false,
-    withoutNotiva: true,
+    capability: 'Automatic forecasting',
+    withNotiva: true,
+    withoutNotiva: false,
   },
   {
-    icon: CalendarClock,
     capability: 'Renewal and expiration tracking',
     withNotiva: true,
     withoutNotiva: false,
   },
 ]
 
-const ValueCell = ({ value, isNotiva }: { value: string | boolean; isNotiva: boolean }) => {
+function CheckIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="12" fill="#1AC200" fillOpacity="0.15" />
+      <path d="M7 12.5L10.5 16L17 9" stroke="#1AC200" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function CrossIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="12" fill="#F32735" fillOpacity="0.15" />
+      <path d="M8 8L16 16M16 8L8 16" stroke="#F32735" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function ValueCell({ value }: { value: string | boolean }) {
   if (typeof value === 'string') {
+    const isPositive = value === 'Automatic'
     return (
-      <span className={`font-semibold text-sm ${
-        isNotiva 
-          ? 'text-emerald-600 dark:text-emerald-400' 
-          : 'text-slate-500 dark:text-slate-400'
-      }`}>
+      <span className={`font-semibold text-[14px] ${isPositive ? 'text-[#1AC200]' : 'text-[#898C8E]'}`}>
         {value}
       </span>
     )
   }
-  
-  if (value) {
-    return (
-      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-        isNotiva 
-          ? 'bg-emerald-100 dark:bg-emerald-900/30' 
-          : 'bg-slate-100 dark:bg-slate-800'
-      }`}>
-        <Check className={`w-4 h-4 ${
-          isNotiva 
-            ? 'text-emerald-600 dark:text-emerald-400' 
-            : 'text-slate-500 dark:text-slate-400'
-        }`} strokeWidth={2.5} />
-      </div>
-    )
-  }
-  
-  return (
-    <div className="w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
-      <X className="w-4 h-4 text-red-500 dark:text-red-400" strokeWidth={2.5} />
-    </div>
-  )
+  return value ? <CheckIcon /> : <CrossIcon />
 }
 
 export default function ComparisonSection() {
   return (
-    <section 
-      id="comparison" 
-      className="relative bg-slate-50 dark:bg-slate-950 py-24 md:py-32 overflow-hidden"
+    <section
+      className="relative py-[100px] px-[16px] overflow-hidden"
+      style={{
+        background: 'radial-gradient(ellipse at 50% 0%, rgba(0,71,186,0.15) 0%, transparent 60%)',
+      }}
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.08),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.15),transparent_50%)]" />
-      
-      <div className="relative mx-auto max-w-5xl px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center space-y-4 mb-16"
-        >
-          <span className="inline-block text-sm font-semibold text-primary/80 uppercase tracking-wider">
-            Why choose automation
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            Automatic versus manual
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See what changes when you choose automation
-          </p>
-        </motion.div>
+      <div className="max-w-[900px] mx-auto flex flex-col items-center gap-[48px]">
+        {/* Title */}
+        <h2 className="text-[48px] font-semibold text-[#0047BA] text-center">
+          Automatic vs Manual
+        </h2>
 
-        {/* Comparison Table */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden"
-        >
-          {/* Table Header */}
-          <div className="px-6 py-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
-            <div className="flex items-start">
-              <div className="flex-1 text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Capability
+        {/* Comparison Card */}
+        <div className="w-full bg-[#E6EDF8] border-2 border-[#0047BA] rounded-[16px] p-[12px]">
+          <div className="bg-[#FAFAF8] border border-[#B0C6EA] rounded-[24px] p-[24px]">
+            {/* Header Row */}
+            <div className="grid grid-cols-[1fr_140px_140px] md:grid-cols-[1fr_180px_180px] items-center gap-[8px] pb-[16px] border-b border-[#F0EEE9]">
+              <span className="text-[16px] font-semibold text-[#101113]">Capabilities</span>
+              <div className="flex flex-col items-center gap-[4px]">
+                <Image
+                  src="/Logo/Notiva-Logo-Blue.svg"
+                  alt="Notiva"
+                  width={40}
+                  height={40}
+                />
+                <span className="text-[12px] font-medium text-[#101113]">With Notiva</span>
               </div>
-              
-              {/* With Notiva Header */}
-              <div className="w-[140px] md:w-[180px] text-center flex-shrink-0">
-                <div className="inline-flex items-center justify-center gap-2 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-primary" />
-                  </div>
-                </div>
-                <div className="font-semibold text-foreground text-sm">With Notiva</div>
-                <p className="text-xs text-muted-foreground mt-1 hidden md:block">
-                  Your important dates update themselves
-                </p>
-              </div>
-              
-              {/* Without Notiva Header */}
-              <div className="w-[140px] md:w-[180px] text-center flex-shrink-0">
-                <div className="inline-flex items-center justify-center gap-2 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-                  </div>
-                </div>
-                <div className="font-semibold text-slate-500 dark:text-slate-400 text-sm">Without Notiva</div>
-                <p className="text-xs text-muted-foreground mt-1 hidden md:block">
-                  Manual tracking is slow and unreliable
-                </p>
+              <div className="flex flex-col items-center gap-[4px]">
+                <Image
+                  src="/Logo/Notiva-Logo-Blue.svg"
+                  alt="Notiva"
+                  width={40}
+                  height={40}
+                  className="opacity-30 grayscale"
+                />
+                <span className="text-[12px] font-medium text-[#898C8E]">Without Notiva</span>
               </div>
             </div>
-          </div>
 
-          {/* Table Body */}
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
+            {/* Data Rows */}
             {comparisonData.map((row, index) => (
-              <motion.div
+              <div
                 key={row.capability}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center px-6 py-5 hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors"
+                className={`grid grid-cols-[1fr_140px_140px] md:grid-cols-[1fr_180px_180px] items-center gap-[8px] py-[16px] ${
+                  index % 2 === 0 ? 'bg-[#E6EDF8]' : ''
+                } rounded-l-[8px] rounded-r-[8px] px-[12px]`}
               >
-                {/* Capability */}
-                <div className="flex-1 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0">
-                    <row.icon className="w-5 h-5 text-slate-600 dark:text-slate-300" strokeWidth={1.5} />
-                  </div>
-                  <span className="text-sm md:text-base font-medium text-foreground">
-                    {row.capability}
-                  </span>
+                <span className="text-[14px] md:text-[16px] font-medium text-[#101113]">
+                  {row.capability}
+                </span>
+                <div className="flex items-center justify-center">
+                  <ValueCell value={row.withNotiva} />
                 </div>
-                
-                {/* With Notiva Value */}
-                <div className="w-[140px] md:w-[180px] flex items-center justify-center flex-shrink-0">
-                  <ValueCell value={row.withNotiva} isNotiva={true} />
+                <div className="flex items-center justify-center">
+                  <ValueCell value={row.withoutNotiva} />
                 </div>
-                
-                {/* Without Notiva Value */}
-                <div className="w-[140px] md:w-[180px] flex items-center justify-center flex-shrink-0">
-                  <ValueCell value={row.withoutNotiva} isNotiva={false} />
-                </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-4 mt-10"
+        {/* Bottom CTA */}
+        <NotivaButtonLink
+          href="/compare"
+          variant="secondary"
+          size="lg"
         >
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="rounded-full px-8 font-medium"
-            asChild
-          >
-            <Link href="/compare">
-              Compare in Detail
-            </Link>
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="lg"
-            className="rounded-full px-6 font-medium text-muted-foreground hover:text-foreground group"
-            asChild
-          >
-            <Link href="/features">
-              Learn More
-              <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
-        </motion.div>
+          Compare in detail
+        </NotivaButtonLink>
       </div>
     </section>
   )
 }
-

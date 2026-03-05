@@ -9,7 +9,7 @@ frontend:
         - echo "NPM version:"
         - npm --version
         - echo "Installing dependencies..."
-        - npm ci --legacy-peer-deps
+        - npm ci --legacy-peer-deps --include=dev
         - echo "✅ Dependencies installed"
     build:
       commands:

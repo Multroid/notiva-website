@@ -31,6 +31,12 @@ export async function middleware(request: NextRequest) {
     '/privacy',
     '/terms',
     '/license',
+    '/features',
+    '/faq',
+    '/changelog',
+    '/milestones',
+    '/brand',
+    '/business',
   ]
 
   // Check if the path matches any public route

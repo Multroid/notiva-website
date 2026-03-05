@@ -1,95 +1,83 @@
 import { BookOpen, Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { NotivaButtonLink } from "@/components/ui/notiva-button";
 
 export default function BlogPage() {
-	// Sample blog posts - in production, these would come from a CMS or database
 	const blogPosts = [
 		{
 			id: 1,
-			title: "10 Ways to Save Money on Subscriptions in 2025",
-			excerpt: "Discover proven strategies to reduce your subscription costs without sacrificing the services you love.",
-			category: "Tips & Guides",
-			date: "March 15, 2025",
+			title: "How Novi Reads Your Invoices So You Don\u2019t Have To",
+			excerpt: "A look at how Notiva\u2019s AI co-pilot scans invoices, detects patterns, and surfaces insights automatically.",
+			category: "Product",
+			date: "February 2026",
 			readTime: "5 min read",
-			image: "/blog/subscription-savings.jpg",
 		},
 		{
 			id: 2,
-			title: "The Hidden Cost of Forgotten Subscriptions",
-			excerpt: "How much are unused subscriptions really costing you? Our research reveals surprising statistics.",
-			category: "Industry Insights",
-			date: "March 10, 2025",
+			title: "5 Signs You\u2019re Overpaying on Subscriptions",
+			excerpt: "Hidden fees, forgotten trials, and renewal creep \u2014 here\u2019s how to spot them before they add up.",
+			category: "Tips & Guides",
+			date: "January 2026",
 			readTime: "7 min read",
-			image: "/blog/forgotten-subs.jpg",
 		},
 		{
 			id: 3,
-			title: "How to Audit Your Company's SaaS Stack",
-			excerpt: "A step-by-step guide for businesses to identify waste and optimize their software subscriptions.",
-			category: "Business",
-			date: "March 5, 2025",
-			readTime: "10 min read",
-			image: "/blog/saas-audit.jpg",
+			title: "Why We Built Notiva with GDPR at Its Core",
+			excerpt: "Privacy isn\u2019t a feature we added later. Here\u2019s how data protection shapes every decision we make.",
+			category: "Engineering",
+			date: "December 2025",
+			readTime: "6 min read",
 		},
 		{
 			id: 4,
-			title: "Subscription Management Best Practices for 2025",
-			excerpt: "Expert tips and industry best practices for staying on top of your recurring expenses.",
-			category: "Best Practices",
-			date: "February 28, 2025",
-			readTime: "6 min read",
-			image: "/blog/best-practices.jpg",
+			title: "The Real Cost of Forgotten Renewals",
+			excerpt: "Our research shows the average person loses \u20AC240/year on subscriptions they forgot about. Here\u2019s how to fix it.",
+			category: "Insights",
+			date: "November 2025",
+			readTime: "8 min read",
 		},
 		{
 			id: 5,
-			title: "Understanding Different Types of Subscription Models",
-			excerpt: "From freemium to enterprise - a comprehensive guide to subscription pricing models.",
-			category: "Education",
-			date: "February 20, 2025",
-			readTime: "8 min read",
-			image: "/blog/subscription-models.jpg",
-		},
-		{
-			id: 6,
-			title: "Notiva Product Update: Calendar Sync is Here",
-			excerpt: "We're excited to announce our new Google Calendar integration and other exciting features.",
-			category: "Product Updates",
-			date: "February 15, 2025",
+			title: "Notiva Launch: Your AI Financial Friend Is Here",
+			excerpt: "Introducing Notiva \u2014 the AI-native platform that tracks your accounts, invoices, subscriptions, and taxes in one place.",
+			category: "Announcements",
+			date: "September 2025",
 			readTime: "4 min read",
-			image: "/blog/product-update.jpg",
 		},
 	];
 
-	const categories = ["All", "Tips & Guides", "Industry Insights", "Business", "Best Practices", "Education", "Product Updates"];
+	const categories = ["All", "Product", "Tips & Guides", "Engineering", "Insights", "Announcements"];
 
 	return (
 		<div className="min-h-screen">
-			{/* Hero Section */}
-			<section className="py-20 text-center bg-muted/50">
+			{/* Hero */}
+			<section className="py-20 text-center">
 				<div className="container mx-auto px-4">
-					<div className="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/20 mb-6">
+					<div className="inline-flex items-center justify-center size-16 rounded-2xl bg-[#D9E3F5] text-[#0047BA] ring-1 ring-[#B0C6EA] mb-6">
 						<BookOpen className="size-8" />
 					</div>
-					<h1 className="text-4xl md:text-5xl font-bold mb-6">Notiva Blog</h1>
-					<p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-						Tips, guides, and insights to help you master subscription management and save money.
+					<h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#0047BA]">Notiva Blog</h1>
+					<p className="text-xl text-[var(--multroid-grey-dark)] max-w-2xl mx-auto">
+						Tips, product updates, and insights on managing your finances with AI.
 					</p>
 				</div>
 			</section>
 
 			{/* Category Filter */}
-			<section className="py-8 border-b bg-background sticky top-16 z-30">
+			<section className="py-6 border-b border-[#B0C6EA] sticky top-[84px] z-30 bg-white">
 				<div className="container mx-auto px-4">
 					<div className="flex flex-wrap gap-2 justify-center">
 						{categories.map((category) => (
-							<Button
+							<button
 								key={category}
-								variant={category === "All" ? "default" : "outline"}
-								size="sm"
+								className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${
+									category === "All"
+										? "bg-[#0047BA] text-[#F0EEE9]"
+										: "bg-[#D9E3F5] text-[#0047BA] border border-[#B0C6EA] hover:bg-[#B0C6EA]"
+								}`}
 							>
 								{category}
-							</Button>
+							</button>
 						))}
 					</div>
 				</div>
@@ -99,28 +87,28 @@ export default function BlogPage() {
 			<section className="py-12">
 				<div className="container mx-auto px-4">
 					<div className="max-w-5xl mx-auto">
-						<div className="bg-muted/50 rounded-lg overflow-hidden border">
+						<div className="rounded-[12px] overflow-hidden border border-[#B0C6EA] bg-white">
 							<div className="grid md:grid-cols-2 gap-0">
-								<div className="bg-muted flex items-center justify-center p-12">
-									<BookOpen className="size-32 text-muted-foreground/30" />
+								<div className="bg-[#D9E3F5] flex items-center justify-center p-12">
+									<BookOpen className="size-32 text-[#0047BA]/20" />
 								</div>
 								<div className="p-8 flex flex-col justify-center">
-									<span className="text-sm font-semibold text-primary mb-2">FEATURED POST</span>
+									<span className="text-xs font-semibold text-[#F05627] uppercase mb-2">Featured Post</span>
 									<h2 className="text-3xl font-bold mb-4">{blogPosts[0].title}</h2>
-									<p className="text-muted-foreground mb-6">{blogPosts[0].excerpt}</p>
-									<div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+									<p className="text-[var(--multroid-grey-dark)] mb-6">{blogPosts[0].excerpt}</p>
+									<div className="flex items-center gap-4 text-sm text-[var(--multroid-grey)] mb-6">
 										<span className="flex items-center gap-1">
 											<Calendar className="size-4" />
 											{blogPosts[0].date}
 										</span>
-										<span>•</span>
+										<span>&middot;</span>
 										<span>{blogPosts[0].readTime}</span>
 									</div>
-									<Button asChild>
-										<Link href={`/blog/${blogPosts[0].id}`}>
-											Read Article <ArrowRight className="ml-2 size-4" />
-										</Link>
-									</Button>
+									<div>
+										<NotivaButtonLink href={`/blog/${blogPosts[0].id}`} variant="primary" size="sm">
+											Read Article
+										</NotivaButtonLink>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -128,29 +116,29 @@ export default function BlogPage() {
 				</div>
 			</section>
 
-			{/* Blog Posts Grid */}
+			{/* Blog Grid */}
 			<section className="py-12">
 				<div className="container mx-auto px-4">
-					<h2 className="text-2xl font-bold mb-8">Latest Articles</h2>
-					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<h2 className="text-2xl font-bold mb-8 text-[#0047BA]">Latest Articles</h2>
+					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
 						{blogPosts.slice(1).map((post) => (
-							<article key={post.id} className="bg-background border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-								<div className="bg-muted h-48 flex items-center justify-center">
-									<BookOpen className="size-16 text-muted-foreground/30" />
+							<article key={post.id} className="rounded-[12px] border border-[#B0C6EA] bg-white overflow-hidden hover:shadow-lg transition-shadow">
+								<div className="bg-[#D9E3F5] h-48 flex items-center justify-center">
+									<BookOpen className="size-16 text-[#0047BA]/20" />
 								</div>
 								<div className="p-6">
-									<span className="text-xs font-semibold text-primary uppercase">{post.category}</span>
+									<span className="text-xs font-semibold text-[#F05627] uppercase">{post.category}</span>
 									<h3 className="text-xl font-bold mt-2 mb-3 line-clamp-2">{post.title}</h3>
-									<p className="text-muted-foreground text-sm mb-4 line-clamp-3">{post.excerpt}</p>
-									<div className="flex items-center gap-3 text-xs text-muted-foreground mb-4">
+									<p className="text-[var(--multroid-grey-dark)] text-sm mb-4 line-clamp-3">{post.excerpt}</p>
+									<div className="flex items-center gap-3 text-xs text-[var(--multroid-grey)] mb-4">
 										<span className="flex items-center gap-1">
 											<Calendar className="size-3" />
 											{post.date}
 										</span>
-										<span>•</span>
+										<span>&middot;</span>
 										<span>{post.readTime}</span>
 									</div>
-									<Link href={`/blog/${post.id}`} className="text-sm font-semibold text-primary hover:underline inline-flex items-center gap-1">
+									<Link href={`/blog/${post.id}`} className="text-sm font-semibold text-[#0047BA] hover:underline inline-flex items-center gap-1">
 										Read More <ArrowRight className="size-4" />
 									</Link>
 								</div>
@@ -160,25 +148,25 @@ export default function BlogPage() {
 				</div>
 			</section>
 
-			{/* Newsletter Signup */}
-			<section className="py-20 bg-primary text-primary-foreground">
+			{/* Newsletter */}
+			<section className="py-20 bg-[#0047BA]">
 				<div className="container mx-auto px-4">
 					<div className="max-w-2xl mx-auto text-center">
-						<h2 className="text-3xl font-bold mb-4">Never Miss an Update</h2>
-						<p className="text-lg opacity-90 mb-8">
-							Subscribe to our newsletter for the latest tips, guides, and product updates delivered to your inbox.
+						<h2 className="text-3xl font-bold mb-4 text-[#F0EEE9]">Never Miss an Update</h2>
+						<p className="text-lg text-[#B0C6EA] mb-8">
+							Subscribe for the latest tips, guides, and product updates delivered to your inbox.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
 							<input
 								type="email"
 								placeholder="Enter your email"
-								className="flex-1 px-4 py-3 rounded-md text-foreground"
+								className="flex-1 px-4 py-3 rounded-[8px] text-sm bg-[#D9E3F5] border border-[#B0C6EA] text-[#0047BA] placeholder:text-[#0047BA]/50"
 							/>
-							<Button variant="secondary" size="lg">
+							<NotivaButtonLink href="#" variant="important" size="lg">
 								Subscribe
-							</Button>
+							</NotivaButtonLink>
 						</div>
-						<p className="text-sm opacity-75 mt-4">No spam. Unsubscribe anytime.</p>
+						<p className="text-sm text-[#B0C6EA]/70 mt-4">No spam. Unsubscribe anytime.</p>
 					</div>
 				</div>
 			</section>
@@ -186,28 +174,22 @@ export default function BlogPage() {
 			{/* Topics */}
 			<section className="py-20">
 				<div className="container mx-auto px-4">
-					<h2 className="text-3xl font-bold text-center mb-12">Explore Topics</h2>
+					<h2 className="text-3xl font-bold text-center mb-12 text-[#0047BA]">Explore Topics</h2>
 					<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-						<Link href="/blog/category/tips" className="bg-muted/50 rounded-lg p-6 hover:bg-muted transition-colors">
-							<h3 className="font-semibold mb-2">Tips & Tricks</h3>
-							<p className="text-sm text-muted-foreground">Practical advice for managing subscriptions</p>
-						</Link>
-						<Link href="/blog/category/business" className="bg-muted/50 rounded-lg p-6 hover:bg-muted transition-colors">
-							<h3 className="font-semibold mb-2">Business</h3>
-							<p className="text-sm text-muted-foreground">SaaS management for companies</p>
-						</Link>
-						<Link href="/blog/category/guides" className="bg-muted/50 rounded-lg p-6 hover:bg-muted transition-colors">
-							<h3 className="font-semibold mb-2">How-To Guides</h3>
-							<p className="text-sm text-muted-foreground">Step-by-step tutorials</p>
-						</Link>
-						<Link href="/blog/category/updates" className="bg-muted/50 rounded-lg p-6 hover:bg-muted transition-colors">
-							<h3 className="font-semibold mb-2">Product Updates</h3>
-							<p className="text-sm text-muted-foreground">Latest features and improvements</p>
-						</Link>
+						{[
+							{ title: "Tips & Tricks", desc: "Practical advice for managing finances" },
+							{ title: "Product Updates", desc: "Latest Notiva features and improvements" },
+							{ title: "Engineering", desc: "How we build Notiva under the hood" },
+							{ title: "Insights", desc: "Data and research on financial habits" },
+						].map((topic) => (
+							<div key={topic.title} className="rounded-[12px] p-6 border border-[#B0C6EA] bg-white hover:bg-[#FAFAF8] transition-colors">
+								<h3 className="font-semibold mb-2">{topic.title}</h3>
+								<p className="text-sm text-[var(--multroid-grey-dark)]">{topic.desc}</p>
+							</div>
+						))}
 					</div>
 				</div>
 			</section>
 		</div>
 	);
 }
-

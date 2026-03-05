@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { CheckIcon as Check } from "@heroicons/react/24/solid";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 

@@ -68,22 +68,19 @@ function ValueCell({ value }: { value: string | boolean }) {
 export default function ComparisonSection() {
   return (
     <section
-      className="relative py-[100px] px-[16px] overflow-hidden"
-      style={{
-        background: 'radial-gradient(ellipse at 50% 0%, rgba(0,71,186,0.15) 0%, transparent 60%)',
-      }}
+      className="relative py-[60px] lg:py-[100px] px-[16px] lg:px-[48px] overflow-hidden"
     >
       <div className="max-w-[900px] mx-auto flex flex-col items-center gap-[48px]">
         {/* Title */}
-        <h2 className="text-[48px] font-semibold text-[#0047BA] text-center">
+        <h2 className="text-[28px] lg:text-[48px] font-semibold text-[#0047BA] text-center">
           Automatic vs Manual
         </h2>
 
         {/* Comparison Card */}
-        <div className="w-full bg-[#E6EDF8] border-2 border-[#0047BA] rounded-[16px] p-[12px]">
-          <div className="bg-[#FAFAF8] border border-[#B0C6EA] rounded-[24px] p-[24px]">
+        <div className="w-full bg-[#E6EDF8] border-2 border-[#0047BA] rounded-[16px] p-[8px] lg:p-[12px]">
+          <div className="bg-[#FAFAF8] border border-[#B0C6EA] rounded-[16px] lg:rounded-[24px] p-[12px] lg:p-[24px]">
             {/* Header Row */}
-            <div className="grid grid-cols-[1fr_140px_140px] md:grid-cols-[1fr_180px_180px] items-center gap-[8px] pb-[16px] border-b border-[#F0EEE9]">
+            <div className="grid grid-cols-[1fr_90px_90px] sm:grid-cols-[1fr_140px_140px] lg:grid-cols-[1fr_180px_180px] items-center gap-[8px] pb-[16px] border-b border-[#F0EEE9]">
               <span className="text-[16px] font-semibold text-[#101113]">Capabilities</span>
               <div className="flex flex-col items-center gap-[4px]">
                 <Image
@@ -110,11 +107,11 @@ export default function ComparisonSection() {
             {comparisonData.map((row, index) => (
               <div
                 key={row.capability}
-                className={`grid grid-cols-[1fr_140px_140px] md:grid-cols-[1fr_180px_180px] items-center gap-[8px] py-[16px] ${
+                className={`grid grid-cols-[1fr_90px_90px] sm:grid-cols-[1fr_140px_140px] lg:grid-cols-[1fr_180px_180px] items-center gap-[8px] py-[16px] ${
                   index % 2 === 0 ? 'bg-[#E6EDF8]' : ''
                 } rounded-l-[8px] rounded-r-[8px] px-[12px]`}
               >
-                <span className="text-[14px] md:text-[16px] font-medium text-[#101113]">
+                <span className="text-[12px] sm:text-[14px] lg:text-[16px] font-medium text-[#101113]">
                   {row.capability}
                 </span>
                 <div className="flex items-center justify-center">

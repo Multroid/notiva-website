@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Camera, Loader2, Trash2, Upload } from "lucide-react"
+import { CameraIcon, ArrowPathIcon, TrashIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
 
@@ -192,14 +192,14 @@ export function AvatarUpload({
             className="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex items-center justify-center"
             onClick={() => fileInputRef.current?.click()}
           >
-            <Camera className={cn("text-white", iconSizes[size])} />
+            <CameraIcon className={cn("text-white", iconSizes[size])} />
           </div>
         )}
 
         {/* Loading overlay */}
         {(uploading || deleting) && (
           <div className="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center">
-            <Loader2 className={cn("text-white animate-spin", iconSizes[size])} />
+            <ArrowPathIcon className={cn("text-white animate-spin", iconSizes[size])} />
           </div>
         )}
       </div>
@@ -214,12 +214,12 @@ export function AvatarUpload({
         >
           {uploading ? (
             <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              <ArrowPathIcon className="h-4 w-4 mr-2 animate-spin" />
               Uploading...
             </>
           ) : (
             <>
-              <Upload className="h-4 w-4 mr-2" />
+              <ArrowUpTrayIcon className="h-4 w-4 mr-2" />
               {avatarUrl ? "Change" : "Upload"}
             </>
           )}
@@ -235,12 +235,12 @@ export function AvatarUpload({
           >
             {deleting ? (
               <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                <ArrowPathIcon className="h-4 w-4 mr-2 animate-spin" />
                 Removing...
               </>
             ) : (
               <>
-                <Trash2 className="h-4 w-4 mr-2" />
+                <TrashIcon className="h-4 w-4 mr-2" />
                 Remove
               </>
             )}

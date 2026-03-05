@@ -1,4 +1,4 @@
-import { Rocket, Sparkles, Bug, Wrench } from "lucide-react";
+import { RocketLaunchIcon as Rocket, SparklesIcon as Sparkles, BugAntIcon as Bug, WrenchIcon as Wrench } from "@heroicons/react/24/solid";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 

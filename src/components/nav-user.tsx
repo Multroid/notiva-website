@@ -2,17 +2,17 @@
 
 import * as React from "react"
 import {
-  Bell,
-  ChevronRight,
-  Home,
-  LogOut,
-  Monitor,
-  Moon,
-  Sparkles,
-  Sun,
-  UserPlus,
-  Loader2,
-} from "lucide-react"
+  BellIcon as Bell,
+  ChevronRightIcon as ChevronRight,
+  HomeIcon as Home,
+  ArrowRightStartOnRectangleIcon as LogOut,
+  ComputerDesktopIcon as Monitor,
+  MoonIcon as Moon,
+  SparklesIcon as Sparkles,
+  SunIcon as Sun,
+  UserPlusIcon as UserPlus,
+  ArrowPathIcon as Loader2,
+} from "@heroicons/react/24/solid"
 import { signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"

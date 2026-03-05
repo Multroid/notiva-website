@@ -1,4 +1,4 @@
-import { FileText, Download, Mail, Image as ImageIcon } from "lucide-react";
+import { DocumentTextIcon as FileText, ArrowDownTrayIcon as Download, EnvelopeIcon as Mail, PhotoIcon as ImageIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";

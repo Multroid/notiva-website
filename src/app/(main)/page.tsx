@@ -10,15 +10,8 @@ import Footer from '@/components/Footer'
 export default function Home() {
     return (
         <>
-            <div
-                style={{
-                    background:
-                        'radial-gradient(ellipse at 50% 50%, rgba(0,71,186,0.8) 0%, rgba(128,163,221,0.4) 25%, rgba(255,255,255,0) 55%)',
-                }}
-            >
-                <HeroSection />
-                <MeetNoviSection />
-            </div>
+            <HeroSection />
+            <MeetNoviSection />
             <FeaturesGridSection />
             <HowNotivaWorksSection />
             <ComparisonSection />

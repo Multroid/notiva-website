@@ -1,13 +1,13 @@
 import {
-	Brain,
-	Bell,
-	FileText,
-	CalendarDays,
-	BarChart3,
-	Shield,
-	Plug,
-	Receipt,
-} from "lucide-react";
+  LightBulbIcon as Brain,
+  BellIcon as Bell,
+  DocumentTextIcon as FileText,
+  CalendarDaysIcon as CalendarDays,
+  ChartBarIcon as BarChart3,
+  ShieldCheckIcon as Shield,
+  LinkIcon as Plug,
+  ReceiptPercentIcon as Receipt,
+} from "@heroicons/react/24/solid";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 

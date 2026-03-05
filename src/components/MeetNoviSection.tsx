@@ -63,16 +63,9 @@ export default function MeetNoviSection() {
   ]
 
   return (
-    <section className="px-6 lg:px-[111px] py-[80px] lg:py-[120px]">
+    <section className="px-[16px] lg:px-[48px] py-[60px] lg:py-[120px]">
       <div className="mx-auto max-w-6xl flex flex-col lg:flex-row items-center gap-[32px]">
-        {/* Left - Novi Animation */}
-        <div className="flex items-center justify-center flex-shrink-0">
-          <div style={{ width: '400px', height: '400px' }}>
-            <RiveComponent style={{ width: '100%', height: '100%', display: 'block' }} />
-          </div>
-        </div>
-
-        {/* Right - Content */}
+        {/* Content — first in DOM, left on desktop */}
         <div className="flex flex-col gap-[40px] p-[16px] max-w-[514px] text-center lg:text-left">
           <div>
             <h2 className="text-[44px] leading-[48px]">
@@ -124,6 +117,13 @@ export default function MeetNoviSection() {
             >
               See examples
             </NotivaButtonLink>
+          </div>
+        </div>
+
+        {/* Novi Animation — second in DOM, right on desktop */}
+        <div className="flex items-center justify-center flex-shrink-0 w-full lg:w-auto">
+          <div className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]">
+            <RiveComponent style={{ width: '100%', height: '100%', display: 'block' }} />
           </div>
         </div>
       </div>

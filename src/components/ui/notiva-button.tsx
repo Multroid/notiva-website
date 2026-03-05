@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
-import { ArrowRight } from "lucide-react"
+import { ArrowRightIcon } from "@heroicons/react/24/solid"
 
 export interface NotivaButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -58,7 +58,7 @@ const NotivaButton = React.forwardRef<HTMLButtonElement, NotivaButtonProps>(
         >
           <span className="notiva-btn-cta-text">{ctaText || children}</span>
           <span className="notiva-btn-cta-arrow">
-            <ArrowRight />
+            <ArrowRightIcon />
           </span>
         </Comp>
       )
@@ -122,7 +122,7 @@ const NotivaButtonLink = React.forwardRef<HTMLAnchorElement, NotivaButtonLinkPro
         >
           <span className="notiva-btn-cta-text">{ctaText || children}</span>
           <span className="notiva-btn-cta-arrow">
-            <ArrowRight />
+            <ArrowRightIcon />
           </span>
         </a>
       )

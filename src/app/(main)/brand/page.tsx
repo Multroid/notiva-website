@@ -1,4 +1,4 @@
-import { Palette, Download, FileText, Type } from "lucide-react";
+import { SwatchIcon as Palette, ArrowDownTrayIcon as Download, DocumentTextIcon as FileText, LanguageIcon as Type } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 

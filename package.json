@@ -15,6 +15,7 @@
     "export:env": "bash scripts/export-env-vars.sh"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.16.2",
     "@radix-ui/react-accordion": "^1.2.12",

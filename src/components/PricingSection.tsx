@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { CheckIcon as Check } from '@heroicons/react/24/solid'
 import { NotivaButtonLink } from '@/components/ui/notiva-button'
 import { getMainAppRegisterUrl } from '@/lib/app-url'
 
@@ -43,19 +43,19 @@ const plans = [
 export default function PricingSection() {
   return (
     <section
-      className="py-[124px] px-[16px] md:px-[190px]"
+      className="py-[60px] xl:py-[124px] px-[16px] lg:px-[48px]"
       style={{
         borderTop: '1px dashed rgba(0,71,186,0.5)',
         borderBottom: '1px dashed rgba(0,71,186,0.5)',
       }}
     >
-      <div className="max-w-5xl mx-auto flex flex-col items-center gap-[48px]">
+      <div className="max-w-[900px] mx-auto flex flex-col items-center gap-[48px]">
         {/* Header */}
         <div className="text-center flex flex-col gap-[16px]">
           <span className="text-[14px] font-normal uppercase text-[#54545E]" style={{ letterSpacing: '0.7px' }}>
             PLANS
           </span>
-          <h2 className="text-[60px] font-semibold text-[#09090B]" style={{ letterSpacing: '-0.5px', lineHeight: '60px' }}>
+          <h2 className="text-[36px] lg:text-[60px] font-semibold text-[#09090B]" style={{ letterSpacing: '-0.5px', lineHeight: '1' }}>
             Simple pricing
           </h2>
           <p className="text-[20px] font-normal text-[#54545E]">
@@ -64,11 +64,11 @@ export default function PricingSection() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-[24px] w-full">
+        <div className="grid lg:grid-cols-2 gap-[24px] w-full">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className="relative flex flex-col p-[33px] bg-[#FEFDFD] border-2 border-[#B0C6EA] rounded-[16px]"
+              className="relative flex flex-col p-[20px] lg:p-[33px] bg-[#FEFDFD] border-2 border-[#B0C6EA] rounded-[16px] max-w-[440px] mx-auto w-full"
               style={{
                 boxShadow: '0px 0px 19.6px -1px rgba(0,71,186,0.2)',
               }}
@@ -76,7 +76,7 @@ export default function PricingSection() {
               {/* Popular Badge */}
               {plan.popular && (
                 <div className="absolute top-[24px] right-[24px]">
-                  <span className="bg-[#F05627] rounded-[16px] px-[16px] py-[8px] text-[#F0EEE9] text-[20px] font-medium">
+                  <span className="bg-[#F05627] rounded-[16px] px-[12px] py-[6px] lg:px-[16px] lg:py-[8px] text-[#F0EEE9] text-[14px] lg:text-[20px] font-medium">
                     Popular
                   </span>
                 </div>

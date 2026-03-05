@@ -1,4 +1,4 @@
-import { HelpCircle, ChevronDown } from "lucide-react";
+import { QuestionMarkCircleIcon as HelpCircle, ChevronDownIcon as ChevronDown } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 

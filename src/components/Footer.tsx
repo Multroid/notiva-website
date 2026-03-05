@@ -35,7 +35,7 @@ const linkColumns = [
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#0047BA] rounded-tl-[40px] rounded-tr-[40px] pt-[32px] px-[24px]"
+    <footer className="w-full bg-[#0047BA] rounded-tl-[24px] rounded-tr-[24px] lg:rounded-tl-[40px] lg:rounded-tr-[40px] pt-[32px] px-[16px] lg:px-[48px]"
       style={{
         boxShadow: '0px -27px 50px 0px rgba(0,71,186,0.35)',
       }}
@@ -50,7 +50,7 @@ export default function Footer() {
             width={40}
             height={40}
           />
-          <span className="text-[40px] font-black text-[#FEFDFD]">
+          <span className="text-[28px] lg:text-[40px] font-black text-[#FEFDFD]">
             Notiva
           </span>
         </div>
@@ -63,8 +63,8 @@ export default function Footer() {
         </div>
 
         {/* Stay Updated CTA */}
-        <div className="flex flex-col gap-[18px] px-[32px] max-w-[431px]">
-          <h3 className="text-[32px] font-semibold text-[#FEFDFD]">Stay Updated</h3>
+        <div className="flex flex-col gap-[18px] px-0 lg:px-[32px] max-w-[431px]">
+          <h3 className="text-[24px] lg:text-[32px] font-semibold text-[#FEFDFD]">Stay Updated</h3>
           <p className="text-[16px] font-medium text-[#FEFDFD]">
             Get the latest news and updates from Notiva.
           </p>
@@ -77,10 +77,10 @@ export default function Footer() {
       </div>
 
       {/* Middle Section - Link Columns */}
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-[40px] px-[40px] py-[60px] border-t border-white/10">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-3 gap-[24px] lg:gap-[40px] px-[16px] lg:px-[40px] py-[40px] lg:py-[60px] border-t border-white/10">
         {linkColumns.map((col) => (
           <div key={col.title}>
-            <h4 className="text-[32px] font-semibold text-[#FEFDFD] mb-[24px]">
+            <h4 className="text-[20px] lg:text-[32px] font-semibold text-[#FEFDFD] mb-[16px] lg:mb-[24px]">
               {col.title}
             </h4>
             <ul className="flex flex-col gap-[16px]">
@@ -102,7 +102,7 @@ export default function Footer() {
       {/* Bottom - Giant Wordmark */}
       <div className="flex flex-col items-center gap-[24px] py-[40px]">
         <h2
-          className="text-[120px] md:text-[180px] lg:text-[228px] font-black text-[#F0EEE9] uppercase text-center leading-none select-none"
+          className="text-[60px] sm:text-[100px] md:text-[180px] lg:text-[228px] font-black text-[#F0EEE9] uppercase text-center leading-none select-none"
           style={{ opacity: 0.15 }}
         >
           NOTIVA

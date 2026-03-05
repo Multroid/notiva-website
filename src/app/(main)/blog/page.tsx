@@ -1,4 +1,4 @@
-import { BookOpen, Calendar, ArrowRight } from "lucide-react";
+import { BookOpenIcon as BookOpen, CalendarIcon as Calendar, ArrowRightIcon as ArrowRight } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 

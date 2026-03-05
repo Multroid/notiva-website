@@ -1,9 +1,9 @@
 import {
-  CloudUpload,
-  Sparkles,
-  Bell,
-  ShieldCheck,
-} from 'lucide-react'
+  CloudArrowUpIcon as CloudUpload,
+  SparklesIcon as Sparkles,
+  BellIcon as Bell,
+  ShieldCheckIcon as ShieldCheck,
+} from '@heroicons/react/24/solid'
 import { NotivaButtonLink } from '@/components/ui/notiva-button'
 import { getMainAppRegisterUrl } from '@/lib/app-url'
 
@@ -34,7 +34,7 @@ export default function HowNotivaWorksSection() {
   return (
     <section
       id="how-it-works"
-      className="relative py-[79px] px-[48px] overflow-hidden"
+      className="relative py-[60px] lg:py-[79px] px-[16px] lg:px-[48px] overflow-hidden"
       style={{
         background: 'radial-gradient(circle at 50% 50%, rgba(0,71,186,0.3) 0%, transparent 70%)',
       }}
@@ -49,11 +49,11 @@ export default function HowNotivaWorksSection() {
             HOW IT WORKS
           </span>
 
-          <h2 className="text-[44px] font-bold leading-[48px] text-[#101113]">
+          <h2 className="text-[28px] lg:text-[44px] font-bold leading-[34px] lg:leading-[48px] text-[#101113]">
             How Notiva works
           </h2>
 
-          <p className="text-[20px] font-normal leading-[25px] text-[#67696B] max-w-md">
+          <p className="text-[16px] lg:text-[20px] font-normal leading-[22px] lg:leading-[25px] text-[#67696B] max-w-md">
             From setup to peace of mind in just a few simple steps. Let Notiva handle the tracking while you focus on what matters.
           </p>
 

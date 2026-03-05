@@ -1,12 +1,12 @@
 import {
-	Building,
-	Users,
-	ShieldCheck,
-	BarChart3,
-	Plug,
-	Lock,
-	ArrowRight,
-} from "lucide-react";
+  BuildingOfficeIcon as Building,
+  UserGroupIcon as Users,
+  ShieldCheckIcon as ShieldCheck,
+  ChartBarIcon as BarChart3,
+  LinkIcon as Plug,
+  LockClosedIcon as Lock,
+  ArrowRightIcon as ArrowRight,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 

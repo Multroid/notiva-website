@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Loader2, CheckCircle2, XCircle, Mail } from "lucide-react"
+import { ArrowPathIcon as Loader2, CheckCircleIcon as CheckCircle2, XCircleIcon as XCircle, EnvelopeIcon as Mail } from "@heroicons/react/24/solid"
 import { toast } from "sonner"
 
 type VerificationStatus = "verifying" | "success" | "error"

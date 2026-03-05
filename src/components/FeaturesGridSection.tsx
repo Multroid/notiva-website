@@ -1,13 +1,17 @@
+'use client'
+
+import { useState } from 'react'
 import {
-  Lock,
-  Smile,
-  Sparkles,
-  PieChart,
-  BarChart2,
-  Calendar,
-  RefreshCw,
-  DollarSign,
-} from 'lucide-react'
+  LockClosedIcon as Lock,
+  FaceSmileIcon as Smile,
+  SparklesIcon as Sparkles,
+  ChartPieIcon as PieChart,
+  ChartBarIcon as BarChart2,
+  CalendarIcon as Calendar,
+  ArrowPathIcon as RefreshCw,
+  CurrencyDollarIcon as DollarSign,
+  ChevronDownIcon as ChevronDown,
+} from '@heroicons/react/24/solid'
 import { NotivaButtonLink } from '@/components/ui/notiva-button'
 import { getMainAppRegisterUrl } from '@/lib/app-url'
 
@@ -73,27 +77,38 @@ const features: FeatureCard[][] = [
 ]
 
 function FeatureCardComponent({ card }: { card: FeatureCard }) {
+  const [expanded, setExpanded] = useState(false)
   const isWide = card.colSpan === 2
 
   return (
     <div
-      className={`bg-[#FEFDFD] border-2 border-[#0047BA] rounded-[16px] p-[16px] flex ${
-        isWide ? 'col-span-1 md:col-span-2 flex-row gap-[16px]' : 'flex-col gap-[12px]'
+      className={`bg-[#FEFDFD] border-2 border-[#0047BA] rounded-[16px] p-[16px] cursor-pointer transition-all ${
+        isWide ? 'lg:col-span-2' : ''
       }`}
       style={{
         boxShadow: '0px 4px 15px 0px rgba(0,0,0,0.2)',
       }}
+      onClick={() => setExpanded((v) => !v)}
     >
-      {isWide && (
-        <div className="hidden md:flex w-[200px] flex-shrink-0 bg-[#B0C6EA] rounded-[16px] items-center justify-center">
-          <div className="text-[#0047BA] text-[14px] font-medium">App Preview</div>
-        </div>
-      )}
-      <div className="flex flex-col gap-[12px] flex-1">
-        {card.icon}
-        <h3 className="text-[22px] font-semibold leading-[28px] text-[#101113]">
+      {/* Mobile: icon + title vertical / lg+: icon + title horizontal */}
+      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[12px]">
+        <div className="flex-shrink-0">{card.icon}</div>
+        <h3 className="text-[18px] lg:text-[18px] xl:text-[22px] font-semibold leading-[24px] xl:leading-[28px] text-[#101113] flex-1">
           {card.title}
         </h3>
+        <ChevronDown
+          className={`size-[20px] text-[#0047BA] flex-shrink-0 transition-transform duration-200 ${
+            expanded ? 'rotate-180' : ''
+          }`}
+        />
+      </div>
+
+      {/* Expandable body */}
+      <div
+        className={`overflow-hidden transition-all duration-200 ${
+          expanded ? 'max-h-[200px] opacity-100 mt-[12px]' : 'max-h-0 opacity-0'
+        }`}
+      >
         <p className="text-[16px] font-normal leading-[22px] text-[#898C8E]">
           {card.body}
         </p>
@@ -104,24 +119,24 @@ function FeatureCardComponent({ card }: { card: FeatureCard }) {
 
 export default function FeaturesGridSection() {
   return (
-    <section className="py-[80px] px-[16px]" style={{ background: 'linear-gradient(to bottom, #d4e4ff, rgba(176,198,234,0))' }}>
-      <div className="max-w-[1360px] mx-auto flex flex-col items-center gap-[60px]">
+    <section className="py-[60px] xl:py-[80px] px-[16px] lg:px-[48px]" style={{ background: 'linear-gradient(to bottom, #d4e4ff, rgba(176,198,234,0))' }}>
+      <div className="max-w-[1360px] mx-auto flex flex-col items-center gap-[40px] xl:gap-[60px]">
         {/* Header */}
         <div className="text-center max-w-[900px] px-4 flex flex-col gap-[24px]">
-          <h2 className="text-[44px] font-bold leading-[48px] text-[#0047BA]">
+          <h2 className="text-[28px] lg:text-[36px] xl:text-[44px] font-bold leading-[34px] lg:leading-[42px] xl:leading-[48px] text-[#0047BA]">
             The Features you will love...
           </h2>
-          <p className="text-[20px] font-normal leading-[25px] text-[#001238]">
+          <p className="text-[16px] xl:text-[20px] font-normal leading-[22px] xl:leading-[25px] text-[#001238]">
             Notiva combines open banking, AI-native intelligence, and German financial expertise — so your money works while you focus on everything else.
           </p>
         </div>
 
         {/* Bento Grid */}
-        <div className="w-full flex flex-col gap-[24px]">
+        <div className="w-full flex flex-col gap-[16px] xl:gap-[24px]">
           {features.map((row, rowIndex) => (
             <div
               key={rowIndex}
-              className="grid grid-cols-1 md:grid-cols-4 gap-[24px]"
+              className="grid grid-cols-1 lg:grid-cols-4 gap-[16px] xl:gap-[24px]"
             >
               {row.map((card, cardIndex) => (
                 <FeatureCardComponent key={cardIndex} card={card} />
@@ -140,11 +155,11 @@ export default function FeaturesGridSection() {
             Get Started
           </NotivaButtonLink>
           <NotivaButtonLink
-            href="#how-it-works"
+            href="/features"
             variant="secondary"
             size="lg"
           >
-            See how NOVI works
+            See all the features
           </NotivaButtonLink>
         </div>
       </div>

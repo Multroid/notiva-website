@@ -1,4 +1,4 @@
-import { HelpCircle, BookOpen, MessageSquare, Video, Search, FileQuestion, Zap, Users, Shield } from "lucide-react";
+import { QuestionMarkCircleIcon as HelpCircle, BookOpenIcon as BookOpen, ChatBubbleLeftRightIcon as MessageSquare, VideoCameraIcon as Video, MagnifyingGlassIcon as Search, DocumentMagnifyingGlassIcon as FileQuestion, BoltIcon as Zap, UserGroupIcon as Users, ShieldCheckIcon as Shield } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { Input } from "@/components/ui/input";

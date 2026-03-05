@@ -1,4 +1,4 @@
-import { Target, Users, Zap, Globe, Heart, Building, Shield } from "lucide-react";
+import { ViewfinderCircleIcon as Target, UserGroupIcon as Users, BoltIcon as Zap, GlobeAltIcon as Globe, HeartIcon as Heart, BuildingOfficeIcon as Building, ShieldCheckIcon as Shield } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";

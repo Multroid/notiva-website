@@ -1,4 +1,4 @@
-import { Flag, Rocket, Users, Brain, Building, Globe } from "lucide-react";
+import { FlagIcon as Flag, RocketLaunchIcon as Rocket, UserGroupIcon as Users, LightBulbIcon as Brain, BuildingOfficeIcon as Building, GlobeAltIcon as Globe } from "@heroicons/react/24/solid";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 

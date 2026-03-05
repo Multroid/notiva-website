@@ -1,4 +1,4 @@
-import { Mail, MessageSquare, Phone, MapPin, Send, Clock } from "lucide-react";
+import { EnvelopeIcon as Mail, ChatBubbleLeftRightIcon as MessageSquare, PhoneIcon as Phone, MapPinIcon as MapPin, PaperAirplaneIcon as Send, ClockIcon as Clock } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { Input } from "@/components/ui/input";

@@ -1,6 +1,9 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRightIcon as ChevronRight } from "@heroicons/react/24/solid"
+import React from "react"
+
+type HeroIcon = React.ForwardRefExoticComponent<React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> & { title?: string; titleId?: string } & React.RefAttributes<SVGSVGElement>>
 import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -31,7 +34,7 @@ export function NavMainCategorized({
     items: {
       title: string
       url: string
-      icon: LucideIcon
+      icon: HeroIcon
       isActive?: boolean
       disabled?: boolean
       items?: {

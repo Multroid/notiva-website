@@ -9,22 +9,22 @@ import { NotivaButtonLink } from "@/components/ui/notiva-button";
 import { getMainAppLoginUrl, getMainAppRegisterUrl, getMainAppDashboardUrl } from "@/lib/app-url";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
-	Menu,
-	X,
-	ChevronDown,
-	LayoutDashboard,
-	Sparkles,
-	Tag,
-	Building,
-	FileText,
-	BookOpen,
-	HelpCircle,
-	Mail,
-	Palette,
-	Rocket,
-	Flag,
-	MessageCircleQuestion,
-} from "lucide-react";
+  Bars3Icon as Menu,
+  XMarkIcon as X,
+  ChevronDownIcon as ChevronDown,
+  Squares2X2Icon as LayoutDashboard,
+  SparklesIcon as Sparkles,
+  TagIcon as Tag,
+  BuildingOfficeIcon as Building,
+  DocumentTextIcon as FileText,
+  BookOpenIcon as BookOpen,
+  QuestionMarkCircleIcon as HelpCircle,
+  EnvelopeIcon as Mail,
+  SwatchIcon as Palette,
+  RocketLaunchIcon as Rocket,
+  FlagIcon as Flag,
+  ChatBubbleLeftEllipsisIcon as MessageCircleQuestion,
+} from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -42,7 +42,7 @@ export default function MainLayout({
 	return (
 		<>
 			<header
-				className="w-full sticky top-0 z-40 px-6"
+				className="w-full sticky top-0 z-40 px-3 md:px-6"
 				style={{
 					height: '84px',
 					backdropFilter: 'blur(6px)',
@@ -367,7 +367,7 @@ export default function MainLayout({
 					</div>
 				)}
 			</header>
-			<main>{children}</main>
+			<main className="overflow-x-hidden">{children}</main>
 		</>
 	);
 }

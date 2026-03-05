@@ -1,7 +1,7 @@
 "use client"
 
 import { useTheme } from "next-themes"
-import { Moon, Sun } from "lucide-react"
+import { MoonIcon as Moon, SunIcon as Sun } from "@heroicons/react/24/solid"
 import { Button } from "@/components/ui/button"
 
 export function ThemeToggle() {

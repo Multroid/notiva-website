@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { signOut, useSession } from "next-auth/react"
 import {
-    Settings,
-    LayoutDashboard,
-    LogOut,
-} from "lucide-react"
+    Cog6ToothIcon as Settings,
+    Squares2X2Icon as LayoutDashboard,
+    ArrowRightStartOnRectangleIcon as LogOut,
+} from "@heroicons/react/24/solid"
 import { getConsumerAppUrl } from "@/lib/app-url"
 
 export function UserNav() {

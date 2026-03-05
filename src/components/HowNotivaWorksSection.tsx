@@ -16,17 +16,17 @@ const steps = [
   {
     icon: Sparkles,
     title: 'Notiva extracts what matters',
-    description: 'Renewals, expirations, invoices, IDs, contract dates — all analyzed automatically.',
+    description: 'Expenses, renewals, expirations, invoices, IDs, contract dates — all analyzed automatically.',
   },
   {
     icon: Bell,
     title: 'Novi keeps you informed',
-    description: 'Novi notifies you only when a renewal, expiration, or payment is coming up — nothing unnecessary.',
+    description: 'Notiva keeps your finances and important data up to date so you can stop worrying about staying on top of everything.',
   },
   {
     icon: ShieldCheck,
     title: 'Peace of mind',
-    description: 'Notiva keeps your important data up to date so you can stop worrying about staying on top of everything.',
+    description: 'Novi notifies you only when a renewal, expiration, or payment is coming up — nothing unnecessary.',
   },
 ]
 
@@ -53,8 +53,8 @@ export default function HowNotivaWorksSection() {
             How Notiva works
           </h2>
 
-          <p className="text-[24px] font-normal leading-[32px] text-[#67696B] max-w-md">
-            From setup to peace of mind in just a few simple steps.
+          <p className="text-[20px] font-normal leading-[25px] text-[#67696B] max-w-md">
+            From setup to peace of mind in just a few simple steps. Let Notiva handle the tracking while you focus on what matters.
           </p>
 
           <div className="flex flex-wrap items-center gap-[16px]">

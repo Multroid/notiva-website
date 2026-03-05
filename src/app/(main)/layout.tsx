@@ -48,15 +48,15 @@ export default function MainLayout({
 				}}
 			>
 				<div className="container mx-auto flex items-center justify-between h-full px-4">
-					{/* Logo in blue pill */}
-					<Link href="/" className="inline-flex items-center gap-[8px] bg-[#0047BA] rounded-[8px] px-[16px] py-[8px]">
-						<div className="relative size-[32px] overflow-hidden">
+					{/* Logo */}
+					<Link href="/" className="inline-flex items-center gap-[8px] rounded-[8px]">
+						<div className="bg-[#0047BA] rounded-[8px] p-[8px] flex items-center justify-center overflow-hidden">
 							<Image
 								src="/Logo/Notiva Logo transparent white.svg"
 								alt="Notiva"
-								width={32}
-								height={32}
-								className="size-[32px]"
+								width={25}
+								height={24}
+								className="w-[25px] h-[24px]"
 							/>
 						</div>
 						<span
@@ -67,7 +67,7 @@ export default function MainLayout({
 								fontSize: '24px',
 								lineHeight: '26px',
 								letterSpacing: '2px',
-								color: '#F0EEE9'
+								color: '#0047BA'
 							}}
 						>
 							Notiva

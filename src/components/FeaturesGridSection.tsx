@@ -24,18 +24,18 @@ const features: FeatureCard[][] = [
     {
       icon: <Lock className="size-[40px] text-[#0047BA]" />,
       title: 'Private by default. Secure by design.',
-      body: 'Read-only connections, encrypted storage, and transparent controls over what\'s synced.',
+      body: 'Read-only connections, encrypted storage, and full transparency over what\'s synced. Your data is never exposed.',
     },
     {
       icon: <Smile className="size-[40px] text-[#0047BA]" />,
       title: 'Your money, explained in plain language.',
-      body: 'Novi translates complex financial data into simple insights you can act on.',
+      body: 'Novi surfaces insights, flags issues, and answers financial questions — before you even think to ask.',
       colSpan: 2,
     },
     {
       icon: <Sparkles className="size-[40px] text-[#0047BA]" />,
       title: 'Proactive, not reactive.',
-      body: 'Get alerts before renewals, price increases, or trial expirations happen.',
+      body: 'Novi watches your bills, subscriptions, and cash flow 24/7 — alerting you days before a problem hits.',
     },
   ],
   // Row 2
@@ -43,17 +43,17 @@ const features: FeatureCard[][] = [
     {
       icon: <PieChart className="size-[40px] text-[#0047BA]" />,
       title: 'German tax, handled automatically.',
-      body: 'Automatically categorize and prepare expenses for German tax filing.',
+      body: 'VAT tracking, Steuerberater-ready exports, and freelance categorization — built natively, not bolted on.',
     },
     {
       icon: <BarChart2 className="size-[40px] text-[#0047BA]" />,
       title: 'Track investments across accounts.',
-      body: 'See all your investment accounts in one unified dashboard.',
+      body: 'Novi aggregates your financial data, providing insights on all your portfolios and accounts in one view.',
     },
     {
       icon: <Calendar className="size-[40px] text-[#0047BA]" />,
       title: 'A clear timeline of your spending.',
-      body: 'Everything grouped by merchant and category so you can understand patterns fast.',
+      body: 'Grouped by merchant and category so you can spot waste, track patterns, and take action — fast.',
       colSpan: 2,
     },
   ],
@@ -62,12 +62,12 @@ const features: FeatureCard[][] = [
     {
       icon: <RefreshCw className="size-[40px] text-[#0047BA]" />,
       title: 'Kill subscriptions you forgot about.',
-      body: 'Find and cancel unused subscriptions draining your wallet.',
+      body: 'Novi detects every recurring charge and flags anything you haven\'t used in 90+ days. Cancel in seconds.',
     },
     {
       icon: <DollarSign className="size-[40px] text-[#0047BA]" />,
       title: 'Optimize subscriptions and reduce overspending.',
-      body: 'Get recommendations to downgrade or switch plans and save money.',
+      body: 'Novi compares your current subscriptions with better alternatives, ensuring you save money without losing value.',
     },
   ],
 ]
@@ -77,7 +77,7 @@ function FeatureCardComponent({ card }: { card: FeatureCard }) {
 
   return (
     <div
-      className={`bg-[#F0EEE9] border-2 border-[#0047BA] rounded-[8px] p-[16px] flex ${
+      className={`bg-[#FEFDFD] border-2 border-[#0047BA] rounded-[16px] p-[16px] flex ${
         isWide ? 'col-span-1 md:col-span-2 flex-row gap-[16px]' : 'flex-col gap-[12px]'
       }`}
       style={{
@@ -104,15 +104,15 @@ function FeatureCardComponent({ card }: { card: FeatureCard }) {
 
 export default function FeaturesGridSection() {
   return (
-    <section className="py-[80px] px-[16px]" style={{ backgroundColor: '#FAFAF8' }}>
-      <div className="max-w-[1360px] mx-auto flex flex-col items-center gap-[48px]">
+    <section className="py-[80px] px-[16px]" style={{ background: 'linear-gradient(to bottom, #d4e4ff, rgba(176,198,234,0))' }}>
+      <div className="max-w-[1360px] mx-auto flex flex-col items-center gap-[60px]">
         {/* Header */}
         <div className="text-center max-w-[900px] px-4 flex flex-col gap-[24px]">
           <h2 className="text-[44px] font-bold leading-[48px] text-[#0047BA]">
             The Features you will love...
           </h2>
-          <p className="text-[24px] font-normal leading-[32px] text-[#898C8E]">
-            Notiva combines open banking, email scanning, and AI to give you full control of your finances.
+          <p className="text-[20px] font-normal leading-[25px] text-[#001238]">
+            Notiva combines open banking, AI-native intelligence, and German financial expertise — so your money works while you focus on everything else.
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export default function FeaturesGridSection() {
             variant="secondary"
             size="lg"
           >
-            See how Novi works
+            See how NOVI works
           </NotivaButtonLink>
         </div>
       </div>

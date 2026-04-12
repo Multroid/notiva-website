@@ -1,145 +1,220 @@
-import { CheckIcon as Check } from '@heroicons/react/24/solid'
-import { NotivaButtonLink } from '@/components/ui/notiva-button'
-import { getMainAppRegisterUrl } from '@/lib/app-url'
+"use client"
 
-const plans = [
-  {
-    name: 'Pro',
-    price: '3.99',
-    yearlyPrice: '49',
-    savePercent: 32,
-    category: 'FOR INDIVIDUALS',
-    popular: true,
-    buttonVariant: 'primary' as const,
-    buttonText: 'Get Started with Pro',
-    features: [
-      'Track unlimited subscriptions',
-      'Email and bank sync',
-      'Document scanning & deadline extraction',
-      'Smart reminders & notifications',
-      'Export reports to PDF/CSV',
-    ],
-  },
-  {
-    name: 'Family',
-    price: '11.99',
-    yearlyPrice: '99',
-    savePercent: 31,
-    category: 'FOR HOUSEHOLDS',
-    popular: false,
-    buttonVariant: 'primaryDark' as const,
-    buttonText: 'Get Started with Family',
-    features: [
-      'Everything in Pro',
-      'Up to 6 family members',
-      'Shared subscription tracking',
-      'Family spending insights',
-      'Collaborative document management',
-      'Priority support access',
-    ],
-  },
+import { useState } from "react"
+import Link from "next/link"
+import { CheckIcon, ArrowRightIcon } from "@heroicons/react/24/solid"
+import { Button } from "@/components/ui/button"
+
+type Plan = {
+    id: string
+    name: string
+    price: { monthly: string; yearly: string }
+    audience: string
+    features: string[]
+    cta: string
+    variant: "primary" | "secondary"
+    popular?: boolean
+}
+
+const plans: Plan[] = [
+    {
+        id: "plus",
+        name: "Plus",
+        price: { monthly: "€4.99", yearly: "€3.99" },
+        audience: "For Individuals",
+        features: [
+            "AI Financial Agent \u201C Novi \u201D",
+            "Email and bank sync",
+            "Document Intelligence",
+            "Smart financial planning",
+            "Export reports to PDF/CSV",
+        ],
+        cta: "Get Started with Plus",
+        variant: "secondary",
+    },
+    {
+        id: "pro",
+        name: "Pro",
+        price: { monthly: "€7.99", yearly: "€6.39" },
+        audience: "For Individuals & Couples",
+        features: [
+            "Everything in Plus",
+            "Extra partner account",
+            "Tax Intelligence",
+            "Subscription & Provider Intelligence",
+            "Advanced Financial Analysis",
+        ],
+        cta: "Get Started with Pro",
+        variant: "primary",
+        popular: true,
+    },
+    {
+        id: "family",
+        name: "Family",
+        price: { monthly: "€12.99", yearly: "€10.39" },
+        audience: "For Households",
+        features: [
+            "Everything in Pro",
+            "Up to 6 family members",
+            "Shared finances & contracts management",
+            "Collaborative Financial planning",
+            "Priority support access",
+        ],
+        cta: "Get Started with Family",
+        variant: "secondary",
+    },
 ]
 
-export default function PricingSection() {
-  return (
-    <section
-      className="py-[60px] xl:py-[124px] px-[16px] lg:px-[48px]"
-      style={{
-        borderTop: '1px dashed rgba(0,71,186,0.5)',
-        borderBottom: '1px dashed rgba(0,71,186,0.5)',
-      }}
-    >
-      <div className="max-w-[900px] mx-auto flex flex-col items-center gap-[48px]">
-        {/* Header */}
-        <div className="text-center flex flex-col gap-[16px]">
-          <span className="text-[14px] font-normal uppercase text-[#54545E]" style={{ letterSpacing: '0.7px' }}>
-            PLANS
-          </span>
-          <h2 className="text-[36px] lg:text-[60px] font-semibold text-[#09090B]" style={{ letterSpacing: '-0.5px', lineHeight: '1' }}>
-            Simple pricing
-          </h2>
-          <p className="text-[20px] font-normal text-[#54545E]">
-            Choose what works for you
-          </p>
-        </div>
+type Billing = "monthly" | "yearly"
 
-        {/* Pricing Cards */}
-        <div className="grid lg:grid-cols-2 gap-[24px] w-full">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className="relative flex flex-col p-[20px] lg:p-[33px] bg-[#FEFDFD] border-2 border-[#B0C6EA] rounded-[16px] max-w-[440px] mx-auto w-full"
-              style={{
-                boxShadow: '0px 0px 19.6px -1px rgba(0,71,186,0.2)',
-              }}
+function BillingToggle({
+    value,
+    onChange,
+}: {
+    value: Billing
+    onChange: (v: Billing) => void
+}) {
+    return (
+        <div
+            role="tablist"
+            className="flex items-center justify-center gap-0 rounded-[32px] border-2 border-[rgba(0,71,186,0.25)] p-2"
+        >
+            <button
+                type="button"
+                role="tab"
+                aria-selected={value === "monthly"}
+                onClick={() => onChange("monthly")}
+                className={`appearance-none flex w-[100px] items-center justify-center rounded-3xl px-4 py-2 font-semibold text-base leading-6 transition-colors outline-none focus:outline-none ${
+                    value === "monthly"
+                        ? "bg-[#0047BA] text-white"
+                        : "text-[rgba(0,71,186,0.25)]"
+                }`}
             >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute top-[24px] right-[24px]">
-                  <span className="bg-[#F05627] rounded-[16px] px-[12px] py-[6px] lg:px-[16px] lg:py-[8px] text-[#F0EEE9] text-[14px] lg:text-[20px] font-medium">
-                    Popular
-                  </span>
-                </div>
-              )}
-
-              {/* Plan Name */}
-              <h3 className="text-[22px] font-semibold text-[#101113]">{plan.name}</h3>
-
-              {/* Price */}
-              <div className="flex items-baseline gap-[4px] mt-[16px]">
-                <span className="text-[48px] font-bold text-[#0047BA]" style={{ letterSpacing: '-1.2px', lineHeight: '48px' }}>
-                  &euro;{plan.price}
+                Monthly
+            </button>
+            <button
+                type="button"
+                role="tab"
+                aria-selected={value === "yearly"}
+                onClick={() => onChange("yearly")}
+                className={`appearance-none flex items-end justify-center gap-[10px] rounded-3xl px-4 py-2 transition-colors outline-none focus:outline-none ${
+                    value === "yearly"
+                        ? "bg-[#0047BA] text-white"
+                        : ""
+                }`}
+            >
+                <span
+                    className={`font-semibold text-base leading-6 ${
+                        value === "yearly" ? "text-white" : "text-[rgba(0,71,186,0.25)]"
+                    }`}
+                >
+                    Yearly
                 </span>
-                <span className="text-[18px] font-normal text-[#898C8E]">/mo</span>
-              </div>
-
-              {/* Billing Note */}
-              <p className="text-[14px] text-[#898C8E] mt-[8px]">
-                or <span className="font-bold text-[#101113]">&euro;{plan.yearlyPrice}</span> yearly{' '}
-                <span className="text-[#009966] font-semibold">Save {plan.savePercent}%</span>
-              </p>
-
-              {/* Divider */}
-              <div className="border-t border-[#F0EEE9] my-[24px]" />
-
-              {/* Category */}
-              <span className="text-[13px] font-semibold uppercase text-[#898C8E] mb-[16px]">
-                {plan.category}
-              </span>
-
-              {/* Features */}
-              <ul className="flex flex-col gap-[12px] mb-[32px] flex-1">
-                {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-[12px]">
-                    <Check className="size-[20px] text-[#0047BA] flex-shrink-0 mt-[2px]" />
-                    <span className="text-[14px] text-[#101113]">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <NotivaButtonLink
-                href={getMainAppRegisterUrl()}
-                variant={plan.buttonVariant}
-                size="lg"
-                fullWidth
-              >
-                {plan.buttonText}
-              </NotivaButtonLink>
-
-              {/* Trial Text */}
-              <p className="text-[16px] text-[#101113] text-center mt-[16px]">
-                Start a free 30-day trial
-              </p>
-            </div>
-          ))}
+                <span className="font-medium text-xs leading-[18px] text-[#1FC16B]">
+                    20% Discount
+                </span>
+            </button>
         </div>
+    )
+}
 
-        {/* Bottom Note */}
-        <p className="text-[16px] text-[#F05627] text-center">
-          All plans include a 30-day free trial. No credit card required for the trial.
-        </p>
-      </div>
-    </section>
-  )
+function PriceCard({ plan, billing }: { plan: Plan; billing: Billing }) {
+    return (
+        <div className="flex w-[402px] shrink-0 flex-col gap-6 overflow-hidden rounded-2xl bg-white p-8 shadow-[0px_0px_20px_-1px_rgba(0,71,186,0.2)]">
+            {/* Heading */}
+            <div className="flex w-full items-center gap-4">
+                <div className="flex flex-1 flex-col justify-center gap-6">
+                    <h3 className="font-bold text-[26px] leading-[39px] text-[#333333]">
+                        {plan.name}
+                    </h3>
+                    <div className="flex items-center gap-[10px]">
+                        <span className="font-bold text-[56px] leading-[84px] text-[#0047BA] whitespace-nowrap">
+                            {plan.price[billing]}
+                        </span>
+                        <span className="font-medium text-lg leading-[27px] text-[#8E8E8E]">
+                            /mo
+                        </span>
+                    </div>
+                </div>
+                {plan.popular && (
+                    <div className="flex items-start self-stretch">
+                        <span className="rounded-xl bg-[#F05627] px-4 py-2 font-bold text-base leading-6 text-[#F0EEE9]">
+                            Popular
+                        </span>
+                    </div>
+                )}
+            </div>
+
+            {/* Horizontal divider */}
+            <div className="h-px w-full border-t border-[#F0EEE9]" />
+
+            {/* Context */}
+            <div className="flex w-full flex-col gap-12">
+                {/* Plan features */}
+                <div className="flex w-full flex-col gap-4">
+                    <p className="font-medium text-base leading-6 text-[#8E8E8E]">
+                        {plan.audience}
+                    </p>
+                    <ul className="flex w-full flex-col gap-4">
+                        {plan.features.map((feature) => (
+                            <li
+                                key={feature}
+                                className="flex w-full items-center gap-3"
+                            >
+                                <CheckIcon className="size-5 shrink-0 text-[#1FC16B]" />
+                                <span className="font-medium text-sm leading-[21px] text-[#101113]">
+                                    {feature}
+                                </span>
+                            </li>
+                        ))}
+                        <li className="flex w-full items-center justify-center gap-2 pt-1">
+                            <span className="font-medium text-sm leading-[21px] text-[#8E8E8E]">
+                                Explore more Features
+                            </span>
+                            <ArrowRightIcon className="size-[14px] text-[#8E8E8E]" />
+                        </li>
+                    </ul>
+                </div>
+
+                {/* CTA */}
+                <Button asChild variant={plan.variant} fullWidth>
+                    <Link href="/register">{plan.cta}</Link>
+                </Button>
+            </div>
+        </div>
+    )
+}
+
+export default function PricingSection() {
+    const [billing, setBilling] = useState<Billing>("monthly")
+
+    return (
+        <section className="flex flex-col items-center justify-center gap-14 px-4 py-20">
+            {/* Heading */}
+            <div className="flex flex-col items-center justify-center gap-4 text-center">
+                <h2 className="font-bold text-[56px] leading-[84px] text-[#333333]">
+                    Simple pricing
+                </h2>
+                <p className="font-medium text-lg leading-[27px] text-[#8E8E8E]">
+                    Choose what works for you
+                </p>
+            </div>
+
+            {/* Billing toggle */}
+            <BillingToggle value={billing} onChange={setBilling} />
+
+            {/* Plans container */}
+            <div className="flex w-full flex-col items-center gap-14">
+                <div className="flex max-w-full items-stretch justify-center gap-6 overflow-x-auto px-14 py-8">
+                    {plans.map((plan) => (
+                        <PriceCard key={plan.id} plan={plan} billing={billing} />
+                    ))}
+                </div>
+
+                <p className="font-medium text-base leading-6 text-[#F05627] text-center">
+                    All plans include a 7-day free trial.
+                </p>
+            </div>
+        </section>
+    )
 }

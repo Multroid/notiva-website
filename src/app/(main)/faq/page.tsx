@@ -1,6 +1,6 @@
 import { QuestionMarkCircleIcon as HelpCircle, ChevronDownIcon as ChevronDown } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 
 const faqCategories = [
 	{
@@ -152,12 +152,12 @@ export default function FAQPage() {
 						Our support team is happy to help.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<NotivaButtonLink href="/contact" variant="important" size="lg">
-							Contact Support
-						</NotivaButtonLink>
-						<NotivaButtonLink href="/help" variant="secondary" size="lg">
-							Help Center
-						</NotivaButtonLink>
+						<Button asChild variant="important" size="lg">
+							<Link href="/contact">Contact Support</Link>
+						</Button>
+						<Button asChild variant="secondary" size="lg">
+							<Link href="/help">Help Center</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

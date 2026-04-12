@@ -1,5 +1,6 @@
 import { RocketLaunchIcon as Rocket, SparklesIcon as Sparkles, BugAntIcon as Bug, WrenchIcon as Wrench } from "@heroicons/react/24/solid";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 
 type ChangeType = "feature" | "improvement" | "fix";
@@ -103,9 +104,9 @@ export default function ChangelogPage() {
 					<p className="text-xl text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						Every update makes Notiva smarter. Start free and experience it yourself.
 					</p>
-					<NotivaButtonLink href={getMainAppRegisterUrl()} variant="important" size="lg">
-						Get Started Free
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<Link href={getMainAppRegisterUrl()}>Get Started Free</Link>
+					</Button>
 				</div>
 			</section>
 		</div>

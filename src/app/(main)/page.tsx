@@ -1,22 +1,26 @@
 import HeroSection from '@/components/HeroSection'
-import MeetNoviSection from '@/components/MeetNoviSection'
-import FeaturesGridSection from '@/components/FeaturesGridSection'
+import BoldMessageSection from '@/components/BoldMessageSection'
+import BuiltForBigSection from '@/components/BuiltForBigSection'
+import FeaturesSection from '@/components/FeaturesSection'
 import HowNotivaWorksSection from '@/components/HowNotivaWorksSection'
 import ComparisonSection from '@/components/ComparisonSection'
 import PricingSection from '@/components/PricingSection'
-import NewsletterSection from '@/components/NewsletterSection'
+import NewsletterCtaSection from '@/components/NewsletterCtaSection'
 import Footer from '@/components/Footer'
 
 export default function Home() {
     return (
         <>
-            <HeroSection />
-            <MeetNoviSection />
-            <FeaturesGridSection />
-            <HowNotivaWorksSection />
-            <ComparisonSection />
-            <PricingSection />
-            <NewsletterSection />
+            <main>
+                <HeroSection />
+                <BoldMessageSection />
+                <BuiltForBigSection />
+                <FeaturesSection />
+                <HowNotivaWorksSection />
+                <ComparisonSection />
+                <PricingSection />
+                <NewsletterCtaSection />
+            </main>
             <Footer />
         </>
     )

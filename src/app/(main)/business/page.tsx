@@ -8,7 +8,7 @@ import {
   ArrowRightIcon as ArrowRight,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 
 const businessFeatures = [
 	{
@@ -66,12 +66,12 @@ export default function BusinessPage() {
 						company analytics, and enterprise-grade security.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<NotivaButtonLink href="mailto:sales@multroid.com" variant="primary" size="lg">
-							Contact Sales
-						</NotivaButtonLink>
-						<NotivaButtonLink href="/features" variant="secondary" size="lg">
-							See All Features
-						</NotivaButtonLink>
+						<Button asChild variant="primary" size="lg">
+							<a href="mailto:sales@multroid.com">Contact Sales</a>
+						</Button>
+						<Button asChild variant="secondary" size="lg">
+							<Link href="/features">See All Features</Link>
+						</Button>
 					</div>
 				</div>
 			</section>
@@ -181,12 +181,12 @@ export default function BusinessPage() {
 						Talk to our sales team about pricing, custom requirements, and how Notiva can fit your organization.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<NotivaButtonLink href="mailto:sales@multroid.com" variant="important" size="lg">
-							Contact Sales
-						</NotivaButtonLink>
-						<NotivaButtonLink href="/pricing" variant="secondary" size="lg">
-							View Personal Plans
-						</NotivaButtonLink>
+						<Button asChild variant="important" size="lg">
+							<a href="mailto:sales@multroid.com">Contact Sales</a>
+						</Button>
+						<Button asChild variant="secondary" size="lg">
+							<Link href="/pricing">View Personal Plans</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

@@ -1,114 +1,120 @@
-import {
-  CloudArrowUpIcon as CloudUpload,
-  SparklesIcon as Sparkles,
-  BellIcon as Bell,
-  ShieldCheckIcon as ShieldCheck,
-} from '@heroicons/react/24/solid'
-import { NotivaButtonLink } from '@/components/ui/notiva-button'
-import { getMainAppRegisterUrl } from '@/lib/app-url'
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 const steps = [
-  {
-    icon: CloudUpload,
-    title: 'Upload or Connect your email (read-only)',
-    description: 'Choose the accounts, inboxes, or documents you want Notiva to manage.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Notiva extracts what matters',
-    description: 'Expenses, renewals, expirations, invoices, IDs, contract dates — all analyzed automatically.',
-  },
-  {
-    icon: Bell,
-    title: 'Novi keeps you informed',
-    description: 'Notiva keeps your finances and important data up to date so you can stop worrying about staying on top of everything.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Peace of mind',
-    description: 'Novi notifies you only when a renewal, expiration, or payment is coming up — nothing unnecessary.',
-  },
+    {
+        num: 1,
+        title: "Connect your accounts",
+        description: "Bank, Email, Notion, Excel, Paypal, Stripe and more.",
+    },
+    {
+        num: 2,
+        title: "Novi learns your finances",
+        description:
+            "Novi analyzes your transactions, contracts, and goals to build a complete picture of your money.",
+    },
+    {
+        num: 3,
+        title: "Get proactive insights",
+        description:
+            "Daily briefs, contract end alerts, and tax tips — delivered before they cost you anything.",
+    },
+    {
+        num: 4,
+        title: "Let Novi take action",
+        description:
+            "Approve in one tap. Novi handles the boring stuff: cancellations, switches, deductions, reminders.",
+    },
 ]
 
 export default function HowNotivaWorksSection() {
-  return (
-    <section
-      id="how-it-works"
-      className="relative py-[60px] lg:py-[79px] px-[16px] lg:px-[48px] overflow-hidden"
-      style={{
-        background: 'radial-gradient(circle at 50% 50%, rgba(0,71,186,0.3) 0%, transparent 70%)',
-      }}
-    >
-      <div className="mx-auto max-w-7xl flex flex-col lg:flex-row gap-[40px] items-start">
-        {/* Left Column - Sticky */}
-        <div className="lg:sticky lg:top-[120px] flex flex-col gap-[32px] flex-1">
-          <span
-            className="text-[14px] font-normal uppercase"
-            style={{ letterSpacing: '0.7px', color: 'rgba(43,127,255,0.8)' }}
-          >
-            HOW IT WORKS
-          </span>
+    const [activeIndex, setActiveIndex] = useState(0)
+    const refs = useRef<(HTMLDivElement | null)[]>([])
 
-          <h2 className="text-[28px] lg:text-[44px] font-bold leading-[34px] lg:leading-[48px] text-[#101113]">
-            How Notiva works
-          </h2>
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const idx = Number(entry.target.getAttribute("data-step-index"))
+                        setActiveIndex(idx)
+                    }
+                })
+            },
+            { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+        )
+        refs.current.forEach((el) => el && observer.observe(el))
+        return () => observer.disconnect()
+    }, [])
 
-          <p className="text-[16px] lg:text-[20px] font-normal leading-[22px] lg:leading-[25px] text-[#67696B] max-w-md">
-            From setup to peace of mind in just a few simple steps. Let Notiva handle the tracking while you focus on what matters.
-          </p>
+    return (
+        <section className="bg-[#00286A] px-4 py-[168px]">
+            <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-[120px]">
+                <h2 className="text-center font-bold text-[46px] leading-[69px] text-white">
+                    Set up in minutes.
+                    <br />
+                    Works for you forever.
+                </h2>
 
-          <div className="flex flex-wrap items-center gap-[16px]">
-            <NotivaButtonLink
-              href={getMainAppRegisterUrl()}
-              variant="primary"
-              size="lg"
-            >
-              Get Started
-            </NotivaButtonLink>
-            <NotivaButtonLink
-              href="/features"
-              variant="secondary"
-              size="lg"
-            >
-              Learn More
-            </NotivaButtonLink>
-          </div>
-        </div>
+                <div className="grid w-full grid-cols-1 gap-20 lg:grid-cols-2">
+                    {/* Left: scrolling image stack — each image takes one viewport height so the IntersectionObserver fires cleanly */}
+                    <div className="flex flex-col">
+                        {steps.map((step, i) => (
+                            <div
+                                key={step.num}
+                                ref={(el) => {
+                                    refs.current[i] = el
+                                }}
+                                data-step-index={i}
+                                className="flex h-screen items-center justify-center"
+                            >
+                                <div
+                                    className="size-[480px] max-w-full rounded-2xl bg-gradient-to-br from-[#3D87FF]/40 to-[#0047BA]/10 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.5)]"
+                                    aria-hidden="true"
+                                />
+                            </div>
+                        ))}
+                    </div>
 
-        {/* Right Column - Timeline */}
-        <div className="relative flex-1 max-w-[600px]">
-          {/* Connecting line */}
-          <div className="absolute left-[32px] top-[32px] bottom-[32px] w-px bg-[#B0C6EA]" />
-
-          <div className="flex flex-col gap-[10px]">
-            {steps.map((step, index) => (
-              <div key={index} className="relative flex gap-[24px] py-[24px]">
-                {/* Icon circle */}
-                <div
-                  className="relative z-10 flex-shrink-0 w-[64px] h-[64px] rounded-[16px] flex items-center justify-center"
-                  style={{
-                    backgroundColor: '#FEFDFD',
-                    border: '1px solid #F0EEE9',
-                    boxShadow: '0px 10px 15px -3px rgba(226,232,240,0.5)',
-                  }}
-                >
-                  <step.icon className="w-[28px] h-[28px] text-[#0047BA]" />
+                    {/* Right: sticky panel — pinned full-viewport-height; content vertically centered; cross-fades on activeIndex change */}
+                    <div>
+                        <div className="sticky top-0 flex h-screen items-center">
+                            <div className="relative h-[260px] w-full">
+                                {steps.map((step, i) => (
+                                    <div
+                                        key={step.num}
+                                        aria-hidden={i !== activeIndex}
+                                        className={`absolute inset-0 flex flex-col gap-4 text-white transition-opacity duration-500 ${
+                                            i === activeIndex
+                                                ? "opacity-100"
+                                                : "pointer-events-none opacity-0"
+                                        }`}
+                                    >
+                                        <p className="font-bold text-[38px] leading-[57px]">
+                                            Step {step.num}.
+                                        </p>
+                                        <div className="flex max-w-[364px] flex-col gap-2">
+                                            <h3 className="font-bold text-[26px] leading-[39px]">
+                                                {step.title}
+                                            </h3>
+                                            <p className="font-medium text-sm leading-[21px]">
+                                                {step.description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Content */}
-                <div className="flex-1 pt-[8px]">
-                  <h3 className="text-[16px] font-semibold text-[#101113] mb-[8px]">
-                    {step.title}
-                  </h3>
-                  <p className="text-[18px] font-normal leading-[26px] text-[#67696B]">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+                <Button asChild variant="secondary">
+                    <Link href="/features">Learn More</Link>
+                </Button>
+            </div>
+        </section>
+    )
 }

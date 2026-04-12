@@ -1,5 +1,6 @@
 import { CheckIcon as Check } from "@heroicons/react/24/solid";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 
 const plans = [
@@ -115,14 +116,9 @@ export default function PricingPage() {
 									))}
 								</ul>
 
-								<NotivaButtonLink
-									href={getMainAppRegisterUrl()}
-									variant={plan.variant}
-									size="lg"
-									fullWidth
-								>
-									{plan.cta}
-								</NotivaButtonLink>
+								<Button asChild variant={plan.variant} size="lg" fullWidth>
+									<Link href={getMainAppRegisterUrl()}>{plan.cta}</Link>
+								</Button>
 							</div>
 						))}
 					</div>
@@ -141,9 +137,9 @@ export default function PricingPage() {
 							Multi-seat workspaces, role-based access, company-wide analytics, and advanced integrations.
 							Built for teams that need financial clarity at scale.
 						</p>
-						<NotivaButtonLink href="/business" variant="secondary" size="lg">
-							Learn More
-						</NotivaButtonLink>
+						<Button asChild variant="secondary" size="lg">
+							<Link href="/business">Learn More</Link>
+						</Button>
 					</div>
 				</div>
 			</section>
@@ -177,9 +173,9 @@ export default function PricingPage() {
 					<p className="text-xl text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						No credit card required. Get started in under a minute.
 					</p>
-					<NotivaButtonLink href={getMainAppRegisterUrl()} variant="important" size="lg">
-						Get Started Free
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<Link href={getMainAppRegisterUrl()}>Get Started Free</Link>
+					</Button>
 				</div>
 			</section>
 		</div>

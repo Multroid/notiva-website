@@ -1,7 +1,7 @@
 import { ViewfinderCircleIcon as Target, UserGroupIcon as Users, BoltIcon as Zap, GlobeAltIcon as Globe, HeartIcon as Heart, BuildingOfficeIcon as Building, ShieldCheckIcon as Shield } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 
 export default function CompanyPage() {
 	return (
@@ -25,15 +25,11 @@ export default function CompanyPage() {
 						Multroid is the AI operating layer for modern companies — an ecosystem of intelligent products
 						that replaces fragmented tools with one unified, AI-driven experience.
 					</p>
-					<NotivaButtonLink
-						href="https://multroid.com"
-						target="_blank"
-						rel="noopener noreferrer"
-						variant="secondary"
-						size="lg"
-					>
-						Visit Multroid.com
-					</NotivaButtonLink>
+					<Button asChild variant="secondary" size="lg">
+						<a href="https://multroid.com" target="_blank" rel="noopener noreferrer">
+							Visit Multroid.com
+						</a>
+					</Button>
 				</div>
 			</section>
 
@@ -223,13 +219,9 @@ export default function CompanyPage() {
 					<p className="text-xl text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						See how Multroid&apos;s AI-native approach gives you financial clarity and control.
 					</p>
-					<NotivaButtonLink
-						href="/register"
-						variant="important"
-						size="lg"
-					>
-						Get Started Free
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<Link href="/register">Get Started Free</Link>
+					</Button>
 				</div>
 			</section>
 		</div>

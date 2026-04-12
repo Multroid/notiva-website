@@ -1,6 +1,6 @@
 import { QuestionMarkCircleIcon as HelpCircle, BookOpenIcon as BookOpen, ChatBubbleLeftRightIcon as MessageSquare, VideoCameraIcon as Video, MagnifyingGlassIcon as Search, DocumentMagnifyingGlassIcon as FileQuestion, BoltIcon as Zap, UserGroupIcon as Users, ShieldCheckIcon as Shield } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function HelpPage() {
@@ -183,9 +183,9 @@ export default function HelpPage() {
 
 					<div className="text-center mt-12">
 						<p className="text-[var(--multroid-grey-dark)] mb-4">Still have questions?</p>
-						<NotivaButtonLink href="/contact" variant="primary" size="lg">
-							Contact Support
-						</NotivaButtonLink>
+						<Button asChild variant="primary" size="lg">
+							<Link href="/contact">Contact Support</Link>
+						</Button>
 					</div>
 				</div>
 			</section>
@@ -200,12 +200,12 @@ export default function HelpPage() {
 						Our support team is here to help you succeed with Notiva.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<NotivaButtonLink href="/contact" variant="important" size="lg">
-							Contact Support
-						</NotivaButtonLink>
-						<NotivaButtonLink href="/register" variant="secondary" size="lg">
-							Get Started Free
-						</NotivaButtonLink>
+						<Button asChild variant="important" size="lg">
+							<Link href="/contact">Contact Support</Link>
+						</Button>
+						<Button asChild variant="secondary" size="lg">
+							<Link href="/register">Get Started Free</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

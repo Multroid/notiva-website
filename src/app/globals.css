@@ -185,38 +185,15 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground antialiased;
   }
 }
 
-/* Enhanced Hover States for Better Visibility */
+/* Respect reduced motion preference */
 @layer utilities {
-  /* Button hover enhancements */
-  button:not(:disabled):hover,
-  [role="button"]:not(:disabled):hover {
-    @apply scale-[1.02] transition-all duration-200;
-  }
-
-  /* Link hover enhancements */
-  a:hover {
-    @apply transition-colors duration-200;
-  }
-
-  /* Card hover enhancements */
-  [role="article"]:hover,
-  .card:hover {
-    @apply shadow-md transition-shadow duration-200;
-  }
-
-  /* Enhanced focus states for accessibility */
-  *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary ring-2 ring-ring ring-offset-2;
-  }
-
-  /* Respect reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -226,7 +203,6 @@
       transition-duration: 0.01ms !important;
     }
   }
-
 }
 
 /* Override foreground colors for better readability */
@@ -243,261 +219,17 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
+  button {
+    @apply outline-none;
+  }
+  button:focus,
+  button:focus-visible {
+    @apply outline-none;
+  }
 }
-
-
-/* =========================================
-   NOTIVA BUTTON DESIGN SYSTEM
-   Double-layer button design with outer + inner
-   ========================================= */
-
-/* Base button wrapper - all Notiva buttons share this */
-.notiva-btn {
-  box-sizing: border-box;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.notiva-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Inner button - shared styles */
-.notiva-btn-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 24px;
-  border-radius: 8px;
-  min-height: 44px;
-  width: 100%;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
-  text-align: center;
-  transition: all 0.2s ease;
-}
-
-/* ---- Size Variants ---- */
-.notiva-btn-sm {
-  height: 40px;
-}
-
-.notiva-btn-sm .notiva-btn-inner {
-  min-height: 32px;
-  font-size: 14px;
-  line-height: 16px;
-}
-
-.notiva-btn-lg {
-  height: 52px;
-}
-
-.notiva-btn-lg .notiva-btn-inner {
-  min-height: 44px;
-}
-
-/* ---- Full Width ---- */
-.notiva-btn-full {
-  width: 100%;
-}
-
-/* ---- Primary Button (Blue) ---- */
-.notiva-btn-primary {
-  background: var(--notiva-blue-light-hover);
-  border: 1px solid var(--multroid-blue);
-}
-
-.notiva-btn-primary:hover {
-  background: var(--notiva-blue-light);
-}
-
-.notiva-btn-primary .notiva-btn-inner {
-  background: var(--notiva-blue);
-  color: var(--multroid-white);
-}
-
-.notiva-btn-primary:hover .notiva-btn-inner {
-  background: var(--notiva-blue-hover);
-}
-
-.notiva-btn-primary:active .notiva-btn-inner {
-  background: var(--notiva-blue-active);
-}
-
-/* ---- Primary Button (Black) ---- */
-.notiva-btn-primary-black {
-  background: var(--notiva-blue-light-hover);
-  border: 1px solid var(--multroid-blue);
-}
-
-.notiva-btn-primary-black:hover {
-  background: var(--notiva-blue-light);
-}
-
-.notiva-btn-primary-black .notiva-btn-inner {
-  background: var(--multroid-black);
-  color: var(--multroid-white);
-}
-
-.notiva-btn-primary-black:hover .notiva-btn-inner {
-  background: var(--multroid-black-hover);
-}
-
-.notiva-btn-primary-black:active .notiva-btn-inner {
-  background: var(--multroid-black-active);
-}
-
-/* ---- Primary Dark Button (Navy) ---- */
-.notiva-btn-primary-dark {
-  background: var(--notiva-blue-light-hover);
-  border: 1px solid var(--multroid-blue);
-}
-
-.notiva-btn-primary-dark:hover {
-  background: var(--notiva-blue-light);
-}
-
-.notiva-btn-primary-dark .notiva-btn-inner {
-  background: var(--notiva-blue-darker);
-  color: var(--multroid-white);
-}
-
-.notiva-btn-primary-dark:hover .notiva-btn-inner {
-  background: #001230;
-}
-
-.notiva-btn-primary-dark:active .notiva-btn-inner {
-  background: #000D22;
-}
-
-/* ---- Secondary Button ---- */
-.notiva-btn-secondary {
-  background: var(--notiva-blue-light-hover);
-  border: 1px solid var(--notiva-blue);
-}
-
-.notiva-btn-secondary:hover {
-  background: var(--notiva-blue-light);
-}
-
-.notiva-btn-secondary .notiva-btn-inner {
-  background: var(--multroid-grey-light);
-  border: 1px solid var(--notiva-blue);
-  color: var(--notiva-blue);
-}
-
-.notiva-btn-secondary:hover .notiva-btn-inner {
-  background: var(--multroid-grey-light-hover);
-}
-
-.notiva-btn-secondary:active .notiva-btn-inner {
-  background: var(--multroid-grey-light-active);
-}
-
-/* ---- Important Button (Orange) ---- */
-.notiva-btn-important {
-  background: var(--multroid-red-light);
-  border: 1px solid var(--notiva-orange-500);
-}
-
-.notiva-btn-important:hover {
-  background: var(--multroid-red-light-hover);
-}
-
-.notiva-btn-important .notiva-btn-inner {
-  background: var(--notiva-orange-500);
-  color: var(--multroid-white);
-}
-
-.notiva-btn-important:hover .notiva-btn-inner {
-  background: var(--notiva-orange-600);
-}
-
-.notiva-btn-important:active .notiva-btn-inner {
-  background: var(--notiva-orange-700);
-}
-
-/* ---- Danger Button (Red) ---- */
-.notiva-btn-danger {
-  background: var(--multroid-red-light);
-  border: 1px solid var(--multroid-red);
-}
-
-.notiva-btn-danger:hover {
-  background: var(--multroid-red-light-hover);
-}
-
-.notiva-btn-danger .notiva-btn-inner {
-  background: var(--multroid-red);
-  color: var(--multroid-white);
-}
-
-.notiva-btn-danger:hover .notiva-btn-inner {
-  background: var(--multroid-red-hover);
-}
-
-.notiva-btn-danger:active .notiva-btn-inner {
-  background: var(--multroid-red-active);
-}
-
-/* ---- CTA Button (with Arrow) ---- */
-.notiva-btn-cta {
-  flex-direction: row;
-  padding: 4px 4px 4px 16px;
-  gap: 16px;
-  background: var(--notiva-blue-light-hover);
-  border: 2px solid var(--notiva-orange-500);
-}
-
-.notiva-btn-cta:hover {
-  background: var(--notiva-blue-light);
-}
-
-.notiva-btn-cta-text {
-  font-family: 'Nimbus Sans', system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 20px;
-  color: var(--notiva-orange-500);
-  text-align: center;
-}
-
-.notiva-btn-cta-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: var(--notiva-orange-500);
-  border-radius: 8px;
-  box-shadow: 0px -2px 9.4px rgba(232, 232, 232, 0.31);
-  transition: all 0.2s ease;
-}
-
-.notiva-btn-cta:hover .notiva-btn-cta-arrow {
-  background: var(--notiva-orange-600);
-}
-
-.notiva-btn-cta-arrow svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--multroid-white);
-  stroke-width: 2.5px;
-}
-
 

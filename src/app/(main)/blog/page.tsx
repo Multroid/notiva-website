@@ -1,6 +1,6 @@
 import { BookOpenIcon as BookOpen, CalendarIcon as Calendar, ArrowRightIcon as ArrowRight } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 
 export default function BlogPage() {
 	const blogPosts = [
@@ -105,9 +105,9 @@ export default function BlogPage() {
 										<span>{blogPosts[0].readTime}</span>
 									</div>
 									<div>
-										<NotivaButtonLink href={`/blog/${blogPosts[0].id}`} variant="primary" size="sm">
-											Read Article
-										</NotivaButtonLink>
+										<Button asChild variant="primary" size="sm">
+											<Link href={`/blog/${blogPosts[0].id}`}>Read Article</Link>
+										</Button>
 									</div>
 								</div>
 							</div>
@@ -162,9 +162,9 @@ export default function BlogPage() {
 								placeholder="Enter your email"
 								className="flex-1 px-4 py-3 rounded-[8px] text-sm bg-[#D9E3F5] border border-[#B0C6EA] text-[#0047BA] placeholder:text-[#0047BA]/50"
 							/>
-							<NotivaButtonLink href="#" variant="important" size="lg">
-								Subscribe
-							</NotivaButtonLink>
+							<Button asChild variant="important" size="lg">
+								<Link href="#">Subscribe</Link>
+							</Button>
 						</div>
 						<p className="text-sm text-[#B0C6EA]/70 mt-4">No spam. Unsubscribe anytime.</p>
 					</div>

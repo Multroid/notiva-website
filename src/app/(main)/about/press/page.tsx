@@ -1,7 +1,7 @@
 import { DocumentTextIcon as FileText, ArrowDownTrayIcon as Download, EnvelopeIcon as Mail, PhotoIcon as ImageIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 
 export default function PressPage() {
 	const pressReleases = [
@@ -245,13 +245,9 @@ export default function PressPage() {
 					<p className="text-xl text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						Our press team is here to help with media inquiries, interview requests, and more.
 					</p>
-					<NotivaButtonLink
-						href="mailto:press@multroid.com"
-						variant="important"
-						size="lg"
-					>
-						Contact Press Team
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<a href="mailto:press@multroid.com">Contact Press Team</a>
+					</Button>
 				</div>
 			</section>
 		</div>

@@ -1,5 +1,6 @@
 import { FlagIcon as Flag, RocketLaunchIcon as Rocket, UserGroupIcon as Users, LightBulbIcon as Brain, BuildingOfficeIcon as Building, GlobeAltIcon as Globe } from "@heroicons/react/24/solid";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 
 const milestones = [
@@ -175,9 +176,9 @@ export default function MilestonesPage() {
 					<p className="text-xl text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						Join Notiva today and experience every new feature as it ships.
 					</p>
-					<NotivaButtonLink href={getMainAppRegisterUrl()} variant="important" size="lg">
-						Get Started Free
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<Link href={getMainAppRegisterUrl()}>Get Started Free</Link>
+					</Button>
 				</div>
 			</section>
 		</div>

@@ -8,7 +8,8 @@ import {
   LinkIcon as Plug,
   ReceiptPercentIcon as Receipt,
 } from "@heroicons/react/24/solid";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { getMainAppRegisterUrl } from "@/lib/app-url";
 
 const features = [
@@ -81,9 +82,9 @@ export default function FeaturesPage() {
 						Notiva combines AI-powered document reading, smart reminders, and a financial dashboard
 						into one platform \u2014 so you never miss a deadline or overpay again.
 					</p>
-					<NotivaButtonLink href={getMainAppRegisterUrl()} variant="primary" size="lg">
-						Start for free
-					</NotivaButtonLink>
+					<Button asChild variant="primary" size="lg">
+						<Link href={getMainAppRegisterUrl()}>Start for free</Link>
+					</Button>
 				</div>
 			</section>
 
@@ -153,9 +154,9 @@ export default function FeaturesPage() {
 						Join Notiva for free and let Novi handle the details.
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
-						<NotivaButtonLink href={getMainAppRegisterUrl()} variant="important" size="lg">
-							Get Started Free
-						</NotivaButtonLink>
+						<Button asChild variant="important" size="lg">
+							<Link href={getMainAppRegisterUrl()}>Get Started Free</Link>
+						</Button>
 					</div>
 				</div>
 			</section>

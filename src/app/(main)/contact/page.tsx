@@ -1,6 +1,6 @@
 import { EnvelopeIcon as Mail, ChatBubbleLeftRightIcon as MessageSquare, PhoneIcon as Phone, MapPinIcon as MapPin, PaperAirplaneIcon as Send, ClockIcon as Clock } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -142,9 +142,9 @@ export default function ContactPage() {
 							<p className="text-[var(--multroid-grey-dark)] mb-6">
 								Interested in Notiva for your business? Our sales team can help you find the right plan.
 							</p>
-							<NotivaButtonLink href="mailto:sales@multroid.com" variant="primary" size="sm">
-								Contact Sales
-							</NotivaButtonLink>
+							<Button asChild variant="primary" size="sm">
+								<a href="mailto:sales@multroid.com">Contact Sales</a>
+							</Button>
 						</div>
 
 						<div className="rounded-[12px] p-8 border border-[#B0C6EA] bg-white">
@@ -155,9 +155,9 @@ export default function ContactPage() {
 							<p className="text-[var(--multroid-grey-dark)] mb-6">
 								Looking for information, interviews, or brand assets? Reach out to our press team.
 							</p>
-							<NotivaButtonLink href="mailto:press@multroid.com" variant="secondary" size="sm">
-								Contact Press Team
-							</NotivaButtonLink>
+							<Button asChild variant="secondary" size="sm">
+								<a href="mailto:press@multroid.com">Contact Press Team</a>
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -192,9 +192,9 @@ export default function ContactPage() {
 					<p className="text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						Check out our Help Center for instant answers to common questions.
 					</p>
-					<NotivaButtonLink href="/help" variant="important" size="lg">
-						Visit Help Center
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<Link href="/help">Visit Help Center</Link>
+					</Button>
 				</div>
 			</section>
 		</div>

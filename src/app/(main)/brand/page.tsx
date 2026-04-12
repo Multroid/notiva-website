@@ -1,6 +1,7 @@
 import { SwatchIcon as Palette, ArrowDownTrayIcon as Download, DocumentTextIcon as FileText, LanguageIcon as Type } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { NotivaButtonLink } from "@/components/ui/notiva-button";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const colors = [
 	{ name: "Notiva Blue", hex: "#0047BA", text: "white" },
@@ -157,15 +158,15 @@ export default function BrandPage() {
 						<div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
 							<div className="space-y-3">
 								<p className="text-xs text-[var(--multroid-grey)] font-mono">Primary</p>
-								<NotivaButtonLink href="#" variant="primary" size="lg">Primary Action</NotivaButtonLink>
+								<Button asChild variant="primary" size="lg"><Link href="#">Primary Action</Link></Button>
 							</div>
 							<div className="space-y-3">
 								<p className="text-xs text-[var(--multroid-grey)] font-mono">Secondary</p>
-								<NotivaButtonLink href="#" variant="secondary" size="lg">Secondary Action</NotivaButtonLink>
+								<Button asChild variant="secondary" size="lg"><Link href="#">Secondary Action</Link></Button>
 							</div>
 							<div className="space-y-3">
 								<p className="text-xs text-[var(--multroid-grey)] font-mono">Important (CTA)</p>
-								<NotivaButtonLink href="#" variant="important" size="lg">Important CTA</NotivaButtonLink>
+								<Button asChild variant="important" size="lg"><Link href="#">Important CTA</Link></Button>
 							</div>
 						</div>
 						<p className="text-sm text-[var(--multroid-grey-dark)] mt-8 pt-6 border-t border-[#B0C6EA]">
@@ -217,9 +218,9 @@ export default function BrandPage() {
 					<p className="text-xl text-[#B0C6EA] mb-8 max-w-2xl mx-auto">
 						For press kits, partnership materials, or media requests, get in touch.
 					</p>
-					<NotivaButtonLink href="mailto:press@multroid.com" variant="important" size="lg">
-						Contact Press Team
-					</NotivaButtonLink>
+					<Button asChild variant="important" size="lg">
+						<a href="mailto:press@multroid.com">Contact Press Team</a>
+					</Button>
 				</div>
 			</section>
 		</div>

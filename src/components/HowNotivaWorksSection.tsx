@@ -60,7 +60,26 @@ export default function HowNotivaWorksSection() {
                 </h2>
 
                 <div className="grid w-full grid-cols-1 gap-20 lg:grid-cols-2">
-                    {/* Left: scrolling image stack — each image takes one viewport height so the IntersectionObserver fires cleanly */}
+                    {/* Left: sticky animation — pinned full-viewport-height; cross-fades between step visuals on activeIndex change */}
+                    <div>
+                        <div className="sticky top-0 flex h-screen items-center justify-center">
+                            <div className="relative size-[480px] max-w-full">
+                                {steps.map((step, i) => (
+                                    <div
+                                        key={step.num}
+                                        aria-hidden={i !== activeIndex}
+                                        className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-[#3D87FF]/40 to-[#0047BA]/10 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.5)] transition-opacity duration-500 ${
+                                            i === activeIndex
+                                                ? "opacity-100"
+                                                : "pointer-events-none opacity-0"
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right: scrolling step text — each step takes one viewport height so the IntersectionObserver fires cleanly */}
                     <div className="flex flex-col">
                         {steps.map((step, i) => (
                             <div
@@ -69,45 +88,23 @@ export default function HowNotivaWorksSection() {
                                     refs.current[i] = el
                                 }}
                                 data-step-index={i}
-                                className="flex h-screen items-center justify-center"
+                                className="flex h-screen items-center"
                             >
-                                <div
-                                    className="size-[480px] max-w-full rounded-2xl bg-gradient-to-br from-[#3D87FF]/40 to-[#0047BA]/10 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.5)]"
-                                    aria-hidden="true"
-                                />
+                                <div className="flex flex-col gap-4 text-white">
+                                    <p className="font-bold text-[38px] leading-[57px]">
+                                        Step {step.num}.
+                                    </p>
+                                    <div className="flex max-w-[364px] flex-col gap-2">
+                                        <h3 className="font-bold text-[26px] leading-[39px]">
+                                            {step.title}
+                                        </h3>
+                                        <p className="font-medium text-sm leading-[21px]">
+                                            {step.description}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         ))}
-                    </div>
-
-                    {/* Right: sticky panel — pinned full-viewport-height; content vertically centered; cross-fades on activeIndex change */}
-                    <div>
-                        <div className="sticky top-0 flex h-screen items-center">
-                            <div className="relative h-[260px] w-full">
-                                {steps.map((step, i) => (
-                                    <div
-                                        key={step.num}
-                                        aria-hidden={i !== activeIndex}
-                                        className={`absolute inset-0 flex flex-col gap-4 text-white transition-opacity duration-500 ${
-                                            i === activeIndex
-                                                ? "opacity-100"
-                                                : "pointer-events-none opacity-0"
-                                        }`}
-                                    >
-                                        <p className="font-bold text-[38px] leading-[57px]">
-                                            Step {step.num}.
-                                        </p>
-                                        <div className="flex max-w-[364px] flex-col gap-2">
-                                            <h3 className="font-bold text-[26px] leading-[39px]">
-                                                {step.title}
-                                            </h3>
-                                            <p className="font-medium text-sm leading-[21px]">
-                                                {step.description}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
                     </div>
                 </div>
 

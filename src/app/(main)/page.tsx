@@ -1,5 +1,5 @@
 import HeroSection from '@/components/HeroSection'
-import BoldMessageSection from '@/components/BoldMessageSection'
+import NoviSection from '@/components/NoviSection'
 import BuiltForBigSection from '@/components/BuiltForBigSection'
 import FeaturesSection from '@/components/FeaturesSection'
 import HowNotivaWorksSection from '@/components/HowNotivaWorksSection'
@@ -13,8 +13,8 @@ export default function Home() {
         <>
             <main>
                 <HeroSection />
-                <BoldMessageSection />
                 <BuiltForBigSection />
+                <NoviSection />
                 <FeaturesSection />
                 <HowNotivaWorksSection />
                 <ComparisonSection />

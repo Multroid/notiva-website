@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { CheckIcon, ArrowRightIcon } from "@heroicons/react/24/solid"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Reveal, StaggerGroup, staggerItemVariants } from "@/components/ui/reveal"
 
@@ -76,43 +76,58 @@ function BillingToggle({
     value: Billing
     onChange: (v: Billing) => void
 }) {
+    const isMonthly = value === "monthly"
     return (
         <div
             role="tablist"
-            className="flex items-center justify-center gap-0 rounded-[32px] border-2 border-[rgba(0,71,186,0.25)] p-2"
+            className="relative flex items-center justify-center gap-0 rounded-[32px] border-2 border-[rgba(0,71,186,0.25)] p-2"
         >
             <button
                 type="button"
                 role="tab"
-                aria-selected={value === "monthly"}
+                aria-selected={isMonthly}
                 onClick={() => onChange("monthly")}
-                className={`appearance-none flex w-[100px] items-center justify-center rounded-3xl px-4 py-2 font-semibold text-base leading-6 transition-colors outline-none focus:outline-none ${
-                    value === "monthly"
-                        ? "bg-[#0047BA] text-white"
-                        : "text-[rgba(0,71,186,0.25)]"
-                }`}
+                className="relative appearance-none flex w-[100px] items-center justify-center rounded-3xl px-4 py-2 outline-none focus:outline-none"
             >
-                Monthly
+                {isMonthly && (
+                    <motion.span
+                        layoutId="billing-pill"
+                        aria-hidden
+                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                        className="absolute inset-0 rounded-3xl bg-[#0047BA]"
+                    />
+                )}
+                <motion.span
+                    animate={{ color: isMonthly ? "#FFFFFF" : "rgba(0,71,186,0.25)" }}
+                    transition={{ duration: 0.25 }}
+                    className="relative z-[1] font-semibold text-base leading-6"
+                >
+                    Monthly
+                </motion.span>
             </button>
             <button
                 type="button"
                 role="tab"
-                aria-selected={value === "yearly"}
+                aria-selected={!isMonthly}
                 onClick={() => onChange("yearly")}
-                className={`appearance-none flex items-end justify-center gap-[10px] rounded-3xl px-4 py-2 transition-colors outline-none focus:outline-none ${
-                    value === "yearly"
-                        ? "bg-[#0047BA] text-white"
-                        : ""
-                }`}
+                className="relative appearance-none flex items-end justify-center gap-[10px] rounded-3xl px-4 py-2 outline-none focus:outline-none"
             >
-                <span
-                    className={`font-semibold text-base leading-6 ${
-                        value === "yearly" ? "text-white" : "text-[rgba(0,71,186,0.25)]"
-                    }`}
+                {!isMonthly && (
+                    <motion.span
+                        layoutId="billing-pill"
+                        aria-hidden
+                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                        className="absolute inset-0 rounded-3xl bg-[#0047BA]"
+                    />
+                )}
+                <motion.span
+                    animate={{ color: !isMonthly ? "#FFFFFF" : "rgba(0,71,186,0.25)" }}
+                    transition={{ duration: 0.25 }}
+                    className="relative z-[1] font-semibold text-base leading-6"
                 >
                     Yearly
-                </span>
-                <span className="font-medium text-xs leading-[18px] text-[#1FC16B]">
+                </motion.span>
+                <span className="relative z-[1] font-medium text-xs leading-[18px] text-[#1FC16B]">
                     20% Discount
                 </span>
             </button>
@@ -133,8 +148,19 @@ function PriceCard({ plan, billing }: { plan: Plan; billing: Billing }) {
                         {plan.name}
                     </h3>
                     <div className="flex items-center gap-[10px]">
-                        <span className="font-bold text-[56px] leading-[84px] text-[#0047BA] whitespace-nowrap">
-                            {plan.price[billing]}
+                        <span className="relative inline-flex font-bold text-[56px] leading-[84px] text-[#0047BA] whitespace-nowrap overflow-hidden">
+                            <AnimatePresence mode="popLayout" initial={false}>
+                                <motion.span
+                                    key={billing}
+                                    initial={{ y: "60%", opacity: 0, filter: "blur(6px)" }}
+                                    animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                                    exit={{ y: "-60%", opacity: 0, filter: "blur(6px)" }}
+                                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                                    className="inline-block"
+                                >
+                                    {plan.price[billing]}
+                                </motion.span>
+                            </AnimatePresence>
                         </span>
                         <span className="font-medium text-lg leading-[27px] text-[#8E8E8E]">
                             /mo

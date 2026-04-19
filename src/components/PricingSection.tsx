@@ -3,7 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import { CheckIcon, ArrowRightIcon } from "@heroicons/react/24/solid"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Reveal, StaggerGroup, staggerItemVariants } from "@/components/ui/reveal"
 
 type Plan = {
     id: string
@@ -120,7 +122,10 @@ function BillingToggle({
 
 function PriceCard({ plan, billing }: { plan: Plan; billing: Billing }) {
     return (
-        <div className="flex w-[402px] shrink-0 flex-col gap-6 overflow-hidden rounded-2xl bg-white p-8 shadow-[0px_0px_20px_-1px_rgba(0,71,186,0.2)]">
+        <motion.div
+            variants={staggerItemVariants}
+            className="flex w-[402px] shrink-0 flex-col gap-6 overflow-hidden rounded-2xl bg-white p-8 shadow-[0px_0px_20px_-1px_rgba(0,71,186,0.2)]"
+        >
             {/* Heading */}
             <div className="flex w-full items-center gap-4">
                 <div className="flex flex-1 flex-col justify-center gap-6">
@@ -181,7 +186,7 @@ function PriceCard({ plan, billing }: { plan: Plan; billing: Billing }) {
                     <Link href="/register">{plan.cta}</Link>
                 </Button>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
@@ -191,29 +196,36 @@ export default function PricingSection() {
     return (
         <section className="flex flex-col items-center justify-center gap-14 px-4 py-20">
             {/* Heading */}
-            <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <Reveal className="flex flex-col items-center justify-center gap-4 text-center">
                 <h2 className="font-bold text-[56px] leading-[84px] text-[#333333]">
                     Simple pricing
                 </h2>
                 <p className="font-medium text-lg leading-[27px] text-[#8E8E8E]">
                     Choose what works for you
                 </p>
-            </div>
+            </Reveal>
 
             {/* Billing toggle */}
-            <BillingToggle value={billing} onChange={setBilling} />
+            <Reveal delay={0.1}>
+                <BillingToggle value={billing} onChange={setBilling} />
+            </Reveal>
 
             {/* Plans container */}
             <div className="flex w-full flex-col items-center gap-14">
-                <div className="flex max-w-full items-stretch justify-center gap-6 overflow-x-auto px-14 py-8">
+                <StaggerGroup
+                    stagger={0.12}
+                    className="flex max-w-full items-stretch justify-center gap-6 overflow-x-auto px-14 py-8"
+                >
                     {plans.map((plan) => (
                         <PriceCard key={plan.id} plan={plan} billing={billing} />
                     ))}
-                </div>
+                </StaggerGroup>
 
-                <p className="font-medium text-base leading-6 text-[#F05627] text-center">
-                    All plans include a 7-day free trial.
-                </p>
+                <Reveal as="div">
+                    <p className="font-medium text-base leading-6 text-[#F05627] text-center">
+                        All plans include a 7-day free trial.
+                    </p>
+                </Reveal>
             </div>
         </section>
     )

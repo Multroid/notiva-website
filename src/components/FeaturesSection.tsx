@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import {
     ChartPieIcon,
@@ -9,6 +11,7 @@ import {
     CreditCardIcon,
 } from "@heroicons/react/24/solid"
 import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/ui/reveal"
 
 type FeatureContentProps = {
     icon: React.ComponentType<{ className?: string }>
@@ -55,7 +58,7 @@ export default function FeaturesSection() {
         <section className="flex flex-col items-center justify-center px-4 py-[168px]">
             <div className="flex w-full max-w-[1440px] flex-col items-center gap-20">
                 {/* Header */}
-                <div className="flex w-full flex-col items-center gap-12 px-[200px] text-center">
+                <Reveal className="flex w-full flex-col items-center gap-12 px-[200px] text-center">
                     <h2 className="font-bold text-[44px] leading-[48px] text-[#0047BA] whitespace-nowrap">
                         Everything you need. One AI.
                     </h2>
@@ -63,10 +66,10 @@ export default function FeaturesSection() {
                         Notiva combines open banking, AI-native intelligence, and German financial
                         expertise — so your money works while you focus on everything else.
                     </p>
-                </div>
+                </Reveal>
 
                 {/* Grid */}
-                <div className="grid w-full grid-cols-4 gap-6">
+                <Reveal className="grid w-full grid-cols-4 gap-6">
                     {/* Row 1 */}
                     {/* AI Financial Advisor — cols 1-2 */}
                     <div className="col-span-2 flex h-[354px] items-center justify-center gap-4 rounded-2xl bg-[rgba(0,71,186,0.1)] p-4">
@@ -169,23 +172,25 @@ export default function FeaturesSection() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Reveal>
 
                 {/* CTA buttons */}
-                <div className="flex items-center gap-4">
+                <Reveal className="flex items-center gap-4">
                     <Button asChild variant="primary">
                         <Link href="/register">Get Started for free</Link>
                     </Button>
                     <Button asChild variant="secondary">
                         <Link href="/features">Check out all features</Link>
                     </Button>
-                </div>
+                </Reveal>
 
                 {/* Disclaimer */}
-                <p className="text-center font-medium text-base leading-6 text-black">
-                    Advisory only — Novi never moves money or executes without your explicit
-                    approval. Savings based on average German household research data.
-                </p>
+                <Reveal as="div">
+                    <p className="text-center font-medium text-base leading-6 text-black">
+                        Advisory only — Novi never moves money or executes without your explicit
+                        approval. Savings based on average German household research data.
+                    </p>
+                </Reveal>
             </div>
         </section>
     )

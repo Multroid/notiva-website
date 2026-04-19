@@ -1,11 +1,14 @@
-import { NotivaInputField } from "@/components/ui/notiva-input-field"
+"use client"
+
+import NewsletterForm from "@/components/NewsletterForm"
 import NoviAnimation from "@/components/NoviAnimation"
+import { Reveal } from "@/components/ui/reveal"
 
 export default function NewsletterCtaSection() {
     return (
         <section className="flex items-center justify-center px-4 py-[168px]">
             <div className="flex w-full max-w-[1440px] flex-1 items-center justify-center gap-20">
-                <div className="flex h-[334px] w-[800px] max-w-[800px] shrink-0 flex-col items-start justify-center gap-10 px-8 py-4">
+                <Reveal direction="right" className="flex h-[334px] w-[800px] max-w-[800px] shrink-0 flex-col items-start justify-center gap-10 px-8 py-4">
                     <h2 className="w-full font-bold text-[44px] leading-[48px] text-[#0047BA]">
                         Get smarter about your money. Every week.
                     </h2>
@@ -22,12 +25,12 @@ export default function NewsletterCtaSection() {
                         </p>
                     </div>
 
-                    <NotivaInputField />
-                </div>
+                    <NewsletterForm source="newsletter-cta" />
+                </Reveal>
 
-                <div className="relative size-[334px] shrink-0">
+                <Reveal direction="left" delay={0.15} className="relative size-[334px] shrink-0">
                     <NoviAnimation />
-                </div>
+                </Reveal>
             </div>
         </section>
     )

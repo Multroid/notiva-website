@@ -5,6 +5,7 @@ import Link from "next/link"
 import { PlayIcon } from "@heroicons/react/24/solid"
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { AnimatePresence, motion } from "framer-motion"
+import { Reveal } from "@/components/ui/reveal"
 
 type Persona = {
     id: string
@@ -157,7 +158,7 @@ export default function BuiltForBigSection() {
     return (
         <section className="flex flex-col items-center gap-20 overflow-x-clip px-4 py-[168px]">
             {/* Headline row */}
-            <div className="flex w-full max-w-[1440px] items-center justify-center gap-14 px-4">
+            <Reveal className="flex w-full max-w-[1440px] items-center justify-center gap-14 px-4">
                 <div className="flex flex-1 flex-col items-start gap-2">
                     <p className="font-bold text-[22px] leading-[33px] text-[#7DAFFF]">
                         Built for real life
@@ -173,10 +174,10 @@ export default function BuiltForBigSection() {
                         {"\n"}than manage spreadsheets.
                     </p>
                 </div>
-            </div>
+            </Reveal>
 
             {/* Cards + Tabs */}
-            <div className="flex w-full flex-col items-center gap-[120px]">
+            <Reveal delay={0.1} className="flex w-full flex-col items-center gap-[120px]">
                 <div className="relative flex w-full items-center justify-center">
                     <AnimatePresence
                         initial={false}
@@ -276,7 +277,7 @@ export default function BuiltForBigSection() {
                         })}
                     </div>
                 </div>
-            </div>
+            </Reveal>
         </section>
     )
 }

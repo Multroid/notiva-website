@@ -12,6 +12,7 @@ import {
     MapIcon,
 } from "@heroicons/react/24/outline"
 import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/ui/reveal"
 
 type Status = "yes" | "partial" | "none"
 
@@ -159,11 +160,13 @@ export default function ComparisonSection() {
     return (
         <section className="flex flex-col items-center justify-center px-4 py-[168px]">
             <div className="flex w-full max-w-[1440px] flex-col items-center gap-20">
-                <h2 className="text-center font-bold text-[46px] leading-[69px] text-[#0047BA]">
-                    Notiva does it all, so you don&rsquo;t have to.
-                </h2>
+                <Reveal as="div" className="w-full">
+                    <h2 className="text-center font-bold text-[46px] leading-[69px] text-[#0047BA]">
+                        Notiva does it all, so you don&rsquo;t have to.
+                    </h2>
+                </Reveal>
 
-                <div className="flex w-full max-w-full flex-col items-center gap-10 overflow-x-auto">
+                <Reveal delay={0.1} className="flex w-full max-w-full flex-col items-center gap-10 overflow-x-auto">
                     <div className="flex w-[1188px] shrink-0 flex-col px-12">
                         {/* Header row */}
                         <div className="relative flex w-full items-center py-4">
@@ -289,7 +292,7 @@ export default function ComparisonSection() {
                     <Button asChild variant="secondary">
                         <Link href="/features">Compare in detail</Link>
                     </Button>
-                </div>
+                </Reveal>
             </div>
         </section>
     )

@@ -50,3 +50,24 @@ export function getMainAppDashboardUrl(): string {
   return `${getConsumerAppUrl()}/home`
 }
 
+/**
+ * Get the Notiva API base URL (e.g. https://api.notiva.de)
+ */
+export function getApiAppUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_APP_URL
+  if (envUrl) return envUrl.replace(/\/$/, "")
+
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname
+    const protocol = window.location.protocol
+
+    if (hostname === "notiva.de" || hostname === "www.notiva.de") {
+      return `${protocol}//api.notiva.de`
+    }
+
+    return `${protocol}//${hostname}:4000`
+  }
+
+  return "http://localhost:4000"
+}
+

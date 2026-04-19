@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/ui/reveal"
 
 const steps = [
     {
@@ -53,11 +54,13 @@ export default function HowNotivaWorksSection() {
     return (
         <section className="bg-[#00286A] px-4 py-[168px]">
             <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-[120px]">
-                <h2 className="text-center font-bold text-[46px] leading-[69px] text-white">
-                    Set up in minutes.
-                    <br />
-                    Works for you forever.
-                </h2>
+                <Reveal as="div">
+                    <h2 className="text-center font-bold text-[46px] leading-[69px] text-white">
+                        Set up in minutes.
+                        <br />
+                        Works for you forever.
+                    </h2>
+                </Reveal>
 
                 <div className="grid w-full grid-cols-1 gap-20 lg:grid-cols-2">
                     {/* Left: sticky animation — pinned full-viewport-height; cross-fades between step visuals on activeIndex change */}
@@ -108,9 +111,11 @@ export default function HowNotivaWorksSection() {
                     </div>
                 </div>
 
-                <Button asChild variant="secondary">
-                    <Link href="/features">Learn More</Link>
-                </Button>
+                <Reveal>
+                    <Button asChild variant="secondary">
+                        <Link href="/features">Learn More</Link>
+                    </Button>
+                </Reveal>
             </div>
         </section>
     )

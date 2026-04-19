@@ -5,6 +5,7 @@ import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/ui/reveal"
 import financialManagerImg from "../../public/illustrations/novi/financial-manager.png"
 import noviDefaultImg from "../../public/illustrations/novi/novi-default.png"
 
@@ -131,13 +132,15 @@ export default function NoviSection() {
         <section className="flex flex-col items-center justify-center gap-8 bg-[rgba(51,51,51,0.1)] px-4 py-[168px]">
             <div className="flex w-full max-w-[1440px] flex-col items-center justify-center gap-14">
                 {/* Heading */}
-                <h2 className="w-full max-w-[1100px] text-center font-bold text-[46px] leading-[69px] text-[#333333]">
-                    Built to <span className="text-[#F05627]">power</span> your
-                    <br />
-                    financial life
-                </h2>
+                <Reveal as="div" className="w-full">
+                    <h2 className="w-full max-w-[1100px] mx-auto text-center font-bold text-[46px] leading-[69px] text-[#333333]">
+                        Built to <span className="text-[#F05627]">power</span> your
+                        <br />
+                        financial life
+                    </h2>
+                </Reveal>
 
-                <div className="flex w-full max-w-[1148px] flex-col items-stretch gap-20">
+                <Reveal delay={0.1} className="flex w-full max-w-[1148px] flex-col items-stretch gap-20">
                     {/* Category cards */}
                     <div
                         role="tablist"
@@ -221,7 +224,7 @@ export default function NoviSection() {
                             </motion.div>
                         </AnimatePresence>
                     </div>
-                </div>
+                </Reveal>
             </div>
         </section>
     )

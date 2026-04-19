@@ -1,6 +1,9 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import NewsletterForm from "@/components/NewsletterForm"
+import { Reveal } from "@/components/ui/reveal"
 
 const linkColumns = [
     {
@@ -39,7 +42,7 @@ export default function Footer() {
         >
             <div className="mx-auto w-full max-w-[1440px]">
                 {/* Top section: logo + tagline + newsletter */}
-                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 px-10 py-6">
+                <Reveal className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 px-10 py-6">
                     <div className="flex flex-1 items-center gap-6 pr-6">
                         <div className="flex items-center gap-6 max-w-[448px]">
                             <Image
@@ -66,12 +69,12 @@ export default function Footer() {
                         <p className="font-normal text-base leading-5 tracking-[0.32px] text-[#FEFDFD]">
                             Get the latest updates on our products and innovations.
                         </p>
-                        <NewsletterForm />
+                        <NewsletterForm source="footer" />
                     </div>
-                </div>
+                </Reveal>
 
                 {/* Link columns */}
-                <div className="flex flex-col sm:flex-row items-start justify-between gap-10 px-10 py-[10px]">
+                <Reveal delay={0.1} className="flex flex-col sm:flex-row items-start justify-between gap-10 px-10 py-[10px]">
                     {linkColumns.map((col) => (
                         <div
                             key={col.title}
@@ -92,7 +95,7 @@ export default function Footer() {
                             </ul>
                         </div>
                     ))}
-                </div>
+                </Reveal>
             </div>
 
             {/* Giant brand wordmark */}

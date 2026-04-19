@@ -1,7 +1,11 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import LanguageDropdown from "@/components/LanguageDropdown"
+import { WaitlistDialog } from "@/components/WaitlistDialog"
 
 const navLinks = [
     { label: "Features", href: "/features" },
@@ -11,6 +15,7 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+    const [waitlistOpen, setWaitlistOpen] = useState(false)
     return (
         <header className="sticky top-0 z-40 w-full backdrop-blur-[6px] bg-white/80">
             <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-10 py-[18px]">
@@ -52,12 +57,13 @@ export default function Navbar() {
                         <Button asChild variant="secondaryClean">
                             <Link href="/login">Log in</Link>
                         </Button>
-                        <Button asChild variant="primary">
-                            <Link href="/register">Join the waitlist</Link>
+                        <Button variant="primary" onClick={() => setWaitlistOpen(true)}>
+                            Join the waitlist
                         </Button>
                     </div>
                 </div>
             </div>
+            <WaitlistDialog open={waitlistOpen} onOpenChange={setWaitlistOpen} />
         </header>
     )
 }

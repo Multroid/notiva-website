@@ -10,9 +10,9 @@ import '@/styles/notiva/page.css';
 import '@/styles/notiva/shop.css';
 
 import { JsonLd } from '@/components/notiva/json-ld';
+import { getCatalogue } from '@/lib/fourthwall/catalogue';
 import { NOINDEX, pageMetadata } from '@/lib/page-metadata';
 import {
-	MERCH_PRICE_EUR,
 	graph,
 	merchBreadcrumb,
 	product,
@@ -54,10 +54,10 @@ function firstSentence(text: string): string {
  *  ordering it today is a non-binding pre-order. The last part is not optional
  *  — the shop takes no money until launch, and a description implying otherwise
  *  would be a claim the site does not honour. */
-function merchDescription(slug: MerchId): string {
+function merchDescription(slug: MerchId, priceEur: number): string {
 	const copy = PRODUCT_COPY[slug];
 	return (
-		`${copy.name.de} von Notiva für €${MERCH_PRICE_EUR[slug]} inkl. MwSt. ` +
+		`${copy.name.de} von Notiva für €${priceEur} inkl. MwSt. ` +
 		`${firstSentence(copy.desc.de)} Vorbestellung, unverbindlich bis zum Launch 2026.`
 	);
 }
@@ -78,9 +78,12 @@ export async function generateMetadata({
 	if (!isMerchSlug(slug)) {
 		return { title: 'Notiva · Seite nicht gefunden', robots: NOINDEX };
 	}
+	/* The price in the meta description is a public claim, so it is the live one
+	   whenever a shop is configured. */
+	const catalogue = await getCatalogue();
 	return pageMetadata({
 		title: `Notiva · ${PRODUCT_COPY[slug].name.de}`,
-		description: merchDescription(slug),
+		description: merchDescription(slug, catalogue[slug].price),
 		path: `/merch/${slug}`,
 		/* opengraph-image.tsx sits in this segment and renders the product name
 		   and price, so let Next merge that card instead of the generic one. */
@@ -95,16 +98,26 @@ export default async function MerchSlugPage({
 }) {
 	const { slug } = await params;
 	if (!isMerchSlug(slug)) notFound();
+	const entry = (await getCatalogue())[slug];
 	return (
 		<>
 			{/* Product + Offer (PreOrder, EUR, VAT included, seller = the
 			    Organization node from the group layout) and the Start →
 			    Unterstützen → product trail, which mirrors how the page is
 			    actually reached: the grid lives on /support, there is no
-			    /merch index. */}
+			    /merch index.
+
+			    Price and images are the live Fourthwall ones so the markup, the
+			    rendered page and the checkout all state the same thing. */}
 			<JsonLd
 				id="ld-product"
-				data={graph(product(slug), merchBreadcrumb(slug))}
+				data={graph(
+					product(slug, {
+						priceEur: entry.price,
+						images: entry.images.map((img) => img.url),
+					}),
+					merchBreadcrumb(slug)
+				)}
 			/>
 			<MerchProduct slug={slug} />
 		</>

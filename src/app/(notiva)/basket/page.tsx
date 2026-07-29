@@ -9,9 +9,17 @@
 
    The floating basket bar is deliberately not rendered here — the source
    refuses to build it whenever [data-basket-lines] is on the page
-   (notiva-shop.js line 74), and BasketBar itself also bails on /basket. */
+   (notiva-shop.js line 74), and BasketBar itself also bails on /basket.
 
-import React, { useState } from 'react';
+   WHERE THE DESIGN'S CHECKOUT FORM WENT
+   The mock had a name/email/address form and a "Bestellung notiert" overlay.
+   Both are gone: with Fourthwall there is no Notiva-side checkout to fill in.
+   Fourthwall collects the address, takes the payment, computes tax and shipping
+   and sends the confirmation, so the page ends at one button that turns this
+   basket into a Fourthwall cart and leaves. Nothing about the layout above that
+   button changed. */
+
+import React, { useState, useTransition } from 'react';
 import Link from 'next/link';
 
 import '@/styles/notiva/page.css';
@@ -19,103 +27,113 @@ import '@/styles/notiva/shop.css';
 
 import { useLang } from '@/components/notiva/lang-context';
 import { MERCH, fmt, useBasket } from '@/components/notiva/basket-context';
+import { startCheckout } from '@/lib/fourthwall/checkout-action';
 import { NotivaHeader } from '@/components/notiva/notiva-header';
 import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { NotivaFooter } from '@/components/notiva/notiva-footer';
 import { OverlayCard } from '@/components/notiva/overlay-card';
 
 /* The subset of the T table in assets/notiva-shop.js (lines 17–30) that the
-   basket page reads. Strings are verbatim. */
+   basket page reads, plus the strings the Fourthwall handoff needs. Strings
+   carried over from the design are verbatim. */
 const SHOP_T = {
 	de: {
 		size: 'Größe',
 		free: 'kostenlos',
 		sub: 'Zwischensumme',
-		ship: 'Versand',
+		ship: 'Versand (geschätzt)',
 		total: 'Gesamt',
 		remove: 'Entfernen',
 		more: 'Menge erhöhen',
 		less: 'Menge verringern',
-		needAll: 'Bitte Name, E-Mail und vollständige Adresse angeben.',
 		close: 'Schließen',
-		okT: 'Bestellung notiert.',
-		okB: 'Wir bestätigen per E-Mail, sobald der Shop live ist.',
-		okN: 'Abgebucht wird nichts, solange der Zahlungsdienstleister nicht angebunden ist.',
+		checkout: 'Zur Kasse',
+		checkoutBusy: 'Einen Moment …',
+		fine: 'Preise inklusive Mehrwertsteuer. Versand und Steuer werden an der Kasse endgültig berechnet.',
+		leaving:
+			'Die Kasse liegt bei Fourthwall, unserem Shop-Partner: dort gibst du Adresse und Zahlung ein, von dort kommt die Bestätigung.',
+		offT: 'Der Shop ist noch nicht offen.',
+		offB: 'Die Kasse wird angebunden, sobald der Shop live ist. Dein Korb bleibt bis dahin gespeichert.',
+		offN: 'Es wird nichts abgebucht und keine Adresse gespeichert.',
+		errT: 'Das hat nicht geklappt.',
+		errB: 'Die Kasse war gerade nicht erreichbar. Versuch es bitte gleich noch einmal.',
+		errN: 'Dein Korb ist unverändert, abgebucht wurde nichts.',
+		goneT: 'Der Korb ist nicht mehr aktuell.',
+		goneB: 'Diese Artikel gibt es so nicht mehr. Bitte leg sie noch einmal in den Korb.',
+		goneN: 'Abgebucht wurde nichts.',
 	},
 	en: {
 		size: 'Size',
 		free: 'free',
 		sub: 'Subtotal',
-		ship: 'Shipping',
+		ship: 'Shipping (estimate)',
 		total: 'Total',
 		remove: 'Remove',
 		more: 'Increase quantity',
 		less: 'Decrease quantity',
-		needAll: 'Please enter a name, an email and a complete address.',
 		close: 'Close',
-		okT: 'Order noted.',
-		okB: 'We will confirm by email as soon as the shop is live.',
-		okN: 'Nothing is charged until the payment provider is connected.',
+		checkout: 'Go to checkout',
+		checkoutBusy: 'One moment …',
+		fine: 'Prices include VAT. Shipping and tax are calculated finally at checkout.',
+		leaving:
+			'Checkout runs on Fourthwall, our shop partner: you enter your address and payment there, and the confirmation comes from them.',
+		offT: 'The shop is not open yet.',
+		offB: 'Checkout gets connected once the shop is live. Your basket is kept until then.',
+		offN: 'Nothing is charged and no address is stored.',
+		errT: 'That did not work.',
+		errB: 'Checkout was not reachable just now. Please try again in a moment.',
+		errN: 'Your basket is unchanged and nothing was charged.',
+		goneT: 'This basket is out of date.',
+		goneB: 'These items are no longer available in this form. Please add them again.',
+		goneN: 'Nothing was charged.',
 	},
 } as const;
 
-const MAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-interface Delivery {
-	name: string;
-	mail: string;
-	street: string;
-	zip: string;
-	city: string;
-	country: string;
-}
-
-const EMPTY_DELIVERY: Delivery = {
-	name: '',
-	mail: '',
-	street: '',
-	zip: '',
-	city: '',
-	country: 'Deutschland',
-};
+type Problem = 'unconfigured' | 'unavailable' | 'failed';
 
 export default function BasketPage(): React.JSX.Element {
 	const { lang } = useLang();
-	const { lines, setQty, clear, subtotal, shipping } = useBasket();
+	const { lines, setQty, subtotal, shipping, priceOf, catalogue, checkoutLines } =
+		useBasket();
 	const t = SHOP_T[lang];
 
-	const [delivery, setDelivery] = useState<Delivery>(EMPTY_DELIVERY);
-	const [error, setError] = useState(false);
-	const [done, setDone] = useState(false);
+	const [problem, setProblem] = useState<Problem | null>(null);
+	const [pending, startTransition] = useTransition();
 
 	/* <html data-title-de/-en> — applyLang() rewrites document.title */
 	useNotivaTitle('Notiva · Korb', 'Notiva · Basket');
 
-	const field =
-		(key: keyof Delivery) => (e: React.ChangeEvent<HTMLInputElement>) => {
-			const v = e.target.value;
-			setDelivery((prev) => ({ ...prev, [key]: v }));
-		};
-
-	function order() {
-		const okMail = MAIL_RE.test(delivery.mail.trim());
-		if (
-			!delivery.name.trim() ||
-			!okMail ||
-			!delivery.street.trim() ||
-			!delivery.zip.trim() ||
-			!delivery.city.trim()
-		) {
-			setError(true);
+	function checkout() {
+		const items = checkoutLines();
+		if (!items.length) {
+			/* Nothing resolved to a live variant: either no shop is configured yet,
+			   or the basket outlived the products in it. */
+			setProblem(catalogue.shirt.source === 'local' ? 'unconfigured' : 'unavailable');
 			return;
 		}
-		setError(false);
-		setDone(true);
-		clear();
+		startTransition(async () => {
+			const result = await startCheckout(items);
+			if (result.ok) {
+				/* Hard navigation on purpose — the destination is Fourthwall's
+				   domain, not a Next route. The basket is deliberately NOT cleared:
+				   checkout can still be abandoned, and Fourthwall owns the cart from
+				   here, so the only safe local state is "unchanged". */
+				window.location.href = result.url;
+				return;
+			}
+			setProblem(result.reason === 'empty' ? 'unavailable' : result.reason);
+		});
 	}
 
 	const total = subtotal + shipping;
 	const isEmpty = lines.length === 0;
+
+	const overlay =
+		problem === 'unconfigured'
+			? { title: t.offT, body: t.offB, note: t.offN }
+			: problem === 'unavailable'
+				? { title: t.goneT, body: t.goneB, note: t.goneN }
+				: { title: t.errT, body: t.errB, note: t.errN };
 
 	return (
 		<div className="notiva-shell nv-page nv-shop" lang={lang}>
@@ -146,12 +164,14 @@ export default function BasketPage(): React.JSX.Element {
 						<div className="blines" data-basket-lines="">
 							{lines.map((l, i) => {
 								const it = MERCH[l.id];
+								const unit = priceOf(l.id, l.size);
+								const thumb = catalogue[l.id]?.images[0]?.url ?? it.img;
 								return (
 									<div className="bline" key={`${l.id}|${l.size}|${i}`}>
 										<div className="thumb">
-											{it.img ? (
+											{thumb ? (
 												// eslint-disable-next-line @next/next/no-img-element
-												<img src={it.img} alt="" loading="lazy" decoding="async" />
+												<img src={thumb} alt="" loading="lazy" decoding="async" />
 											) : (
 												'✦'
 											)}
@@ -162,7 +182,7 @@ export default function BasketPage(): React.JSX.Element {
 											</div>
 											<div className="vr">
 												{(l.size ? `${t.size} ${l.size} · ` : '') +
-													fmt(it.price, lang)}
+													fmt(unit, lang)}
 											</div>
 											<button
 												type="button"
@@ -190,7 +210,7 @@ export default function BasketPage(): React.JSX.Element {
 													+
 												</button>
 											</div>
-											<div className="lp">{fmt(it.price * l.qty, lang)}</div>
+											<div className="lp">{fmt(unit * l.qty, lang)}</div>
 										</div>
 									</div>
 								);
@@ -216,126 +236,31 @@ export default function BasketPage(): React.JSX.Element {
 							className="fine"
 							style={{ marginLeft: 'auto', textAlign: 'right', maxWidth: 420 }}
 						>
-							{lang === 'de'
-								? 'Preise inklusive Mehrwertsteuer. Versand frei ab €60.'
-								: 'Prices include VAT. Free shipping from €60.'}
+							{t.fine}
 						</p>
 
-						<h2 style={{ marginTop: 'clamp(30px,4vw,48px)' }}>
-							{lang === 'de' ? 'Lieferung' : 'Delivery'}
-						</h2>
-
 						<div className="co">
-							<div className="field wide">
-								<label htmlFor="co-name">{lang === 'de' ? 'Name' : 'Name'}</label>
-								<input
-									id="co-name"
-									type="text"
-									autoComplete="name"
-									placeholder="Alex Weber"
-									value={delivery.name}
-									onChange={field('name')}
-								/>
-							</div>
-							<div className="field wide">
-								<label htmlFor="co-mail">
-									{lang === 'de'
-										? 'E-Mail für die Bestätigung'
-										: 'Email for the confirmation'}
-								</label>
-								<input
-									id="co-mail"
-									type="email"
-									autoComplete="email"
-									placeholder={
-										lang === 'de' ? 'du@beispiel.de' : 'you@example.com'
-									}
-									value={delivery.mail}
-									onChange={field('mail')}
-								/>
-							</div>
-							<div className="field wide">
-								<label htmlFor="co-street">
-									{lang === 'de'
-										? 'Straße und Hausnummer'
-										: 'Street and number'}
-								</label>
-								<input
-									id="co-street"
-									type="text"
-									autoComplete="street-address"
-									placeholder={
-										lang === 'de' ? 'Beispielstraße 12' : 'Example Street 12'
-									}
-									value={delivery.street}
-									onChange={field('street')}
-								/>
-							</div>
-							<div className="field">
-								<label htmlFor="co-zip">
-									{lang === 'de' ? 'PLZ' : 'Postcode'}
-								</label>
-								<input
-									id="co-zip"
-									type="text"
-									inputMode="numeric"
-									autoComplete="postal-code"
-									placeholder="10115"
-									value={delivery.zip}
-									onChange={field('zip')}
-								/>
-							</div>
-							<div className="field">
-								<label htmlFor="co-city">{lang === 'de' ? 'Ort' : 'City'}</label>
-								<input
-									id="co-city"
-									type="text"
-									autoComplete="address-level2"
-									placeholder="Berlin"
-									value={delivery.city}
-									onChange={field('city')}
-								/>
-							</div>
-							<div className="field wide">
-								<label htmlFor="co-country">
-									{lang === 'de' ? 'Land' : 'Country'}
-								</label>
-								<input
-									id="co-country"
-									type="text"
-									autoComplete="country-name"
-									value={delivery.country}
-									onChange={field('country')}
-								/>
-							</div>
 							<button
 								className="btn btn-solid cobtn"
 								type="button"
-								onClick={order}
+								disabled={pending}
+								onClick={checkout}
 							>
-								{lang === 'de' ? 'Bestellung abschicken' : 'Place the order'}
+								{pending ? t.checkoutBusy : `${t.checkout} · ${fmt(total, lang)}`}
 							</button>
 						</div>
 
-						<p className="err" id="co-err" hidden={!error}>
-							{t.needAll}
-						</p>
-
-						<p className="fine">
-							{lang === 'de'
-								? 'Diese Seite ist ein Entwurf: es wird keine Zahlung ausgelöst und keine Adresse gespeichert. Sobald der Shop live ist, bestätigen wir jede Bestellung per E-Mail.'
-								: 'This page is a draft: no payment is taken and no address is stored. Once the shop is live we confirm every order by email.'}
-						</p>
+						<p className="fine">{t.leaving}</p>
 					</div>
 				</div>
 			</section>
 
 			<OverlayCard
-				open={done}
-				onClose={() => setDone(false)}
-				title={t.okT}
-				body={t.okB}
-				note={t.okN}
+				open={problem !== null}
+				onClose={() => setProblem(null)}
+				title={overlay.title}
+				body={overlay.body}
+				note={overlay.note}
 				closeLabel={t.close}
 			/>
 

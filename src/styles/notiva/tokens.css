@@ -189,10 +189,11 @@
   color: var(--blue-400);
 }
 
-/* Full-viewport lock used by the Coming Soon page (was html,body{overflow:hidden}). */
+/* Full-viewport sizing for the Coming Soon page (was html,body{overflow:hidden}).
+   The `overflow:hidden` half is gone: the page now sizes itself with
+   min-height:100vh and gives space back from the dashboard mock before
+   anything is cut (see (notiva)/coming-soon-shell.css), so a scrollbar only
+   appears on a viewport too short to hold the hero at all — and on those it
+   has to appear, or the bottom of the hero is simply unreachable. */
 html.notiva-locked,
-html.notiva-locked body { height: 100%; overflow: hidden; }
-@media (max-height: 760px), (max-width: 900px) {
-  html.notiva-locked,
-  html.notiva-locked body { height: auto; min-height: 100%; overflow: visible; }
-}
+html.notiva-locked body { height: auto; min-height: 100%; }

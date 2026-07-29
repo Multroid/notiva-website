@@ -49,10 +49,17 @@ const TARGETS = [
 	     coming-soon.css .stagewrap>img  height: calc(var(--pad)*1.2) -> max 182px
 	     for-investors.css .novi-cta img height: clamp(150px,15vw,196px)
 	     support.css .novi-hero img      height: clamp(108px,12vw,164px)
-	     support.css .novi-react img     height: clamp(104px,10vw,138px)
 	     support.css .novi-thanks img    height: clamp(92px,8vw,124px)
 	     coming-soon.css .brief>img 62px / .pbrief>img 54px
-	     page.css .ovcard img            76x76 */
+	     page.css .ovcard img            76x76
+
+	   Deliberately NOT here: the four react-*.webp poses in the same folder.
+	   They arrived framed differently from one another and flattened onto a
+	   transparency checkerboard, so they needed keying back to real alpha and
+	   re-laying onto a shared 607x709 canvas at a common face width — see the
+	   note in src/components/notiva/novi.tsx. Running a plain 640-wide resize
+	   over them would throw that normalisation away, so if a new react-* master
+	   ever lands, redo that step rather than adding it to this list. */
 	...[
 		'calendar',
 		'happy',

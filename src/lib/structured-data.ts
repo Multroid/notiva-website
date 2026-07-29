@@ -354,22 +354,33 @@ export type ProductSchema = {
 	};
 };
 
-/** One merch PDP. Name/description/material/images come from `PRODUCT_COPY`
- *  (German), the price from `MERCH_PRICE_EUR`.
+/** One merch PDP. Name/description/material come from `PRODUCT_COPY` (German).
+ *
+ *  Price and images are overridable because the live figures come from
+ *  Fourthwall: what this emits has to be what the page prints and what the
+ *  customer is actually charged, and a JSON-LD offer that disagrees with the
+ *  checkout is a misrepresentation, not a stale cache. `MERCH_PRICE_EUR` and
+ *  the local gallery remain the defaults for when no shop is configured.
  *
  *  `availability` is `PreOrder` on purpose: orders are non-binding until launch
  *  and nothing is charged. No rating, no review count, no return policy and no
  *  shipping node — none of those are substantiated. `image` is omitted for the
  *  six products that have no photograph yet. */
-export function product(slug: MerchId): ProductSchema {
+export function product(
+	slug: MerchId,
+	overrides: { priceEur?: number; images?: string[] } = {}
+): ProductSchema {
 	const copy = PRODUCT_COPY[slug];
 	const url = absoluteUrl(`/merch/${slug}`);
-	const price = money(MERCH_PRICE_EUR[slug]);
+	const price = money(overrides.priceEur ?? MERCH_PRICE_EUR[slug]);
 
-	const images = [copy.gallery.main, ...copy.gallery.thumbs]
-		.map((slot) => slot.src)
-		.filter((src): src is string => typeof src === 'string' && src.length > 0)
-		.map(absoluteUrl);
+	/* Fourthwall image URLs are already absolute and already public. */
+	const images = overrides.images?.length
+		? overrides.images
+		: [copy.gallery.main, ...copy.gallery.thumbs]
+				.map((slot) => slot.src)
+				.filter((src): src is string => typeof src === 'string' && src.length > 0)
+				.map(absoluteUrl);
 
 	return compact({
 		'@context': SCHEMA_CONTEXT,

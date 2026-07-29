@@ -6,17 +6,125 @@
    — with `height:auto`, which breaks the percentage chain, so `.nv-coming-soon`
    would collapse to content height and `main{flex:1}` would never fill the
    screen. Measuring the shell root against the viewport gives exactly the
-   result the source had. The small/short breakpoint is the one from the source
-   (`@media(max-height:760px),(max-width:900px)`), where the page scrolls again
-   and `.page{min-height:100vh}` takes over. */
+   result the source had.
+
+   ── vertical budget ──────────────────────────────────────────────────
+   The source paid for its full-viewport lock with a hard cliff: above
+   `max-height:760px` the shell was `height:100vh;overflow:hidden` and `main`
+   was `flex:1;min-height:0;overflow:hidden`, so on any screen between roughly
+   760px and 900px tall the hero was the element that gave way — the trust row
+   was sliced in half mid-glyph and the page still could not scroll to reveal
+   it. Below 760px it flipped to a scrolling document in one step.
+
+   Inverted here, in two modes.
+
+   Tall enough (>800px): the page still fills the viewport exactly, but the
+   hero takes what it needs *first* — `flex:1 0 auto`, so it grows into spare
+   space and never shrinks — and the dashboard stage is what gives space back,
+   down to a floor. The stage is a decorative peek at a mock that the design
+   already cuts off at the fold, so trimming it costs nothing; the hero keeps
+   a guaranteed band of air above and below it at every height. Because the
+   hero is now the inflexible item, the only thing the shell's `overflow`
+   can ever cut is the bottom of that mock.
+
+   Short (≤800px): the composition genuinely does not fit, so the page becomes
+   an ordinary scrolling document with its rhythm intact rather than a squeezed
+   one. 800px is where the stage would otherwise be pushed under its floor.
+
+   Both modes are scoped to >900px because below that the design is already a
+   scrolling document and the small-screen rules further down own that layout. */
 
 html.notiva-locked .nv-coming-soon {
 	height: 100vh;
 }
 
-@media (max-height: 760px), (max-width: 900px) {
+@media (min-width: 901px) and (min-height: 801px) {
+	/* `flex:1 0 auto` keeps the copy optically centred on a tall screen the way
+	   the source had it, while `padding-block` is the floor under that air on
+	   the way down. `overflow:visible` undoes the generated `hidden`, which is
+	   what made the old clipping silent. */
+	html.notiva-locked .nv-coming-soon main {
+		flex: 1 0 auto;
+		min-height: auto;
+		overflow: visible;
+		padding-block: clamp(30px, 4.6vh, 72px);
+	}
+
+	/* The stage is the give. `min-height:0` on the wrap is what allows it: a
+	   flex item's automatic minimum is its content, and the mock inside is a
+	   fixed 380px, so without this it would refuse to shrink at all. */
+	html.notiva-locked .nv-coming-soon .stagewrap {
+		flex: 0 1 auto;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+	html.notiva-locked .nv-coming-soon .stage {
+		flex: 0 1 auto;
+		/* Floor, not `0` — past this the mock reads as a stripe rather than a
+		   screenshot. A hero long enough to push past it (a wrapped German
+		   line, say) just crops a little more off the bottom of the mock. */
+		min-height: 152px;
+	}
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
 	html.notiva-locked .nv-coming-soon {
 		height: auto;
+		min-height: 100vh;
+		/* `clip` rather than the generated `hidden`: the page is exactly as
+		   tall as its content here, so this only swallows the part of the mock
+		   that hangs below the stage — which the generated `clip-path` already
+		   stops painting — instead of adding a screenful of empty scroll. */
+		overflow: clip;
+	}
+	html.notiva-locked .nv-coming-soon .page {
+		height: auto;
+		min-height: 100vh;
+	}
+	html.notiva-locked .nv-coming-soon main {
+		flex: 1 0 auto;
+		min-height: auto;
+		overflow: visible;
+		padding-block: clamp(40px, 6.5vh, 68px);
+	}
+}
+
+@media (max-width: 900px) {
+	html.notiva-locked .nv-coming-soon {
+		height: auto;
+	}
+}
+
+/* ── rhythm inside the hero on a short viewport ───────────────────────
+   The gaps between eyebrow, headline, lede, buttons and trust row are all
+   `vh`, so on a laptop in a half-height window — or a phone held sideways —
+   they bottom out at 14/14/20/16px and the five blocks read as one dense
+   slab. Only the floors move; every clamp keeps its original `vh` slope and
+   maximum, so nothing changes on a screen tall enough to have been fine.
+
+   Two bands rather than one query so the 560px block further down keeps
+   ownership of the phone layout, where these gaps are already set by hand. */
+
+@media (min-width: 901px) and (max-height: 800px),
+	(min-width: 561px) and (max-width: 900px) {
+	html.notiva-locked .nv-coming-soon h1 {
+		margin-top: clamp(22px, 2.6vh, 28px);
+	}
+	html.notiva-locked .nv-coming-soon .lede {
+		margin-top: clamp(20px, 2.6vh, 26px);
+	}
+	html.notiva-locked .nv-coming-soon .cta-row {
+		margin-top: clamp(28px, 3.6vh, 38px);
+	}
+	html.notiva-locked .nv-coming-soon .trustrow {
+		margin-top: clamp(24px, 2.8vh, 30px);
+	}
+}
+
+@media (min-width: 561px) and (max-width: 900px) {
+	html.notiva-locked .nv-coming-soon main {
+		padding-block: clamp(40px, 5vh, 64px);
 	}
 }
 

@@ -1,10 +1,26 @@
 'use client';
 
-/* Notiva merch catalogue + basket.
-   Direct port of assets/notiva-shop.js lines 4–70 (catalogue, fmt, read/save,
+/* Notiva merch basket.
+   Behaviour is still the port of assets/notiva-shop.js lines 4–70 (read/save,
    count/subtotal/shipping, add, setQty) and the flash message the basket bar
-   shows after an add (line 63). `page` targets are re-pointed at the Next
-   routes: Merch Shirt.html → /merch/shirt. */
+   shows after an add (line 63).
+
+   Two things changed when Fourthwall came in:
+
+   • The catalogue data moved to src/lib/merch.ts (plain module, importable by
+     server code) and is re-exported below, so every existing
+     `from '@/components/notiva/basket-context'` import still resolves.
+
+   • Prices are no longer read from the local table. The route-group layout
+     fetches the live catalogue server-side and passes it in; `priceOf()` reads
+     that, falling back to the local figure for any product Fourthwall has not
+     been told about yet.
+
+   The stored line stays `{id, size, qty}` — deliberately *not* the Fourthwall
+   variant id. Variant ids are resolved from the catalogue at checkout, so a
+   basket that has been sitting in localStorage across a product change picks up
+   the new variant instead of trying to buy a withdrawn one, and the v1 storage
+   format needs no migration. */
 
 import React, {
 	createContext,
@@ -15,70 +31,31 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import type { Lang } from './lang-context';
+
+import {
+	FREE_SHIPPING_FROM,
+	MERCH,
+	SHIP,
+	isMerchId,
+	type MerchId,
+} from '@/lib/merch';
+import type { Catalogue, CatalogueEntry } from '@/lib/fourthwall/catalogue';
+import { isLive, variantFor } from '@/lib/fourthwall/catalogue';
+
 import { useLang } from './lang-context';
 
-export type MerchId =
-	| 'shirt'
-	| 'hoodie'
-	| 'cap'
-	| 'tote'
-	| 'pin'
-	| 'stickers'
-	| 'sleeve'
-	| 'plush';
-
-export interface MerchItem {
-	slug: MerchId;
-	de: string;
-	en: string;
-	price: number;
-	sizes?: string[];
-	img?: string;
-}
-
-export const MERCH: Record<MerchId, MerchItem> = {
-	shirt: {
-		slug: 'shirt',
-		de: 'T-Shirt ✦',
-		en: 'T-shirt ✦',
-		price: 29,
-		sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-		img: '/notiva/novi/merch-shirt.webp',
-	},
-	hoodie: {
-		slug: 'hoodie',
-		de: 'Hoodie ✦',
-		en: 'Hoodie ✦',
-		price: 59,
-		sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-	},
-	cap: { slug: 'cap', de: 'Cap', en: 'Cap', price: 24 },
-	tote: { slug: 'tote', de: 'Tote Bag', en: 'Tote bag', price: 19 },
-	pin: { slug: 'pin', de: 'Emaille-Pin ✦', en: 'Enamel pin ✦', price: 9 },
-	stickers: {
-		slug: 'stickers',
-		de: 'Sticker-Set',
-		en: 'Sticker set',
-		price: 6,
-		img: '/notiva/novi/sticker-pack.webp',
-	},
-	sleeve: { slug: 'sleeve', de: 'Laptop-Sleeve', en: 'Laptop sleeve', price: 34 },
-	plush: { slug: 'plush', de: 'Novi-Plüschtier', en: 'Novi plush', price: 39 },
-};
-
-export const SHIP = 4.9;
-export const FREE_SHIPPING_FROM = 60;
+export {
+	MERCH,
+	SHIP,
+	FREE_SHIPPING_FROM,
+	fmt,
+	isMerchId,
+	type MerchId,
+	type MerchItem,
+} from '@/lib/merch';
 
 const LS_BASKET = 'notiva.basket.v1';
 const FLASH_MS = 2600;
-
-/** Same rounding + separator rules as notiva-shop.js fmt(). */
-export function fmt(n: number, lang: Lang): string {
-	if (Math.abs(n - Math.round(n)) < 0.005) return '€' + Math.round(n);
-	const s = n.toFixed(2);
-	return '€' + (lang === 'de' ? s.replace('.', ',') : s);
-}
 
 export interface BasketLine {
 	id: MerchId;
@@ -95,7 +72,37 @@ export interface BasketContextValue {
 	subtotal: number;
 	shipping: number;
 	flash: string | null;
+	/** Live catalogue, or the local fallback when no shop is configured. */
+	catalogue: Catalogue;
+	/** Whether a Fourthwall checkout can be built from this basket. */
+	live: boolean;
+	/** Unit price for a line, live where available. */
+	priceOf(id: MerchId, size?: string): number;
+	/** Basket → Fourthwall cart items. Empty when nothing resolves. */
+	checkoutLines(): { variantId: string; quantity: number }[];
 }
+
+/** Local-only catalogue, used before the provider mounts and by any consumer
+ *  rendered outside it. Mirrors localCatalogue() in the Fourthwall bridge. */
+function fallbackCatalogue(): Catalogue {
+	const entries = (Object.keys(MERCH) as MerchId[]).map(
+		(id): [MerchId, CatalogueEntry] => [
+			id,
+			{
+				id,
+				price: MERCH[id].price,
+				currency: 'EUR',
+				images: [],
+				variants: [],
+				available: true,
+				source: 'local',
+			},
+		]
+	);
+	return Object.fromEntries(entries) as Catalogue;
+}
+
+const EMPTY_CATALOGUE = fallbackCatalogue();
 
 const BasketContext = createContext<BasketContextValue>({
 	lines: [],
@@ -106,11 +113,11 @@ const BasketContext = createContext<BasketContextValue>({
 	subtotal: 0,
 	shipping: 0,
 	flash: null,
+	catalogue: EMPTY_CATALOGUE,
+	live: false,
+	priceOf: (id) => MERCH[id].price,
+	checkoutLines: () => [],
 });
-
-function isMerchId(v: unknown): v is MerchId {
-	return typeof v === 'string' && Object.prototype.hasOwnProperty.call(MERCH, v);
-}
 
 /** read() from notiva-shop.js — tolerant of anything that is not a valid line. */
 function readStored(): BasketLine[] {
@@ -144,8 +151,10 @@ function readStored(): BasketLine[] {
 
 export function NotivaBasketProvider({
 	children,
+	catalogue = EMPTY_CATALOGUE,
 }: {
 	children: React.ReactNode;
+	catalogue?: Catalogue;
 }): React.JSX.Element {
 	const { lang } = useLang();
 	const [lines, setLines] = useState<BasketLine[]>([]);
@@ -190,6 +199,15 @@ export function NotivaBasketProvider({
 		}, FLASH_MS);
 	}, []);
 
+	const priceOf = useCallback(
+		(id: MerchId, size = '') => {
+			const entry = catalogue[id];
+			if (!entry) return MERCH[id].price;
+			return variantFor(entry, size)?.price ?? entry.price;
+		},
+		[catalogue]
+	);
+
 	const add = useCallback(
 		(id: MerchId, size?: string, qty?: number) => {
 			const item = MERCH[id];
@@ -226,19 +244,57 @@ export function NotivaBasketProvider({
 		setLines([]);
 	}, []);
 
+	const checkoutLines = useCallback(() => {
+		const out: { variantId: string; quantity: number }[] = [];
+		for (const line of lines) {
+			const entry = catalogue[line.id];
+			if (!entry || !entry.available) continue;
+			const variant = variantFor(entry, line.size);
+			if (variant) out.push({ variantId: variant.id, quantity: line.qty });
+		}
+		return out;
+	}, [lines, catalogue]);
+
 	const count = useMemo(() => lines.reduce((n, l) => n + l.qty, 0), [lines]);
 	const subtotal = useMemo(
-		() => lines.reduce((n, l) => n + l.qty * MERCH[l.id].price, 0),
-		[lines]
+		() => lines.reduce((n, l) => n + l.qty * priceOf(l.id, l.size), 0),
+		[lines, priceOf]
 	);
 	const shipping = useMemo(
 		() => (subtotal === 0 || subtotal >= FREE_SHIPPING_FROM ? 0 : SHIP),
 		[subtotal]
 	);
+	const live = useMemo(() => isLive(catalogue), [catalogue]);
 
 	const value = useMemo<BasketContextValue>(
-		() => ({ lines, add, setQty, clear, count, subtotal, shipping, flash }),
-		[lines, add, setQty, clear, count, subtotal, shipping, flash]
+		() => ({
+			lines,
+			add,
+			setQty,
+			clear,
+			count,
+			subtotal,
+			shipping,
+			flash,
+			catalogue,
+			live,
+			priceOf,
+			checkoutLines,
+		}),
+		[
+			lines,
+			add,
+			setQty,
+			clear,
+			count,
+			subtotal,
+			shipping,
+			flash,
+			catalogue,
+			live,
+			priceOf,
+			checkoutLines,
+		]
 	);
 
 	return <BasketContext.Provider value={value}>{children}</BasketContext.Provider>;

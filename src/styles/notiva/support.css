@@ -1,4 +1,6 @@
-/* Generated from sn.css — scoped to .nv-support. Do not edit by hand. */
+/* Scoped to .nv-support. Originally generated from sn.css; the Spenden block
+   is now maintained against the design project's Spenden Section Variants.html
+   (see the banner comment on that block). */
 .nv-support .hero{padding-top:clamp(26px,3.6vw,50px)}
 .nv-support .novi-hero{display:flex;align-items:flex-end;gap:18px;margin:0 0 20px}
 .nv-support .novi-hero img{height:clamp(108px,12vw,164px);width:auto;flex:0 0 auto;margin:0 -14px}
@@ -22,39 +24,53 @@
 .nv-support .prog .of{font-size:14px;font-weight:600;color:var(--neutral-800)}
 .nv-support .prog .bar{margin-top:12px;height:10px;border-radius:99px;background:var(--blue-fill);overflow:hidden}
 .nv-support .prog .bar i{display:block;height:100%;width:32.4%;border-radius:99px;background:var(--blue-400)}
-.nv-support .toggle{margin:clamp(22px,2.6vw,30px) 0 0;display:inline-flex;padding:4px;gap:4px;border:1px solid var(--blue-stroke);border-radius:var(--radius-md);background:var(--blue-fill)}
+/* ── Spenden section ─────────────────────────────────────────────────────
+   Ported from the design project's "Spenden Section Variants.html": the
+   desktop rules are frame V1 (Aufteilungsbalken), the 700/560 media queries
+   below are the 390 pt mobile frame. Everything in between interpolates —
+   the amount tiles go 4-up → 2-up, the legend is auto-fit 3 → 2 → 1. */
+.nv-support .don-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px 28px;flex-wrap:wrap}
+.nv-support .don-head>div{min-width:0}
+.nv-support .toggle{display:inline-flex;padding:4px;gap:4px;border:1px solid var(--blue-stroke);border-radius:var(--radius-md);background:var(--blue-fill)}
 .nv-support .toggle button{min-height:44px;border:0;background:transparent;padding:0 20px;border-radius:8px;font-family:inherit;font-size:14px;font-weight:600;color:var(--blue-500);cursor:pointer;transition:background 150ms var(--ease-out),color 150ms}
 .nv-support .toggle button[aria-pressed="true"]{background:var(--blue-400);color:var(--paper)}
-.nv-support .amts{margin:20px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;max-width:760px}
-.nv-support .amt{text-align:left;padding:18px;border:2px solid var(--blue-stroke);border-radius:var(--radius-xl);background:var(--white);cursor:pointer;font-family:inherit;transition:border-color 150ms var(--ease-out),background 150ms,transform 150ms}
+.nv-support .don-novi{margin:22px 0 0;display:flex;align-items:flex-end;gap:clamp(16px,2.8vw,30px)}
+/* The design's 157px assumed its own masters, which filled their canvas. The
+   react-* sheet is 607x709 with the rocket's flame setting the height, so the
+   grounded poses sit lower in the box — 205px here puts Novi's face at the same
+   64px the hero above renders, and keeps every pose on one baseline. */
+.nv-support .don-novi img{height:clamp(132px,19vw,205px);width:auto;flex:0 0 auto;margin:0 -16px 0 -26px}
+.nv-support .don-novi .say{position:relative;margin:0 0 14px;padding:13px 17px;border:2px solid var(--blue-border);border-radius:var(--radius-xl);background:var(--white);max-width:40ch;font-size:14.5px;line-height:1.5;font-weight:600;color:var(--ink);text-wrap:pretty}
+.nv-support .don-novi .say::after{content:"";position:absolute;left:-9px;bottom:16px;width:14px;height:14px;background:var(--white);border-left:2px solid var(--blue-border);border-bottom:2px solid var(--blue-border);transform:rotate(45deg)}
+/* Reaction poses share one canvas and one face size, so swapping the src never
+   resizes Novi. Rocket mode (> €50) adds a slow hover plus a thruster glow. */
+@keyframes nvNoviFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@keyframes nvNoviBurn{0%,100%{filter:drop-shadow(0 10px 16px rgba(240,86,39,.55)) drop-shadow(0 26px 46px rgba(240,86,39,.3))}50%{filter:drop-shadow(0 15px 22px rgba(240,86,39,.78)) drop-shadow(0 36px 62px rgba(240,86,39,.44))}}
+.nv-support .don-novi img[data-pose="rocket"]{animation:nvNoviFloat 2.4s var(--ease-out) infinite,nvNoviBurn 820ms ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.nv-support .don-novi img[data-pose="rocket"]{animation:none}}
+.nv-support .amts{margin:22px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.nv-support .amt{text-align:left;padding:16px 17px;border:2px solid var(--blue-stroke);border-radius:var(--radius-xl);background:var(--white);cursor:pointer;font-family:inherit;transition:border-color 150ms var(--ease-out),background 150ms,transform 150ms}
 .nv-support .amt:hover{border-color:var(--blue-border)}
 .nv-support .amt:active{transform:scale(.98)}
 .nv-support .amt[aria-pressed="true"]{border-color:var(--blue-400);background:var(--blue-fill)}
-.nv-support .amt .v{display:block;font-family:var(--font-numeric),'Inter',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.02em}
-.nv-support .amt .l{display:block;margin-top:7px;font-size:12.5px;line-height:1.45;font-weight:500;color:var(--neutral-800)}
-.nv-support .tiers{margin:20px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:16px}
-.nv-support .tier{text-align:left;padding:22px;border:2px solid var(--blue-stroke);border-radius:var(--radius-xl);background:var(--white);cursor:pointer;font-family:inherit;transition:border-color 150ms var(--ease-out),background 150ms}
-.nv-support .tier:hover{border-color:var(--blue-border)}
-.nv-support .tier[aria-pressed="true"]{border-color:var(--blue-400);background:var(--blue-fill)}
-.nv-support .tier .name{font-family:var(--font-tag),'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-400)}
-.nv-support .tier .price{margin-top:10px;font-family:var(--font-numeric),'Inter',sans-serif;font-size:28px;font-weight:700;letter-spacing:-.02em}
-.nv-support .tier .price small{font-family:var(--font-display),'Montserrat',sans-serif;font-size:13px;font-weight:600;color:var(--neutral-700);letter-spacing:0}
-.nv-support .tier ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:9px}
-.nv-support .tier li{position:relative;padding-left:21px;font-size:13.5px;line-height:1.5;font-weight:500;color:var(--slate)}
-.nv-support .tier li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--blue-400);font-size:11px}
-.nv-support .pay{margin:24px 0 0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;max-width:700px}
-.nv-support .pay .field{flex:1 1 250px}
-.nv-support .pay .btn{min-height:50px}
-.nv-support .novi-react{margin:26px 0 0;display:flex;align-items:flex-end;gap:18px;padding:18px 22px;border:2px solid var(--blue-border);border-radius:var(--radius-xl);background:var(--white);max-width:720px}
-.nv-support .novi-react img{height:clamp(104px,10vw,138px);width:auto;flex:0 0 auto;margin:0 -12px;transition:transform 200ms var(--ease-out)}
-.nv-support .novi-react.up img{transform:translateY(-6px)}
-.nv-support .novi-react .txt{min-width:0;padding-bottom:4px}
-.nv-support .novi-react .eb{font-family:var(--font-tag),'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-400)}
-.nv-support .novi-react .cap{margin:7px 0 0;font-size:15px;line-height:1.5;font-weight:600;color:var(--ink);text-wrap:pretty}
-.nv-support .strip{margin:clamp(26px,3vw,34px) 0 0;padding-top:22px;border-top:1px solid var(--blue-stroke);display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:14px 28px}
-.nv-support .strip div{display:flex;gap:12px;align-items:baseline}
-.nv-support .strip .k{flex:0 0 auto;font-family:var(--font-numeric),'Inter',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--blue-400)}
-.nv-support .strip p{margin:0;font-size:13.5px;line-height:1.5;font-weight:500;color:var(--slate)}
+.nv-support .amt .v{display:block;font-family:var(--font-numeric),'Inter',sans-serif;font-size:23px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.nv-support .amt .l{display:block;margin-top:6px;font-size:12px;line-height:1.42;font-weight:500;color:var(--neutral-800)}
+/* Two label lengths per tile: the design's mobile frame runs the short ones. */
+.nv-support .amt .l .short{display:none}
+.nv-support .don-go{margin:24px 0 0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;max-width:640px}
+.nv-support .don-go .field{flex:1 1 240px}
+.nv-support .don-go .btn{min-height:50px}
+.nv-support .don-split{margin:26px 0 0;padding:20px 22px;border:2px solid var(--blue-stroke);border-radius:var(--radius-xl);background:var(--paper)}
+.nv-support .don-split .lbl{display:flex;justify-content:space-between;align-items:baseline;gap:6px 16px;flex-wrap:wrap}
+.nv-support .don-split .lbl b{font-family:var(--font-tag),'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-400)}
+.nv-support .don-split .lbl em{font-style:normal;font-size:12.5px;font-weight:600;color:var(--neutral-800)}
+.nv-support .barx{display:flex;height:14px;margin:13px 0 0;border-radius:99px;overflow:hidden;background:var(--blue-fill)}
+.nv-support .barx i{display:block}
+.nv-support .keys{margin:15px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 22px}
+.nv-support .keys>div{display:flex;gap:10px;align-items:flex-start}
+.nv-support .keys s{flex:0 0 auto;width:11px;height:11px;margin-top:5px;border-radius:3px;text-decoration:none}
+.nv-support .keys p{margin:0;font-size:13px;line-height:1.45;font-weight:500;color:var(--slate)}
+.nv-support .keys p b{display:block;font-size:13.5px;font-weight:700;color:var(--ink)}
 .nv-support .wall{margin:20px 0 0;display:flex;flex-wrap:wrap;gap:9px}
 .nv-support .chip{padding:8px 15px;border:2px solid var(--blue-border);border-radius:var(--radius-lg);background:var(--white);font-size:13.5px;font-weight:600;color:var(--slate)}
 .nv-support .chip.you{border-color:var(--blue-400);border-style:dashed;color:var(--blue-400)}
@@ -82,23 +98,41 @@
 .nv-support .legal ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:11px}
 .nv-support .legal li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.6;font-weight:500;color:var(--slate)}
 .nv-support .legal li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--blue-border)}
+@media(max-width:760px){
+/* 4-up tiles would leave ~166px of usable width here; the design pairs them. */
+.nv-support .amts{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:700px){
 .nv-support .pop{position:fixed;left:14px;right:14px;bottom:14px;top:auto;width:auto;z-index:70}
 .nv-support .pop::before{display:none}
 .nv-support .pop .x{display:block}
+/* Head stacks: the toggle drops under the heading and spans the column. */
+.nv-support .don-head{align-items:flex-start}
+.nv-support .toggle{display:grid;grid-template-columns:1fr 1fr;width:100%}
+.nv-support .toggle button{padding:0 8px;font-size:13.5px}
 }
 @media(max-width:560px){
 .nv-support .novi-hero{gap:8px;margin-bottom:16px}
 .nv-support .novi-hero img{height:104px;margin:0 -12px}
 .nv-support .novi-hero .say{max-width:none;margin-bottom:6px;padding:11px 13px;font-size:13px}
-.nv-support .actions .btn,.nv-support .ctabtns .btn,.nv-support .pay .btn{width:100%}
-.nv-support .novi-react{flex-direction:column;align-items:flex-start;gap:2px;padding:16px 18px}
-.nv-support .novi-react img{height:116px;margin:0 -14px}
-.nv-support .novi-react .txt{padding-bottom:0}
+.nv-support .actions .btn,.nv-support .ctabtns .btn{width:100%}
+.nv-support .don-head .eyebrow{font-size:11px}
+.nv-support .don-novi{margin-top:20px;gap:16px}
+.nv-support .don-novi img{margin:0 -6px 0 -14px}
+.nv-support .don-novi .say{flex:1 1 auto;max-width:none;margin:0 0 8px;padding:11px 14px;font-size:13px}
+.nv-support .amts{margin-top:20px;gap:10px}
+.nv-support .amt{padding:13px 14px}
+.nv-support .amt .v{font-size:20px}
+.nv-support .amt .l{margin-top:5px;font-size:11px;line-height:1.4}
+.nv-support .amt .l .long{display:none}
+.nv-support .amt .l .short{display:inline}
+.nv-support .don-go{margin-top:20px;flex-direction:column;align-items:stretch;max-width:none;gap:14px}
+.nv-support .don-go .field{flex:none}
+.nv-support .don-go .btn{width:100%}
+.nv-support .don-split{margin-top:22px;padding:18px}
+.nv-support .don-split .lbl{flex-direction:column;gap:4px}
+.nv-support .don-split .lbl em{font-size:11.5px}
 .nv-support .novi-thanks{gap:10px}
 .nv-support .novi-thanks img{height:88px;margin:0 -12px}
-.nv-support .amt{padding:15px}
-.nv-support .amt .v{font-size:21px}
-.nv-support .tier{padding:18px}
 .nv-support .chip{padding:7px 13px;font-size:13px}
 }

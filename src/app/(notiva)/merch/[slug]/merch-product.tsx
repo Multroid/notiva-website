@@ -14,11 +14,12 @@
    Merch Hoodie.html has no inline <style>: every class below is selected by
    src/styles/notiva/shop.css / page.css, so the markup must keep them. */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 
 import { T, useLang, useT } from '@/components/notiva/lang-context';
 import { MERCH, fmt, useBasket, type MerchId } from '@/components/notiva/basket-context';
+import { sizesFor, variantFor } from '@/lib/fourthwall/catalogue';
 import { NotivaHeader } from '@/components/notiva/notiva-header';
 import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { NotivaFooter } from '@/components/notiva/notiva-footer';
@@ -57,11 +58,16 @@ const SHOP_T = {
 export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 	const { lang } = useLang();
 	const t = useT();
-	const { add } = useBasket();
+	const { add, catalogue, priceOf } = useBasket();
 
 	const item = MERCH[slug];
 	const copy = PRODUCT_COPY[slug];
-	const sizes = item.sizes;
+	const entry = catalogue[slug];
+
+	/* Sizes come from the live variants once the shop knows this product, and
+	   from the local table until then — same picker either way. Memoised because
+	   sizesFor() builds a fresh array and it is an effect dependency below. */
+	const sizes = useMemo(() => sizesFor(entry), [entry]);
 
 	/* initProduct(): `var size = it.sizes ? it.sizes[Math.floor(it.sizes.length / 2)] : ''` */
 	const [size, setSize] = useState<string>(() =>
@@ -74,6 +80,18 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 		setSize(sizes ? sizes[Math.floor(sizes.length / 2)] : '');
 		setQty(1);
 	}, [slug, sizes]);
+
+	/* Live unit price for the selected size; the local figure before the shop
+	   exists. Everything the page prints in € comes from here. */
+	const price = priceOf(slug, size);
+	const soldOut =
+		entry.source === 'fourthwall' &&
+		(!entry.available || variantFor(entry, size)?.inStock === false);
+
+	/* Fourthwall photography wins over the local slots the moment it exists —
+	   the shop is where the real product shots live. */
+	const fwMain = entry.images[0];
+	const fwThumbs = entry.images.slice(1, 5);
 
 	/* applyLang(): document.title = <html data-title-{lang}>, which is
 	   "Notiva · " + the catalogue name in both design files. */
@@ -103,41 +121,64 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 								    decorative — ImageSlot's alt default of '' covers it.
 								    ImageZoom passes an empty slot straight through, so only
 								    real photography becomes clickable. */}
+								{/* A Fourthwall shot is by definition real photography, so it
+								    always gets alt text: the API carries no per-image alt and
+								    the product name is the honest description. */}
 								<ImageZoom
-									src={copy.gallery.main.src}
+									src={fwMain?.url ?? copy.gallery.main.src}
 									alt={
-										copy.gallery.main.alt
-											? t(copy.gallery.main.alt.de, copy.gallery.main.alt.en)
-											: ''
+										fwMain
+											? t(copy.name.de, copy.name.en)
+											: copy.gallery.main.alt
+												? t(copy.gallery.main.alt.de, copy.gallery.main.alt.en)
+												: ''
 									}
 								>
 									<ImageSlot
-										src={copy.gallery.main.src}
+										src={fwMain?.url ?? copy.gallery.main.src}
 										alt={
-											copy.gallery.main.alt
-												? t(copy.gallery.main.alt.de, copy.gallery.main.alt.en)
-												: ''
+											fwMain
+												? t(copy.name.de, copy.name.en)
+												: copy.gallery.main.alt
+													? t(copy.gallery.main.alt.de, copy.gallery.main.alt.en)
+													: ''
 										}
 										placeholder={copy.gallery.main.ph}
 									/>
 								</ImageZoom>
 							</div>
 							<div className="thumbs">
-								{copy.gallery.thumbs.map((thumb, i) => (
-									<div className="shot" key={i}>
-										<ImageZoom
-											src={thumb.src}
-											alt={thumb.alt ? t(thumb.alt.de, thumb.alt.en) : ''}
-										>
-											<ImageSlot
-												src={thumb.src}
-												alt={thumb.alt ? t(thumb.alt.de, thumb.alt.en) : ''}
-												placeholder={thumb.ph}
-												loading="lazy"
-											/>
-										</ImageZoom>
-									</div>
-								))}
+								{fwThumbs.length
+									? fwThumbs.map((img) => (
+											<div className="shot" key={img.url}>
+												<ImageZoom
+													src={img.url}
+													alt={t(copy.name.de, copy.name.en)}
+												>
+													<ImageSlot
+														src={img.url}
+														alt={t(copy.name.de, copy.name.en)}
+														placeholder={copy.gallery.main.ph}
+														loading="lazy"
+													/>
+												</ImageZoom>
+											</div>
+										))
+									: copy.gallery.thumbs.map((thumb, i) => (
+											<div className="shot" key={i}>
+												<ImageZoom
+													src={thumb.src}
+													alt={thumb.alt ? t(thumb.alt.de, thumb.alt.en) : ''}
+												>
+													<ImageSlot
+														src={thumb.src}
+														alt={thumb.alt ? t(thumb.alt.de, thumb.alt.en) : ''}
+														placeholder={thumb.ph}
+														loading="lazy"
+													/>
+												</ImageZoom>
+											</div>
+										))}
 							</div>
 						</div>
 
@@ -147,8 +188,7 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 							</div>
 							<h1>{t(copy.name.de, copy.name.en)}</h1>
 							<div className="price">
-								{fmt(item.price, lang)}{' '}
-								<T de="inkl. MwSt." en="incl. VAT" />
+								{fmt(price, lang)} <T de="inkl. MwSt." en="incl. VAT" />
 							</div>
 							<T as="p" className="desc" de={copy.desc.de} en={copy.desc.en} />
 
@@ -194,9 +234,12 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 								<button
 									className="btn btn-solid"
 									type="button"
+									disabled={soldOut}
 									onClick={() => add(slug, size, qty)}
 								>
-									{`${shop.add} · ${fmt(item.price * qty, lang)}`}
+									{soldOut
+										? t('Ausverkauft', 'Sold out')
+										: `${shop.add} · ${fmt(price * qty, lang)}`}
 								</button>
 								<Link className="btn btn-ghost" href="/basket">
 									{t('Zum Korb', 'Go to basket')}
@@ -259,20 +302,23 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 					<div className="shopgrid">
 						{rail.map((k) => {
 							const o = MERCH[k];
+							/* Same precedence as the main gallery: a Fourthwall shot beats
+							   the local placeholder, and the ✦ mark is the last resort. */
+							const thumb = catalogue[k]?.images[0]?.url ?? o.img;
 							return (
 								<div className="pcard" key={k}>
 									<Link href={`/merch/${k}`}>
 										<div className="ph">
-											{o.img ? (
+											{thumb ? (
 												/* eslint-disable-next-line @next/next/no-img-element */
-												<img src={o.img} alt="" loading="lazy" decoding="async" />
+												<img src={thumb} alt="" loading="lazy" decoding="async" />
 											) : (
 												<span className="mark">✦</span>
 											)}
 										</div>
 										<div className="meta">
 											<div className="n">{o[lang]}</div>
-											<div className="pr">{fmt(o.price, lang)}</div>
+											<div className="pr">{fmt(priceOf(k), lang)}</div>
 										</div>
 									</Link>
 								</div>

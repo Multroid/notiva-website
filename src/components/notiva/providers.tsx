@@ -9,6 +9,7 @@
    declared there, not on this div — same pattern the modal uses. */
 
 import React from 'react';
+import type { Catalogue } from '@/lib/fourthwall/catalogue';
 import { NotivaLangProvider } from './lang-context';
 import { NotivaBasketProvider } from './basket-context';
 import { NotivaModalProvider } from './modal-context';
@@ -23,14 +24,18 @@ import '@/styles/notiva/rhythm.css';
 export function NotivaProviders({
 	children,
 	className,
+	catalogue,
 }: {
 	children: React.ReactNode;
 	className?: string;
+	/* Fetched once in the route-group layout and handed down, so the basket, the
+	   merch grid and every PDP price agree without each fetching for itself. */
+	catalogue?: Catalogue;
 }): React.JSX.Element {
 	return (
 		<div className={className}>
 			<NotivaLangProvider>
-				<NotivaBasketProvider>
+				<NotivaBasketProvider catalogue={catalogue}>
 					<NotivaModalProvider>
 						{children}
 						<div className="notiva-shell">

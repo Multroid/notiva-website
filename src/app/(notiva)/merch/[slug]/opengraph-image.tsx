@@ -12,6 +12,8 @@
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 
+import { getCatalogue } from '@/lib/fourthwall/catalogue';
+
 import { MERCH_ORDER, PRODUCT_COPY, isMerchSlug } from './product-copy';
 
 export const runtime = 'nodejs';
@@ -23,20 +25,12 @@ const BLUE = '#0047BA';
 const PAPER = '#FAFAF8';
 const ORANGE = '#F05627';
 
-/* Mirrors MERCH[slug].price in src/components/notiva/basket-context.tsx.
-   Duplicated deliberately: that module is a client component, so importing its
-   values into a server-rendered image route would yield client references
-   rather than the numbers. Prices are EUR, incl. VAT. */
-const PRICE: Record<(typeof MERCH_ORDER)[number], number> = {
-	shirt: 29,
-	hoodie: 59,
-	cap: 24,
-	tote: 19,
-	pin: 9,
-	stickers: 6,
-	sleeve: 34,
-	plush: 39,
-};
+/* The price table that used to sit here is gone. It existed because MERCH lived
+   inside a client component and importing its values here would have yielded
+   client references rather than numbers; MERCH now lives in src/lib/merch.ts,
+   so the Fourthwall catalogue — which falls back to those same numbers — can be
+   read directly. A social card is a public price claim like any other, and it
+   has to agree with the page it previews. */
 
 /* public/notiva/notiva-logo-chip.svg, inverted for the blue field. */
 const CHIP = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><rect width="600" height="600" rx="136" fill="${PAPER}"/><path d="M424.407 407.759V270.761C424.407 265.961 421.598 261.605 417.228 259.628L248.372 183.094C244.196 181.2 239.306 181.803 235.713 184.661L179.613 229.282C176.699 231.599 175 235.122 175 238.847V397.785C175 408.605 188.019 414.092 195.76 406.531L248.552 355.002C252.166 351.471 257.576 350.535 262.175 352.63L407.094 418.878C415.189 422.582 424.4 416.665 424.4 407.759H424.407Z" fill="${BLUE}"/><path d="M424.407 236.544V200.816C424.407 189.322 415.085 180 403.591 180H305.533" fill="${BLUE}"/></svg>`;
@@ -78,7 +72,7 @@ export default async function MerchOpengraphImage({
 	if (!isMerchSlug(slug)) notFound();
 
 	const name = plain(PRODUCT_COPY[slug].name.de);
-	const price = PRICE[slug];
+	const price = (await getCatalogue())[slug].price;
 
 	return new ImageResponse(
 		(

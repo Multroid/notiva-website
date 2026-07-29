@@ -19,3 +19,75 @@ html.notiva-locked .nv-coming-soon {
 		height: auto;
 	}
 }
+
+/* ── mobile refinements ──────────────────────────────────────────────
+   Also not in the design source. The hero's three centred blocks were laid
+   out as single-line flex rows; once the text wraps on a phone the flex
+   children stop reading as one unit. */
+
+/* Trust signals: 12px grey uppercase over an empty background read as fine
+   print. As bordered chips on a tinted field they carry the weight they have
+   on desktop. A grid also fixes the ragged alignment of the flex row — items
+   wrap to different heights, and once the row itself wrapped a separator dot
+   was left dangling at the end of a line. Applied across the whole band where
+   the page is already in phone-mock mode. */
+@media (max-width: 900px) {
+	.nv-coming-soon .trustrow {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		align-items: stretch;
+		gap: 8px;
+		text-align: center;
+	}
+	.nv-coming-soon .trustrow div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 11px 10px;
+		border: 1px solid var(--blue-stroke);
+		border-radius: var(--radius-md);
+		background: var(--paper);
+		color: var(--blue-500);
+		font-size: 10.5px;
+		letter-spacing: 0.07em;
+		line-height: 1.35;
+	}
+	.nv-coming-soon .trustrow i {
+		display: none;
+	}
+}
+
+@media (max-width: 560px) {
+	/* The eyebrow's orange dot is a flex sibling of the text, so with two
+	   wrapped lines it floated alone at the far left, vertically centred
+	   against both. Inline-block makes it sit with the first word instead. */
+	.nv-coming-soon .eyebrow {
+		display: block;
+		text-align: center;
+	}
+	.nv-coming-soon .eyebrow::before {
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 9px;
+		position: relative;
+		top: -1px;
+	}
+
+	/* Same problem on the secondary CTA: the ✦ was a flex item, so it stayed
+	   pinned left while the label wrapped and centred beside it. */
+	.nv-coming-soon .cta-sub {
+		display: block;
+		height: auto;
+		min-height: clamp(48px, 7vh, 58px);
+		padding: 14px 20px;
+		text-align: center;
+		line-height: 1.35;
+	}
+	.nv-coming-soon .cta-sub b {
+		margin-right: 6px;
+	}
+
+	.nv-coming-soon .trustrow {
+		grid-template-columns: 1fr 1fr;
+	}
+}

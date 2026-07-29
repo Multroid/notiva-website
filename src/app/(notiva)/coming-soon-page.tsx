@@ -20,9 +20,6 @@ import { Novi, NOVI_POSES } from '@/components/notiva/novi';
 import '@/styles/notiva/coming-soon.css';
 import './coming-soon-shell.css';
 
-/** Same localStorage key the source uses. */
-const NKEY = 'notiva-coming-soon-notice-dismissed';
-
 type NavKey = 'start' | 'radar' | 'calendar' | 'tx' | 'tax' | 'receipts';
 
 interface NavItem {
@@ -55,8 +52,6 @@ export function ComingSoonPage(): React.JSX.Element {
 	const wrapRef = useRef<HTMLDivElement>(null);
 	const noviRef = useRef<HTMLImageElement>(null);
 
-	/* site notice */
-	const [noticeMin, setNoticeMin] = useState(false);
 	/* desktop mock */
 	const [navOn, setNavOn] = useState<NavKey>('start');
 	const [briefOpen, setBriefOpen] = useState(false);
@@ -78,17 +73,6 @@ export function ComingSoonPage(): React.JSX.Element {
 		};
 	}, []);
 
-	/* ── site notice: restore the persisted / small-screen minimised state ─
-	   Source line 321 — read once, on load, never during render. */
-	useEffect(() => {
-		let stored: string | null = null;
-		try {
-			stored = window.localStorage.getItem(NKEY);
-		} catch {
-			stored = null;
-		}
-		if (stored === '1' || window.innerWidth <= 640) setNoticeMin(true);
-	}, []);
 
 	/* ── Novi by screen size (source lines 348–408) ──────────────────────
 	   Wide: she strolls the top edge of the dashboard. Small: she peeks over
@@ -218,25 +202,7 @@ export function ComingSoonPage(): React.JSX.Element {
 		};
 	}, []);
 
-	function minimiseNotice(e: React.MouseEvent) {
-		e.stopPropagation();
-		setNoticeMin(true);
-		try {
-			window.localStorage.setItem(NKEY, '1');
-		} catch {
-			/* private mode — the notice still minimises for this page view */
-		}
-	}
 
-	function expandNotice() {
-		if (!noticeMin) return;
-		setNoticeMin(false);
-		try {
-			window.localStorage.removeItem(NKEY);
-		} catch {
-			/* ignore */
-		}
-	}
 
 	return (
 		<div className="notiva-shell nv-coming-soon" lang={lang}>
@@ -530,35 +496,8 @@ export function ComingSoonPage(): React.JSX.Element {
 					</div>
 				</div>
 
-				{/* ── yellow site notice ──────────────────────────────────── */}
-				<aside
-					className={'notice' + (noticeMin ? ' is-min' : '')}
-					id="notice"
-					role="region"
-					aria-label="Hinweis"
-					onClick={expandNotice}
-				>
-					<button
-						id="notice-close"
-						type="button"
-						aria-label="Hinweis minimieren"
-						onClick={minimiseNotice}
-					>
-						<svg viewBox="0 0 24 24">
-							<path d="M5 5l14 14M19 5L5 19" />
-						</svg>
-					</button>
-					<h3>{t('Wir bauen gerade an Notiva', 'We are building Notiva')}</h3>
-					<p>
-						{t(
-							'Der Start ist für 2026 geplant. Bis dahin ist diese Seite unser Zuhause, die vollständige Website kommt mit dem Start.',
-							'Launch is planned for 2026. Until then this page is our home, the full website arrives with launch.'
-						)}
-					</p>
-					<svg className="expand" viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M8 14l4-4 4 4" />
-					</svg>
-				</aside>
+				{/* the yellow site notice now lives in NotivaProviders, so it is
+				    on every page and keeps its state across navigation */}
 			</div>
 		</div>
 	);

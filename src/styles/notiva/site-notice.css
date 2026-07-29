@@ -1,0 +1,176 @@
+/* Site notice — the yellow pre-launch card.
+   Moved out of coming-soon.css (where the design source had it) so it can be
+   rendered once by NotivaProviders and appear on every page. Expanded state is
+   the design's, verbatim; the collapsed state is a round icon button instead of
+   the original text pill. */
+
+.notiva-shell .notice {
+	position: fixed;
+	left: clamp(16px, 2.5vw, 40px);
+	bottom: clamp(16px, 2.5vw, 40px);
+	z-index: 30;
+	width: min(400px, calc(100vw - 32px));
+	display: grid;
+	gap: 14px;
+	padding: 24px 26px 26px;
+	border-radius: var(--radius-2xl);
+	background: var(--yellow);
+	color: var(--ink);
+	box-shadow: var(--shadow-md);
+	/* Deliberately no width/height/padding transition: the collapse is a layout
+	   swap, and animating it made the card visibly morph on every page load. */
+	transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+.notiva-shell .notice h3 {
+	margin: 0;
+	padding-right: 34px;
+	font-size: 22px;
+	line-height: 1.16;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+.notiva-shell .notice p {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.6;
+	font-weight: 500;
+	color: #3a3526;
+	text-wrap: pretty;
+}
+.notiva-shell .notice a {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	width: fit-content;
+	padding-bottom: 2px;
+	border-bottom: 2px solid rgba(16, 17, 19, 0.28);
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--ink);
+	transition: border-color 180ms var(--ease-out);
+}
+.notiva-shell .notice a:hover {
+	color: var(--ink);
+	border-bottom-color: var(--ink);
+}
+.notiva-shell .notice a em {
+	font-style: normal;
+	transition: transform 180ms var(--ease-out);
+}
+.notiva-shell .notice a:hover em {
+	transform: translateX(4px);
+}
+.notiva-shell .notice button {
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	width: 32px;
+	height: 32px;
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: var(--radius-sm);
+	background: transparent;
+	color: var(--ink);
+	opacity: 0.7;
+	cursor: pointer;
+	transition: background 150ms var(--ease-out), opacity 150ms;
+}
+.notiva-shell .notice button:hover {
+	opacity: 1;
+	background: rgba(16, 17, 19, 0.1);
+}
+.notiva-shell .notice button svg {
+	width: 16px;
+	height: 16px;
+	stroke: currentColor;
+	stroke-width: 2.4;
+	fill: none;
+	stroke-linecap: round;
+}
+.notiva-shell .notice.is-out {
+	opacity: 0;
+	transform: translateY(12px) scale(0.98);
+	pointer-events: none;
+}
+
+/* ── collapsed: a round info button ─────────────────────────────────── */
+.notiva-shell .notice .nicon {
+	display: none;
+	width: 24px;
+	height: 24px;
+	stroke: var(--ink);
+	stroke-width: 2.2;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	flex: 0 0 auto;
+}
+.notiva-shell .notice.is-min {
+	display: grid;
+	place-items: center;
+	width: 54px;
+	height: 54px;
+	max-width: none;
+	padding: 0;
+	gap: 0;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.notiva-shell .notice.is-min h3,
+.notiva-shell .notice.is-min p,
+.notiva-shell .notice.is-min a,
+.notiva-shell .notice.is-min button {
+	display: none;
+}
+.notiva-shell .notice.is-min .nicon {
+	display: block;
+}
+.notiva-shell .notice.is-min:hover {
+	transform: scale(1.06);
+}
+.notiva-shell .notice.is-min:active {
+	transform: scale(0.97);
+}
+
+/* Keep clear of the floating basket bar, which spans the full width on phones. */
+@media (max-width: 640px) {
+	.notiva-shell .notice {
+		left: 10px;
+		right: 10px;
+		bottom: 10px;
+		width: auto;
+		max-width: none;
+		padding: 18px 20px 20px;
+		gap: 10px;
+		border-radius: var(--radius-xl);
+	}
+	.notiva-shell .notice h3 {
+		font-size: 18px;
+		padding-right: 30px;
+	}
+	.notiva-shell .notice p {
+		font-size: 13px;
+		line-height: 1.55;
+	}
+	.notiva-shell .notice button {
+		top: 12px;
+		right: 12px;
+	}
+	.notiva-shell .notice.is-min {
+		right: auto;
+		width: 50px;
+		height: 50px;
+		padding: 0;
+	}
+	body:has(.basketbar[data-open]) .notiva-shell .notice {
+		bottom: 84px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.notiva-shell .notice.is-min:hover,
+	.notiva-shell .notice.is-min:active {
+		transform: none;
+	}
+}

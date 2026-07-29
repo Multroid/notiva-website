@@ -1,12 +1,20 @@
 'use client';
 
 /* Lang > Basket > Modal, wrapped in a div that carries the next/font
-   variables from the (notiva) route-group layout. */
+   variables from the (notiva) route-group layout.
+
+   The site notice is rendered here rather than per page so it appears
+   everywhere and keeps its collapsed/expanded state across navigation. It
+   needs its own .notiva-shell wrapper because the font and colour tokens are
+   declared there, not on this div — same pattern the modal uses. */
 
 import React from 'react';
 import { NotivaLangProvider } from './lang-context';
 import { NotivaBasketProvider } from './basket-context';
 import { NotivaModalProvider } from './modal-context';
+import { SiteNotice } from './site-notice';
+
+import '@/styles/notiva/site-notice.css';
 
 export function NotivaProviders({
 	children,
@@ -19,7 +27,12 @@ export function NotivaProviders({
 		<div className={className}>
 			<NotivaLangProvider>
 				<NotivaBasketProvider>
-					<NotivaModalProvider>{children}</NotivaModalProvider>
+					<NotivaModalProvider>
+						{children}
+						<div className="notiva-shell">
+							<SiteNotice />
+						</div>
+					</NotivaModalProvider>
 				</NotivaBasketProvider>
 			</NotivaLangProvider>
 		</div>

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { PlayIcon } from "@heroicons/react/24/solid"
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { AnimatePresence, motion } from "framer-motion"
+import { CarouselArrowButton } from "@/components/ui/carousel-arrow-button"
 import { Reveal } from "@/components/ui/reveal"
 
 type Persona = {
@@ -219,24 +219,20 @@ export default function BuiltForBigSection() {
                         </motion.div>
                     </AnimatePresence>
 
-                    <button
-                        type="button"
+                    <CarouselArrowButton
+                        direction="left"
                         aria-label="Previous persona"
                         onClick={goPrev}
                         style={{ top: "190px", left: "calc(50% - 626px)" }}
-                        className="absolute z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#D9E3F5] bg-[#FEFDFD] p-4 transition-colors outline-none hover:border-[#0047BA] focus:outline-none focus-visible:border-[#0047BA]"
-                    >
-                        <ChevronLeftIcon className="size-[14px] text-[#0047BA]" />
-                    </button>
-                    <button
-                        type="button"
+                        className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+                    />
+                    <CarouselArrowButton
+                        direction="right"
                         aria-label="Next persona"
                         onClick={goNext}
                         style={{ top: "190px", left: "calc(50% + 626px)" }}
-                        className="absolute z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#D9E3F5] bg-[#FEFDFD] p-4 transition-colors outline-none hover:border-[#0047BA] focus:outline-none focus-visible:border-[#0047BA]"
-                    >
-                        <ChevronRightIcon className="size-[14px] text-[#0047BA]" />
-                    </button>
+                        className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+                    />
                 </div>
 
                 {/* Tabs */}

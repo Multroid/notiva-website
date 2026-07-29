@@ -2,7 +2,7 @@
 
 import { Fragment, useState } from "react"
 import Link from "next/link"
-import { ChevronLeftIcon, ChevronRightIcon, CheckIcon, MoonIcon } from "@heroicons/react/24/solid"
+import { CheckIcon, MoonIcon } from "@heroicons/react/24/solid"
 import {
     SparklesIcon,
     BanknotesIcon,
@@ -12,6 +12,7 @@ import {
     MapIcon,
 } from "@heroicons/react/24/outline"
 import { Button } from "@/components/ui/button"
+import { CarouselArrowButton } from "@/components/ui/carousel-arrow-button"
 import { Reveal } from "@/components/ui/reveal"
 
 type Status = "yes" | "partial" | "none"
@@ -265,26 +266,20 @@ export default function ComparisonSection() {
                             />
                             <div className="flex flex-1" />
                             <div className="flex flex-1 items-center justify-start">
-                                <button
-                                    type="button"
+                                <CarouselArrowButton
+                                    direction="left"
                                     onClick={goPrev}
                                     disabled={!canGoPrev}
                                     aria-label="Show previous competitors"
-                                    className="appearance-none flex items-center justify-center rounded-full border-2 border-[#D9E3F5] bg-white p-4 outline-none focus:outline-none transition-opacity disabled:opacity-30"
-                                >
-                                    <ChevronLeftIcon className="size-[14px] text-[#0047BA]" />
-                                </button>
+                                />
                             </div>
                             <div className="flex flex-1 items-center justify-end">
-                                <button
-                                    type="button"
+                                <CarouselArrowButton
+                                    direction="right"
                                     onClick={goNext}
                                     disabled={!canGoNext}
                                     aria-label="Show next competitors"
-                                    className="appearance-none flex items-center justify-center rounded-full border-2 border-[#D9E3F5] bg-white p-4 outline-none focus:outline-none transition-opacity disabled:opacity-30"
-                                >
-                                    <ChevronRightIcon className="size-[14px] text-[#0047BA]" />
-                                </button>
+                                />
                             </div>
                         </div>
                     </div>

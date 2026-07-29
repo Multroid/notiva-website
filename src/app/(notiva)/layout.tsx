@@ -5,7 +5,9 @@ import '@/styles/notiva/tokens.css';
 import '@/styles/notiva/nav.css';
 import '@/styles/notiva/modal.css';
 
+import { JsonLd } from '@/components/notiva/json-ld';
 import { NotivaProviders } from '@/components/notiva/providers';
+import { organization } from '@/lib/structured-data';
 
 const jakarta = Plus_Jakarta_Sans({
 	subsets: ['latin'],
@@ -39,6 +41,10 @@ export default function NotivaLayout({
 }) {
 	return (
 		<NotivaProviders className={`${jakarta.variable} ${inter.variable}`}>
+			{/* Publisher node for the whole group. Every other schema on every page
+			    references it by @id (`…/#organization`) instead of restating the
+			    company, so it is emitted once here rather than per page. */}
+			<JsonLd id="ld-organization" data={organization()} />
 			{children}
 		</NotivaProviders>
 	);

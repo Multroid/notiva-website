@@ -44,7 +44,7 @@ export const MERCH: Record<MerchId, MerchItem> = {
 		en: 'T-shirt ✦',
 		price: 29,
 		sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-		img: '/notiva/novi/merch-shirt.png',
+		img: '/notiva/novi/merch-shirt.webp',
 	},
 	hoodie: {
 		slug: 'hoodie',
@@ -61,7 +61,7 @@ export const MERCH: Record<MerchId, MerchItem> = {
 		de: 'Sticker-Set',
 		en: 'Sticker set',
 		price: 6,
-		img: '/notiva/novi/sticker-pack.png',
+		img: '/notiva/novi/sticker-pack.webp',
 	},
 	sleeve: { slug: 'sleeve', de: 'Laptop-Sleeve', en: 'Laptop sleeve', price: 34 },
 	plush: { slug: 'plush', de: 'Novi-Plüschtier', en: 'Novi plush', price: 39 },

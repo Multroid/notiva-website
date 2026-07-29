@@ -91,7 +91,12 @@ export function SiteNotice(): React.JSX.Element {
 					<path d="M5 5l14 14M19 5L5 19" />
 				</svg>
 			</button>
-			<h3>{t('Wir bauen gerade an Notiva', 'We are building Notiva')}</h3>
+			{/* h2, not h3: this notice is rendered on every page by NotivaProviders
+			    and is the last heading in the document. On the landing page and the
+			    404 the only heading before it is the <h1>, so an h3 skipped a
+			    level. Nothing styles a bare `.notiva-shell h2`, so the rule in
+			    site-notice.css is the only one that applies. */}
+			<h2>{t('Wir bauen gerade an Notiva', 'We are building Notiva')}</h2>
 			<p>
 				{t(
 					'Der Start ist für 2026 geplant. Bis dahin ist diese Seite unser Zuhause, die vollständige Website kommt mit dem Start.',

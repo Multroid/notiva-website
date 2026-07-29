@@ -25,32 +25,46 @@ html.notiva-locked .nv-coming-soon {
    out as single-line flex rows; once the text wraps on a phone the flex
    children stop reading as one unit. */
 
-/* Trust signals: 12px grey uppercase over an empty background read as fine
-   print. As bordered chips on a tinted field they carry the weight they have
-   on desktop. A grid also fixes the ragged alignment of the flex row — items
-   wrap to different heights, and once the row itself wrapped a separator dot
-   was left dangling at the end of a line. Applied across the whole band where
-   the page is already in phone-mock mode. */
+/* Trust signals. No boxes — a grid of plain left-set lines, each led by the
+   same small dot the desktop row uses as a separator. The grid is what fixes
+   the alignment the flex row could not: items wrap to different line counts,
+   so as a centred flex row the columns went ragged, and once the row itself
+   wrapped a separator dot was stranded at the end of a line. Left-aligned
+   text on a common left edge per column reads as set, not as floated. */
 @media (max-width: 900px) {
+	/* One item per line so they genuinely line up, and the block is only as
+	   wide as its longest line and centred — so the list sits in the middle of
+	   the hero like everything else, while the dots and text still share a
+	   single left edge. Two columns looked left-shunted against a centred hero
+	   and gave nothing a common vertical line. */
 	.nv-coming-soon .trustrow {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		align-items: stretch;
-		gap: 8px;
-		text-align: center;
+		grid-template-columns: max-content;
+		justify-content: center;
+		justify-items: start;
+		gap: 12px;
+		width: fit-content;
+		max-width: 100%;
+		margin-inline: auto;
+		text-align: left;
 	}
 	.nv-coming-soon .trustrow div {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 11px 10px;
-		border: 1px solid var(--blue-stroke);
-		border-radius: var(--radius-md);
-		background: var(--paper);
-		color: var(--blue-500);
-		font-size: 10.5px;
-		letter-spacing: 0.07em;
-		line-height: 1.35;
+		display: grid;
+		grid-template-columns: 5px minmax(0, 1fr);
+		align-items: start;
+		gap: 11px;
+		font-size: 11px;
+		letter-spacing: 0.09em;
+		line-height: 1.45;
+		color: var(--neutral-800);
+	}
+	.nv-coming-soon .trustrow div::before {
+		content: '';
+		width: 5px;
+		height: 5px;
+		margin-top: 0.5em;
+		border-radius: 50%;
+		background: var(--blue-border);
 	}
 	.nv-coming-soon .trustrow i {
 		display: none;
@@ -87,7 +101,26 @@ html.notiva-locked .nv-coming-soon {
 		margin-right: 6px;
 	}
 
+	/* Breathing room. The source's hero rhythm is driven by vh units, which
+	   collapse on a phone in portrait and left every block sitting on top of
+	   the next one. These are the same steps, floored so they survive. */
+	.nv-coming-soon main {
+		padding: clamp(40px, 8vh, 72px) 0;
+	}
+	.nv-coming-soon h1 {
+		margin-top: 26px;
+	}
+	.nv-coming-soon .lede {
+		margin-top: 22px;
+	}
+	.nv-coming-soon .cta-row {
+		margin-top: 34px;
+		gap: 12px;
+	}
 	.nv-coming-soon .trustrow {
-		grid-template-columns: 1fr 1fr;
+		margin-top: 34px;
+	}
+	.nv-coming-soon .stagewrap {
+		--pad: 116px;
 	}
 }

@@ -1,0 +1,152 @@
+/* Mobile rhythm and layout corrections — not in the design source.
+   ─────────────────────────────────────────────────────────────────────────
+   Selectors here intentionally lead with `.notiva-shell` so they carry one
+   more class than the generated stylesheets they refine (`.nv-page section`
+   is (0,1,1); `.notiva-shell.nv-page section` is (0,2,1)). That means these
+   win on specificity rather than on import order, so this file can be loaded
+   from the layout without having to sit after every page's own CSS. */
+
+/* ── vertical rhythm ────────────────────────────────────────────────────
+   The design's section padding is driven by vw units, which on a phone
+   bottom out at the clamp minimum — 42px on the shared pages, 56px on the
+   investor page — so sections ran together. Raise the floor on small
+   screens; the desktop maximum is untouched. */
+
+@media (max-width: 900px) {
+	.notiva-shell.nv-page section {
+		padding: clamp(56px, 11vw, 80px) 0;
+	}
+	.notiva-shell.nv-investors section {
+		padding: clamp(64px, 12vw, 92px) 0;
+	}
+	.notiva-shell.nv-investors .hero,
+	.notiva-shell.nv-support .hero {
+		padding-top: clamp(40px, 8vw, 56px);
+	}
+
+	/* Space between a section's own blocks, not just between sections. */
+	.notiva-shell.nv-page h2,
+	.notiva-shell.nv-investors h2 {
+		margin-top: 20px;
+	}
+	.notiva-shell.nv-page .lede,
+	.notiva-shell.nv-investors .lede {
+		margin-top: 20px;
+	}
+	.notiva-shell.nv-page .body,
+	.notiva-shell.nv-investors .body {
+		margin-top: 18px;
+	}
+	.notiva-shell.nv-page .fine,
+	.notiva-shell.nv-investors .fine {
+		margin-top: 22px;
+	}
+	.notiva-shell.nv-investors .grid {
+		gap: 18px;
+	}
+	.notiva-shell.nv-investors .actions,
+	.notiva-shell.nv-support .actions {
+		margin-top: 30px;
+	}
+	.notiva-shell.nv-investors .facts {
+		margin-top: 34px;
+	}
+	.notiva-shell.nv-investors .stage {
+		padding: 26px 0;
+	}
+	.notiva-shell.nv-shop .shopgrid {
+		margin-top: 28px;
+	}
+	.notiva-shell.nv-support .amts,
+	.notiva-shell.nv-support .tiers {
+		margin-top: 22px;
+	}
+	.notiva-shell.nv-support .strip {
+		margin-top: 30px;
+		gap: 18px 28px;
+	}
+	.notiva-shell.nv-support .wall {
+		margin-top: 22px;
+	}
+}
+
+/* ── merch cards: one column, image left, content right ─────────────────
+   The two-up grid of tall cards left the artwork tiny and the copy cramped.
+   A single column with the image beside the text gives the photo real size
+   and the name/price a full line each.
+
+   Two markup shapes have to work: the catalogue on /support renders
+   `.ph`, `a.meta` and `.row` as siblings of `.pcard`, while the "more in the
+   shop" rail on a product page wraps `.ph` + `.meta` in a single `<a>`. */
+
+@media (max-width: 640px) {
+	.notiva-shell.nv-shop .shopgrid {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	/* `align-items` stays at its default `stretch` so the image fills the two
+	   rows it spans — setting `center` here (or a percentage height on the
+	   image) collapsed it back to its own min-height, because the row track is
+	   sized from that same element. The text blocks centre themselves instead. */
+	.notiva-shell.nv-shop .pcard {
+		display: grid;
+		grid-template-columns: 124px minmax(0, 1fr);
+		grid-template-rows: 1fr auto;
+		column-gap: 4px;
+	}
+
+	.notiva-shell.nv-shop .pcard > .ph {
+		grid-column: 1;
+		grid-row: 1 / -1;
+		aspect-ratio: auto;
+		min-height: 146px;
+	}
+	.notiva-shell.nv-shop .pcard > .meta {
+		grid-column: 2;
+		grid-row: 1;
+		align-self: center;
+		padding: 16px 16px 4px;
+	}
+	.notiva-shell.nv-shop .pcard > .row {
+		grid-column: 2;
+		grid-row: 2;
+		padding: 10px 16px 14px;
+	}
+	/* card with no action row: the meta block owns the whole content column */
+	.notiva-shell.nv-shop .pcard > .meta:last-child {
+		grid-row: 1 / -1;
+		padding-bottom: 14px;
+	}
+
+	/* Rail variant — the anchor is the card's only child and wraps both halves,
+	   so it carries the split itself. It must be `:not(.meta)`: on /support the
+	   card's own <a> IS the .meta block, and matching it here turned the
+	   name/subtitle/price into a two-column grid. */
+	.notiva-shell.nv-shop .pcard > a:not(.meta) {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: 116px minmax(0, 1fr);
+		align-items: center;
+		column-gap: 4px;
+	}
+	.notiva-shell.nv-shop .pcard > a:not(.meta) > .ph {
+		aspect-ratio: auto;
+		align-self: stretch;
+		min-height: 132px;
+	}
+	.notiva-shell.nv-shop .pcard > a:not(.meta) > .meta {
+		padding: 14px 16px;
+	}
+
+	.notiva-shell.nv-shop .pcard .n {
+		font-size: 15.5px;
+	}
+	.notiva-shell.nv-shop .pcard .sub {
+		font-size: 13px;
+	}
+	.notiva-shell.nv-shop .pcard .pr {
+		margin-top: 6px;
+		font-size: 16px;
+	}
+}

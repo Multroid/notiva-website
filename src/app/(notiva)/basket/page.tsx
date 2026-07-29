@@ -151,7 +151,7 @@ export default function BasketPage(): React.JSX.Element {
 										<div className="thumb">
 											{it.img ? (
 												// eslint-disable-next-line @next/next/no-img-element
-												<img src={it.img} alt="" />
+												<img src={it.img} alt="" loading="lazy" decoding="async" />
 											) : (
 												'✦'
 											)}

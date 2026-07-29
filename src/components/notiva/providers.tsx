@@ -15,6 +15,10 @@ import { NotivaModalProvider } from './modal-context';
 import { SiteNotice } from './site-notice';
 
 import '@/styles/notiva/site-notice.css';
+/* Mobile rhythm + merch-card layout. Loaded here, at the layout level, rather
+   than per page — its selectors lead with .notiva-shell so they out-specify
+   the generated stylesheets they refine and do not depend on import order. */
+import '@/styles/notiva/rhythm.css';
 
 export function NotivaProviders({
 	children,

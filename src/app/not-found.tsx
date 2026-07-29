@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 
 import '@/styles/notiva/tokens.css';
@@ -25,6 +26,19 @@ const inter = Inter({
 	variable: '--font-inter',
 	display: 'swap',
 });
+
+/* The 404 status already keeps this out of an index; the directive below is for
+   anything that renders the page without seeing the header (a soft 404, a
+   preview deploy). Next emits its own `noindex` for this route on top.
+
+   `absolute`, because the root layout's "Notiva - %s" template would otherwise
+   produce "Notiva - Notiva · Seite nicht gefunden" — verified in the built
+   HTML. This file is a real route (`/_not-found`), so unlike a nested
+   not-found its `metadata` export is resolved normally. */
+export const metadata: Metadata = {
+	title: { absolute: 'Notiva · Seite nicht gefunden' },
+	robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
 	return (

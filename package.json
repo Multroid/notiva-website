@@ -11,6 +11,7 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "eslint",
+    "optimize:images": "node scripts/optimize-images.mjs",
     "deploy:env": "node scripts/deploy-env-vars.js",
     "export:env": "bash scripts/export-env-vars.sh"
   },

@@ -80,7 +80,12 @@ export function NotivaHeader({
 			<div className="wrap nav" data-mobilenav="">
 				<Link className="brand" href="/">
 					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<img src="/notiva/notiva-logo-chip.svg" alt="" />
+					<img
+						src="/notiva/notiva-logo-chip.svg"
+						alt=""
+						width={38}
+						height={38}
+					/>
 					<div className="wordmark">Notiva</div>
 				</Link>
 				<div className="navright">

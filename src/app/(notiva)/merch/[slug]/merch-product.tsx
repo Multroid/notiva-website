@@ -24,6 +24,7 @@ import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { NotivaFooter } from '@/components/notiva/notiva-footer';
 import { BasketBar } from '@/components/notiva/basket-bar';
 import { ImageSlot } from '@/components/notiva/image-slot';
+import { ImageZoom } from '@/components/notiva/image-zoom';
 
 import {
 	FACT_MATERIAL_LABEL,
@@ -97,15 +98,44 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 					<div className="pdp" data-product={slug}>
 						<div className="gal">
 							<div className="shot">
-								<ImageSlot
+								{/* Slots with a photograph carry real alt text; the ones
+								    still waiting for a shot render the ✦ mark, which is
+								    decorative — ImageSlot's alt default of '' covers it.
+								    ImageZoom passes an empty slot straight through, so only
+								    real photography becomes clickable. */}
+								<ImageZoom
 									src={copy.gallery.main.src}
-									placeholder={copy.gallery.main.ph}
-								/>
+									alt={
+										copy.gallery.main.alt
+											? t(copy.gallery.main.alt.de, copy.gallery.main.alt.en)
+											: ''
+									}
+								>
+									<ImageSlot
+										src={copy.gallery.main.src}
+										alt={
+											copy.gallery.main.alt
+												? t(copy.gallery.main.alt.de, copy.gallery.main.alt.en)
+												: ''
+										}
+										placeholder={copy.gallery.main.ph}
+									/>
+								</ImageZoom>
 							</div>
 							<div className="thumbs">
 								{copy.gallery.thumbs.map((thumb, i) => (
 									<div className="shot" key={i}>
-										<ImageSlot src={thumb.src} placeholder={thumb.ph} />
+										<ImageZoom
+											src={thumb.src}
+											alt={thumb.alt ? t(thumb.alt.de, thumb.alt.en) : ''}
+										>
+											<ImageSlot
+												src={thumb.src}
+												alt={thumb.alt ? t(thumb.alt.de, thumb.alt.en) : ''}
+												placeholder={thumb.ph}
+												loading="lazy"
+											/>
+										</ImageZoom>
 									</div>
 								))}
 							</div>
@@ -235,7 +265,7 @@ export function MerchProduct({ slug }: { slug: MerchId }): React.JSX.Element {
 										<div className="ph">
 											{o.img ? (
 												/* eslint-disable-next-line @next/next/no-img-element */
-												<img src={o.img} alt="" />
+												<img src={o.img} alt="" loading="lazy" decoding="async" />
 											) : (
 												<span className="mark">✦</span>
 											)}

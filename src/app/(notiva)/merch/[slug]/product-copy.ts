@@ -22,6 +22,9 @@ export interface Slot {
 	/** Placeholder text of the design's <image-slot> (DE only in the source). */
 	ph: string;
 	src?: string;
+	/** Alt text for the slots that actually have a photograph. Empty slots render
+	    the ✦ placeholder mark, which is decorative and takes alt="". */
+	alt?: Bi;
 }
 
 export interface ProductCopy {
@@ -95,11 +98,25 @@ export const PRODUCT_COPY: Record<MerchId, ProductCopy> = {
 			en: '180 gsm organic cotton, GOTS certified',
 		},
 		gallery: {
-			main: { ph: 'Foto: T-Shirt ✦', src: '/notiva/novi/merch-shirt.png' },
+			main: {
+				ph: 'Foto: T-Shirt ✦',
+				src: '/notiva/novi/merch-shirt.webp',
+				alt: {
+					de: 'Notiva T-Shirt ✦ aus Bio-Baumwolle in Off-White, mit dem ✦ klein auf der Brust',
+					en: 'Notiva T-shirt ✦ in off-white organic cotton, with the ✦ small on the chest',
+				},
+			},
 			thumbs: [
 				{ ph: 'Foto: Vorne' },
 				{ ph: 'Foto: Hinten' },
-				{ ph: 'Foto: Novi trägt es', src: '/notiva/novi/tshirt.png' },
+				{
+					ph: 'Foto: Novi trägt es',
+					src: '/notiva/novi/tshirt.webp',
+					alt: {
+						de: 'Novi trägt das Notiva T-Shirt ✦',
+						en: 'Novi wearing the Notiva T-shirt ✦',
+					},
+				},
 			],
 		},
 	},
@@ -141,7 +158,14 @@ export const PRODUCT_COPY: Record<MerchId, ProductCopy> = {
 		],
 		material: { de: 'Baumwoll-Twill, ungefüttert', en: 'Cotton twill, unlined' },
 		gallery: {
-			main: { ph: 'Foto: Cap' },
+			main: {
+				src: '/notiva/merch/cap.webp',
+				alt: {
+					de: 'Novi trägt die Notiva-Cap und das ✦ T-Shirt',
+					en: 'Novi wearing the Notiva cap and the ✦ T-shirt',
+				},
+				ph: 'Foto: Cap',
+			},
 			thumbs: [{ ph: 'Foto: Vorne' }, { ph: 'Foto: Seite' }, { ph: 'Foto: Verschluss' }],
 		},
 	},
@@ -198,7 +222,14 @@ export const PRODUCT_COPY: Record<MerchId, ProductCopy> = {
 		],
 		material: { de: 'Matte Vinylfolie, UV-beschichtet', en: 'Matte vinyl, UV coated' },
 		gallery: {
-			main: { ph: 'Foto: Sticker-Set', src: '/notiva/novi/sticker-pack.png' },
+			main: {
+				ph: 'Foto: Sticker-Set',
+				src: '/notiva/novi/sticker-pack.webp',
+				alt: {
+					de: 'Notiva Sticker-Set: sieben wetterfeste Novi-Sticker in verschiedenen Posen',
+					en: 'Notiva sticker set: seven weatherproof Novi stickers in different poses',
+				},
+			},
 			thumbs: [{ ph: 'Foto: Das Set' }, { ph: 'Foto: Am Laptop' }, { ph: 'Foto: Einzeln' }],
 		},
 	},

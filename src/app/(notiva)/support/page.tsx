@@ -128,6 +128,9 @@ interface MerchCard {
 	price: string;
 	ph: string;
 	img?: string;
+	/** Alt text, German — only meaningful for the tiles that have a photo.
+	    Tiles without `img` render the ✦ placeholder, which carries no meaning. */
+	imgAlt?: string;
 	/** shirt + hoodie only link through to the size picker */
 	sizeOnly?: boolean;
 	quickLabel?: string;
@@ -142,7 +145,8 @@ const CARDS: MerchCard[] = [
 		subEn: 'Organic cotton, S–XXL',
 		price: '€29',
 		ph: 'Foto: T-Shirt',
-		img: '/notiva/novi/merch-shirt.png',
+		img: '/notiva/novi/merch-shirt.webp',
+		imgAlt: 'Notiva T-Shirt ✦ aus Bio-Baumwolle in Off-White, mit dem ✦ klein auf der Brust',
 		sizeOnly: true,
 	},
 	{
@@ -193,7 +197,8 @@ const CARDS: MerchCard[] = [
 		subEn: 'Seven Novi stickers, weatherproof',
 		price: '€6',
 		ph: 'Foto: Sticker-Set',
-		img: '/notiva/novi/sticker-pack.png',
+		img: '/notiva/novi/sticker-pack.webp',
+		imgAlt: 'Notiva Sticker-Set: sieben wetterfeste Novi-Sticker in verschiedenen Posen',
 		quickLabel: 'Sticker-Set in den Korb',
 	},
 	{
@@ -708,7 +713,7 @@ export default function SupportPage(): React.JSX.Element {
 					</div>
 
 					<div className={up ? 'novi-react up' : 'novi-react'} id="nr">
-						<Novi pose={pose} data-novi={pose} alt="" />
+						<Novi pose={pose} data-novi={pose} alt="" loading="lazy" />
 						<div className="txt">
 							<div className="eb">{t('Was das baut', 'What this builds')}</div>
 							<p className="cap" id="nr-cap">
@@ -770,7 +775,12 @@ export default function SupportPage(): React.JSX.Element {
 						{CARDS.map((c) => (
 							<div className="pcard" key={c.id}>
 								<div className="ph">
-									<ImageSlot src={c.img} placeholder={c.ph} />
+									<ImageSlot
+										src={c.img}
+										alt={c.imgAlt ?? ''}
+										placeholder={c.ph}
+										loading="lazy"
+									/>
 								</div>
 								<Link className="meta" href={`/merch/${c.id}`}>
 									<div className="n">{t(c.de, c.en)}</div>
@@ -840,7 +850,7 @@ export default function SupportPage(): React.JSX.Element {
 					<div className="split">
 						<div>
 							<div className="novi-thanks">
-								<Novi pose="relieved" data-novi="relieved" alt="" />
+								<Novi pose="relieved" data-novi="relieved" alt="" loading="lazy" />
 								<p>
 									{t(
 										'Auch ohne Geld kommt Notiva voran.',

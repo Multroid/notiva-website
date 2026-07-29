@@ -21,7 +21,7 @@
 	   swap, and animating it made the card visibly morph on every page load. */
 	transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
 }
-.notiva-shell .notice h3 {
+.notiva-shell .notice h2 {
 	margin: 0;
 	padding-right: 34px;
 	font-size: 22px;
@@ -117,7 +117,7 @@
 	border-radius: 50%;
 	cursor: pointer;
 }
-.notiva-shell .notice.is-min h3,
+.notiva-shell .notice.is-min h2,
 .notiva-shell .notice.is-min p,
 .notiva-shell .notice.is-min a,
 .notiva-shell .notice.is-min button {
@@ -145,7 +145,7 @@
 		gap: 10px;
 		border-radius: var(--radius-xl);
 	}
-	.notiva-shell .notice h3 {
+	.notiva-shell .notice h2 {
 		font-size: 18px;
 		padding-right: 30px;
 	}

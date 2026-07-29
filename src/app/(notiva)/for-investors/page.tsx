@@ -298,7 +298,14 @@ export default function ForInvestorsPage(): React.JSX.Element {
 								</div>
 								<div className="frame">
 									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src="/notiva/shot-tax-crop.png" alt="Notiva Steuer-Ansicht" />
+									<img
+										src="/notiva/shot-tax-crop.webp"
+										alt="Steueransicht in Notiva: zurückgelegter Steuerbetrag, Vollständigkeit der Bücher, UStVA-Stand des Quartals und Vorauszahlungen im Jahresverlauf."
+										width={1586}
+										height={1150}
+										loading="lazy"
+										decoding="async"
+									/>
 								</div>
 							</div>
 							<T
@@ -318,7 +325,14 @@ export default function ForInvestorsPage(): React.JSX.Element {
 								</div>
 								<div className="frame">
 									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src="/notiva/shot-fin-crop.png" alt="Notiva Finanz-Ansicht" />
+									<img
+										src="/notiva/shot-fin-crop.webp"
+										alt="Finanzansicht in Notiva: alle Konten in einem Bild, markierte Auffälligkeiten und Betrugsverdacht, erkannte wiederkehrende Kosten."
+										width={1586}
+										height={1150}
+										loading="lazy"
+										decoding="async"
+									/>
 								</div>
 							</div>
 							<T
@@ -338,7 +352,14 @@ export default function ForInvestorsPage(): React.JSX.Element {
 								</div>
 								<div className="frame">
 									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src="/notiva/shot-home.png" alt="Notiva Übersicht" />
+									<img
+										src="/notiva/shot-home.webp"
+										alt="Übersicht in Notiva: die Action Inbox mit anstehenden Fristen, offenen Aufgaben und dem bereits zurückgelegten Steuerbetrag."
+										width={1240}
+										height={950}
+										loading="lazy"
+										decoding="async"
+									/>
 								</div>
 							</div>
 							<T
@@ -654,7 +675,7 @@ export default function ForInvestorsPage(): React.JSX.Element {
 					<div className="split">
 						<div>
 							<div className="novi-cta">
-								<Novi pose="hold-doc" alt="" />
+								<Novi pose="hold-doc" alt="" loading="lazy" />
 								<T
 									as="p"
 									de="Novi hält das Deck bereit."

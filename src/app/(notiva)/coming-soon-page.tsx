@@ -8,6 +8,7 @@
    html/body scroll lock (line 15, now `notiva-locked` on <html>). */
 
 import React, { useEffect, useRef, useState } from 'react';
+import { preload } from 'react-dom';
 import Link from 'next/link';
 
 import { T, useT, useLang } from '@/components/notiva/lang-context';
@@ -44,10 +45,22 @@ const FINANCE: NavItem[] = [
 /* The .ai tab is not selectable, so the tab bar stays literal markup. */
 type TabKey = 'home' | 'radar' | 'tax';
 
+/* Poses the automaton below reaches for by writing img.src directly: 'think'
+   on the wide stroll, and think/pleased/point on the small-screen peek. The
+   initial 'walk' frame is in the markup, so the parser already has it. */
+const WALKER_SWAP_POSES = ['think', 'pleased', 'point'] as const;
+
 export function ComingSoonPage(): React.JSX.Element {
 	const t = useT();
 	const { lang } = useLang();
 	const { open } = useNotivaModal();
+
+	/* A runtime src swap is invisible to the preload scanner, so the first pose
+	   change would otherwise blank Novi for a beat. Warmed at low priority so
+	   these never contend with the hero copy and CTA. */
+	for (const p of WALKER_SWAP_POSES) {
+		preload(NOVI_POSES[p], { as: 'image', fetchPriority: 'low' });
+	}
 
 	const wrapRef = useRef<HTMLDivElement>(null);
 	const noviRef = useRef<HTMLImageElement>(null);
@@ -60,9 +73,18 @@ export function ComingSoonPage(): React.JSX.Element {
 	const [pbriefOpen, setPbriefOpen] = useState(false);
 	const [tabOn, setTabOn] = useState<TabKey>('home');
 
-	/* Coming Soon.html line 6: a fixed <title>, no data-title-de/-en on <html>,
-	   so it never follows the language toggle — same string for both. */
-	useNotivaTitle('Notiva · Warteliste', 'Notiva · Warteliste');
+	/* Coming Soon.html line 6 has a fixed <title> ("Notiva · Warteliste") and no
+	   data-title-de/-en on <html>. That string says nothing a search or answer
+	   engine can use about the site's primary page, so it is replaced by the
+	   descriptive one — which, unlike the source, does follow the toggle.
+
+	   The German string must stay character-identical to `metadata.title` in
+	   page.tsx: this hook re-asserts document.title after hydration, so a drift
+	   makes the rendered title differ from the server-rendered one. */
+	useNotivaTitle(
+		'Notiva · Buchhaltung und Steuern für Selbstständige',
+		'Notiva · Bookkeeping and tax for the self-employed'
+	);
 
 	/* ── html,body{height:100%;overflow:hidden} from the source ─────────── */
 	useEffect(() => {
@@ -211,10 +233,19 @@ export function ComingSoonPage(): React.JSX.Element {
 
 				<main>
 					<div className="wrap">
+						{/* Germany only, deliberately. This line is the audience claim a
+						    crawler reads first, and every machine-readable surface says
+						    Germany: countriesSupported 'DE' and audienceType in
+						    structured-data.ts, the OG card subtitle, llms.txt and every
+						    page description. Structured data has to describe the visible
+						    content, so "und Europa" here made one of the two wrong — and
+						    it is the one the project's own positioning guardrail rules
+						    out. Europe is an Erzählung ab Jahr 3 and lives on
+						    /for-investors, not on the indexable landing hero. */}
 						<div className="eyebrow">
 							{t(
-								'Für Selbstständige in Deutschland und Europa',
-								'For the self-employed in Germany and Europe'
+								'Für Selbstständige in Deutschland',
+								'For the self-employed in Germany'
 							)}
 						</div>
 						<T
@@ -222,10 +253,18 @@ export function ComingSoonPage(): React.JSX.Element {
 							de="Nie wieder <em>Angst</em> vor dem Finanzamt"
 							en="Never <em>fear</em> the Finanzamt again"
 						/>
+						{/* Second sentence is not filler. "Was kostet es?" is one of the
+						    four questions an answer engine will be asked about this
+						    site, and until now the honest answer — no public price list
+						    yet — existed only in /llms.txt, which Google and Bing do not
+						    read. The SoftwareApplication node carries no `offers` for the
+						    same reason; this is the human-readable half of that, so a
+						    model has a fact to quote instead of an implicature to
+						    hallucinate from. */}
 						<p className="lede">
 							{t(
-								'Notiva liest Bank, E-Mail und Belege das ganze Jahr, erstellt UStVA und EÜR und warnt, bevor etwas Geld kostet.',
-								'Notiva reads your bank, email and documents all year, prepares your UStVA and EÜR, and warns you before anything costs money.'
+								'Notiva liest Bank, E-Mail und Belege das ganze Jahr, erstellt UStVA und EÜR und warnt, bevor etwas Geld kostet. Notiva ist heute noch nicht kaufbar, und es gibt noch keine öffentliche Preisliste.',
+								'Notiva reads your bank, email and documents all year, prepares your UStVA and EÜR, and warns you before anything costs money. Notiva is not on sale yet, and there is no public price list.'
 							)}
 						</p>
 						<div className="cta-row">
@@ -245,12 +284,25 @@ export function ComingSoonPage(): React.JSX.Element {
 									de="<b>✦</b> Bau mit uns: Merch und Spenden →"
 									en="<b>✦</b> Build it with us: merch and donations →"
 								/>
+								{/* Decorative merch peek — 88x88 and 66x84 cards that
+								    .peek{display:none} hides below 900px, so `lazy`
+								    also means narrow viewports never fetch them. */}
 								<div className="peek" aria-hidden="true">
 									<div className="pk shirt" title="Novi T-Shirt">
-										<ImageSlot src="/notiva/uploads/firefly-tshirt-design.png" />
+										<ImageSlot
+												src="/notiva/uploads/firefly-tshirt-design.webp"
+												width={224}
+												height={224}
+												loading="lazy"
+											/>
 									</div>
 									<div className="pk stick" title="Novi Sticker-Set">
-										<ImageSlot src="/notiva/uploads/adobe-firefly-stickers.png" />
+										<ImageSlot
+												src="/notiva/uploads/adobe-firefly-stickers.webp"
+												width={179}
+												height={224}
+												loading="lazy"
+											/>
 									</div>
 								</div>
 							</div>
@@ -267,8 +319,33 @@ export function ComingSoonPage(): React.JSX.Element {
 					</div>
 				</main>
 
-				<div className="stagewrap" ref={wrapRef}>
-					<Novi pose="walk" ref={noviRef} />
+				{/* aria-hidden on the whole stage, not just the <h4>s inside it.
+				    Everything below is a fake product screenshot: an invented user
+				    ("Markus") and invented euro amounts (€12.480 total balance,
+				    €4.180,00 overdue, €1.240 VAT). It was half the extractable text
+				    on the site's primary indexable URL, rendered twice (desktop +
+				    phone mock), unlabelled and with no schema — so an answer engine
+				    summarising notiva.de had "Gesamtsaldo €12.480" sitting there
+				    looking like a fact about the product. role="presentation" on the
+				    headings was not enough: it drops heading semantics, it does not
+				    remove text. CSS visibility is irrelevant to an extractor.
+
+				    Safe to hide wholesale: nothing in here is focusable. The click
+				    handlers below sit on <li>/<s>/<u>/<div> with no tabIndex and no
+				    role, so aria-hidden traps no keyboard user, and the Novi walker
+				    is decorative (alt=""). The mock is atmosphere; the answer to
+				    "what is Notiva" lives in the <h1> and lede above.
+
+				    /for-investors solves the same problem the other way — it labels
+				    its screenshots "Zahlen sind Testdaten aus den Pilotphasen"
+				    (for-investors/page.tsx). A visible caption is the better fix
+				    here too, but it needs a rule in coming-soon.css, and the
+				    generated stylesheets under src/styles/notiva/ are off-limits. */}
+				<div className="stagewrap" ref={wrapRef} aria-hidden="true">
+					{/* Do not lazy-load: the automaton above writes img.src on this
+					    node, and a deferred first paint would strand it mid-stroll.
+					    Its swap targets are preloaded at the top of the component. */}
+					<Novi pose="walk" ref={noviRef} loading="eager" fetchPriority="high" />
 					<div className="stage">
 						{/* ── desktop dashboard mock ─────────────────────────── */}
 						<div className="mock">
@@ -318,7 +395,15 @@ export function ComingSoonPage(): React.JSX.Element {
 							</div>
 							<div className="body">
 								<div className="day">{t('Dienstag, 28. Juli', 'Tuesday, 28 July')}</div>
-								<h4>{t('Willkommen zurück, Markus.', 'Welcome back, Markus.')}</h4>
+								{/* role="presentation" strips the heading semantics while
+								    keeping the tag the mock's CSS selects
+								    (.nv-coming-soon .mock .body h4). This is fake dashboard
+								    chrome with sample data, not page structure: as a real
+								    heading it both skipped a level after the <h1> and offered
+								    "Willkommen zurück, Markus." for answer extraction. */}
+								<h4 role="presentation">
+									{t('Willkommen zurück, Markus.', 'Welcome back, Markus.')}
+								</h4>
 								<div
 									className={
 										'brief' +
@@ -399,7 +484,13 @@ export function ComingSoonPage(): React.JSX.Element {
 								</div>
 								<div className="ptop">
 									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src="/notiva/notiva-logo-chip.svg" alt="" />
+									<img
+											src="/notiva/notiva-logo-chip.svg"
+											alt=""
+											width={26}
+											height={26}
+											decoding="async"
+										/>
 									<b>Notiva</b>
 									<s>
 										<em>3</em>
@@ -410,7 +501,9 @@ export function ComingSoonPage(): React.JSX.Element {
 										<div className="day">
 											{t('Dienstag, 28. Juli', 'Tuesday, 28 July')}
 										</div>
-										<h4>
+										{/* as above — and this one is already inside the
+										    role="img" phone, so it was never exposed anyway */}
+										<h4 role="presentation">
 											{t(
 												'Willkommen zurück, Markus.',
 												'Welcome back, Markus.'

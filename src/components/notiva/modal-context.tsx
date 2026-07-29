@@ -209,7 +209,13 @@ export function NotivaModalProvider({
 							</svg>
 						</button>
 						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img className="nm-mark" src="/notiva/notiva-logo-chip.svg" alt="" />
+						<img
+							className="nm-mark"
+							src="/notiva/notiva-logo-chip.svg"
+							alt=""
+							width={56}
+							height={56}
+						/>
 						<h2 id="nm-title">
 							{done ? (deck ? t.dDoneT : t.wDoneT) : deck ? t.dTitle : t.wTitle}
 						</h2>

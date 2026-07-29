@@ -53,7 +53,14 @@ export function OverlayCard({
 		>
 			<div className="ovcard" role="dialog" aria-modal="true" aria-labelledby="ov-t">
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img src="/notiva/novi/thankful.png" alt="Novi" />
+				<img
+					src="/notiva/novi/thankful.webp"
+					alt="Novi"
+					width={640}
+					height={533}
+					loading="lazy"
+					decoding="async"
+				/>
 				<h3 id="ov-t">{title}</h3>
 				<p>{body}</p>
 				<p className="ovnote">{note}</p>

@@ -6,6 +6,7 @@ import ThemeProvider from "@/components/theme-provider";
 import { SessionProvider } from "@/components/session-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { DynamicTitle } from "@/components/dynamic-title";
+import { SITE_URL } from "@/lib/structured-data";
 
 const montserrat = Montserrat({
 	subsets: ["latin"],
@@ -15,11 +16,19 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+	/* Required for the file-based OG cards and every relative `alternates.canonical`
+	   to resolve to an absolute URL. Without it Next warns at build time and emits
+	   localhost URLs in production. */
+	metadataBase: new URL(SITE_URL),
 	title: {
 		default: "Notiva",
 		template: "Notiva - %s",
 	},
-	description: "The smartest way to track document expirations, subscription renewals, and important payments.",
+	/* German, because every server-rendered page is German (English is a
+	   client-side toggle at the same URL, so crawlers never see it). This is only
+	   a fallback — each indexable route sets its own via pageMetadata(). */
+	description:
+		"Notiva ist das KI-native Finanz-Backoffice für Selbstständige in Deutschland: Buchhaltung, Umsatzsteuer und Fristen vorbereitet, jede Zahl belegt. Start 2026.",
 };
 
 export default function RootLayout({
@@ -28,7 +37,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		/* lang="de": every server-rendered page ships German copy. The English
+		   toggle swaps `lang` on the page shell client-side, it does not change
+		   the document language a crawler sees. */
+		<html lang="de" suppressHydrationWarning>
 			<head>
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

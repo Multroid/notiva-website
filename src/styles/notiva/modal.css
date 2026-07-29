@@ -1,0 +1,37 @@
+/* Generated from the `css` string inside
+   Designs/Example designs/Notiva Design/assets/notiva-modal.js —
+   scoped to .notiva-shell. Rules are otherwise verbatim. */
+.notiva-shell .nm-scrim{position:fixed;inset:0;z-index:80;background:rgba(16,17,19,.5);backdrop-filter:blur(6px);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 180ms var(--ease-out)}
+.notiva-shell .nm-scrim[data-open]{opacity:1;pointer-events:auto}
+.notiva-shell .nm-modal{position:relative;width:100%;max-width:520px;max-height:92vh;overflow:auto;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);padding:clamp(28px,4vw,44px);text-align:left;transform:translateY(10px) scale(.985);transition:transform 180ms var(--ease-out)}
+.notiva-shell .nm-scrim[data-open] .nm-modal{transform:none}
+.notiva-shell .nm-close{position:absolute;top:18px;right:18px;width:38px;height:38px;border:0;border-radius:var(--radius-sm);background:transparent;color:var(--slate);display:grid;place-items:center;cursor:pointer}
+.notiva-shell .nm-close:hover{background:var(--blue-fill)}
+.notiva-shell .nm-close svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+.notiva-shell .nm-mark{width:56px;height:56px;display:block;border-radius:22%}
+.notiva-shell .nm-modal h2{margin:22px 0 0;font-family:var(--font-display),Montserrat,sans-serif;font-size:clamp(25px,3.2vw,31px);line-height:1.12;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+.notiva-shell .nm-modal .nm-copy{margin:14px 0 0;font-family:var(--font-display),Montserrat,sans-serif;font-size:16px;line-height:24px;font-weight:500;color:var(--slate)}
+.notiva-shell .nm-rows{margin:26px 0 0;display:grid;gap:12px}
+.notiva-shell .nm-row label{display:block;font-family:var(--font-tag),"Plus Jakarta Sans",sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.notiva-shell .nm-row input{width:100%;height:50px;padding:0 16px;border:2px solid var(--blue-border);border-radius:var(--radius-md);background:var(--blue-fill);font-family:var(--font-display),Montserrat,sans-serif;font-size:16px;font-weight:500;color:var(--blue-500)}
+.notiva-shell .nm-row input::placeholder{color:var(--blue-400);opacity:.55}
+.notiva-shell .nm-row input:focus{outline:none;border-color:var(--blue-200)}
+.notiva-shell .nm-submit{margin:18px 0 0;width:100%;height:52px;border:0;border-radius:var(--radius-sm);background:var(--blue-400);color:var(--paper);font-family:var(--font-display),Montserrat,sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:background 180ms var(--ease-out),transform 150ms}
+.notiva-shell .nm-submit:hover{background:#003A9A}
+.notiva-shell .nm-submit:active{transform:scale(.99)}
+.notiva-shell .nm-err{margin:12px 0 0;font-family:var(--font-display),Montserrat,sans-serif;font-size:14px;line-height:21px;font-weight:600;color:var(--red)}
+.notiva-shell .nm-small{margin:16px 0 0;font-family:var(--font-display),Montserrat,sans-serif;font-size:13px;line-height:20px;font-weight:500;color:var(--neutral-800)}
+.notiva-shell .nm-switch{margin:22px 0 0;padding-top:20px;border-top:1px solid var(--blue-stroke)}
+.notiva-shell .nm-switch button{border:0;background:transparent;padding:0;font-family:var(--font-display),Montserrat,sans-serif;font-size:14px;font-weight:500;color:var(--neutral-800);cursor:pointer;transition:color 150ms var(--ease-out)}
+.notiva-shell .nm-switch button b{color:var(--blue-400);font-weight:700}
+.notiva-shell .nm-switch button:hover b{color:var(--blue-300)}
+.notiva-shell [hidden]{display:none !important}
+
+/* ─────────────────────────────────────────────────────────────
+   <ImageSlot> base box. The design's <image-slot> custom element
+   carried these in its shadow-root :host rule
+   (assets/image-slot.js line 291) rather than in any stylesheet, so
+   there was nothing for the generated shop/coming-soon CSS to pick up.
+   Container rules such as `.pcard .ph img` override the sizing.
+   ───────────────────────────────────────────────────────────── */
+.notiva-shell .imgslot{display:block;position:relative;width:100%;height:100%;object-fit:contain}

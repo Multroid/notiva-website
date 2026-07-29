@@ -5,6 +5,28 @@ import path from "path";
 // Local: http://localhost:3000, Production: https://app.notiva.de
 const CONSUMER_APP_URL = process.env.NEXT_PUBLIC_CONSUMER_APP_URL || "http://localhost:3000";
 
+// Pre-launch: the site serves only the Coming Soon landing page and the
+// investor / support / merch pages. Every other marketing route has been moved
+// to archive/ (see archive/README.md) and is redirected to the landing page.
+// Deliberately NOT permanent — these URLs come back at relaunch, and a cached
+// 301 would be very hard to undo.
+const ARCHIVED_MARKETING_PATHS = [
+  "/about",
+  "/blog",
+  "/brand",
+  "/business",
+  "/changelog",
+  "/compare",
+  "/contact",
+  "/faq",
+  "/features",
+  "/help",
+  "/milestones",
+  "/pricing",
+  "/security",
+  "/use-cases",
+];
+
 const nextConfig: NextConfig = {
   // AWS Amplify Next.js SSR - do not use standalone output
   // Standalone output is incompatible with Amplify's Next.js hosting
@@ -100,6 +122,23 @@ const nextConfig: NextConfig = {
         destination: `${CONSUMER_APP_URL}/settings/:path*`,
         permanent: false,
       },
+      // The verify-email page moved to the consumer app along with the rest of auth
+      {
+        source: "/verify-email",
+        destination: `${CONSUMER_APP_URL}/verify-email`,
+        permanent: false,
+      },
+      // The landing page lives at "/" now; keep the old path working
+      {
+        source: "/coming-soon",
+        destination: "/",
+        permanent: false,
+      },
+      // Archived marketing pages -> landing page (self and any sub-path)
+      ...ARCHIVED_MARKETING_PATHS.flatMap((path) => [
+        { source: path, destination: "/", permanent: false },
+        { source: `${path}/:path*`, destination: "/", permanent: false },
+      ]),
     ];
   },
 

@@ -46,3 +46,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Downloaded design source (ported to src/app/(notiva); runtime assets live in public/notiva)
+Designs/

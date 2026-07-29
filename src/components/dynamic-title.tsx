@@ -69,10 +69,31 @@ const pathMap: Record<string, string> = {
   admin: "Admin Panel",
 }
 
+// Routes in the (notiva) route group ship their own full titles
+// ("Notiva · Warteliste", "Notiva · Hoodie ✦", …) from `metadata` and from the
+// language toggle. This component must not overwrite them.
+const OWN_TITLE_PREFIXES = [
+  "/",
+  "/for-investors",
+  "/support",
+  "/merch",
+  "/basket",
+]
+
+function ownsItsTitle(pathname: string): boolean {
+  return OWN_TITLE_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`)
+  )
+}
+
 export function DynamicTitle() {
   const pathname = usePathname()
 
   useEffect(() => {
+    if (pathname && ownsItsTitle(pathname)) {
+      return
+    }
+
     // Function to update the title
     const updateTitle = () => {
       // Don't update if pathname isn't ready

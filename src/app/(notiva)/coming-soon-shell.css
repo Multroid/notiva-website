@@ -1,0 +1,21 @@
+/* Not in the design source.
+
+   Coming Soon.html got its full-viewport layout from `html,body{height:100%}`
+   feeding `.page{height:100%}`. In the App Router there is one extra element
+   between <body> and the page root — the (notiva) layout's font-variable <div>
+   — with `height:auto`, which breaks the percentage chain, so `.nv-coming-soon`
+   would collapse to content height and `main{flex:1}` would never fill the
+   screen. Measuring the shell root against the viewport gives exactly the
+   result the source had. The small/short breakpoint is the one from the source
+   (`@media(max-height:760px),(max-width:900px)`), where the page scrolls again
+   and `.page{min-height:100vh}` takes over. */
+
+html.notiva-locked .nv-coming-soon {
+	height: 100vh;
+}
+
+@media (max-height: 760px), (max-width: 900px) {
+	html.notiva-locked .nv-coming-soon {
+		height: auto;
+	}
+}

@@ -18,6 +18,7 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "archive/**",          // Pre-launch: not built or served (see archive/README.md)
       "tailwind.config.js",  // Config file uses CommonJS require
       "postcss.config.mjs",  // Config file
     ],

@@ -1,0 +1,39 @@
+/* Generated from notiva-nav.css — scoped to .notiva-shell. Do not edit by hand. */
+.notiva-shell header{position:sticky;top:0;z-index:40;flex:0 0 auto;background:rgba(254,253,253,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--blue-stroke)}
+.notiva-shell header .wrap{max-width:1180px}
+.notiva-shell .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;height:80px}
+.notiva-shell .brand{display:flex;align-items:center;gap:12px}
+.notiva-shell .brand img{width:38px;height:38px;display:block;border-radius:22%}
+.notiva-shell .wordmark{font-weight:700;font-size:22px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-400)}
+.notiva-shell .navright{display:flex;align-items:center;gap:clamp(10px,1.6vw,20px)}
+.notiva-shell .navlink{font-size:14px;font-weight:600;color:var(--neutral-800)}
+.notiva-shell .navlink:hover{color:var(--blue-400)}
+.notiva-shell .navlink[aria-current]{color:var(--blue-400)}
+.notiva-shell .lang{display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--blue-stroke);border-radius:var(--radius-sm);background:var(--blue-fill)}
+.notiva-shell .lang button{border:0;background:transparent;padding:6px 10px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:600;color:var(--blue-500);cursor:pointer;transition:background 150ms var(--ease-out),color 150ms}
+.notiva-shell .lang button[aria-pressed="true"]{background:var(--blue-400);color:var(--paper)}
+.notiva-shell .nav .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:46px;padding:0 22px;border-radius:var(--radius-sm);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:background 180ms var(--ease-out),color 180ms,transform 150ms,border-color 180ms}
+.notiva-shell .nav .btn:active{transform:scale(.98)}
+.notiva-shell .nav .btn-solid{border:0;background:var(--blue-400);color:var(--paper)}
+.notiva-shell .nav .btn-solid:hover{background:#003A9A}
+.notiva-shell .navburger{display:none;width:44px;height:44px;flex:0 0 auto;padding:0;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:2px solid var(--blue-border);border-radius:var(--radius-sm);background:var(--white);cursor:pointer;transition:border-color 150ms var(--ease-out),background 150ms}
+.notiva-shell .navburger:hover{border-color:var(--blue-400);background:var(--blue-fill)}
+.notiva-shell .navburger span{width:18px;height:2px;border-radius:2px;background:var(--blue-400);transition:transform 180ms var(--ease-out)}
+.notiva-shell .navburger[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+.notiva-shell .navburger[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+.notiva-shell .navsheet{display:none}
+.notiva-shell .navsheet[hidden]{display:none !important}
+@media(max-width:820px){
+.notiva-shell .nav[data-mobilenav]{gap:12px;height:72px}
+.notiva-shell .nav[data-mobilenav] .navlink,.notiva-shell .nav[data-mobilenav]>.navright>.btn{display:none}
+.notiva-shell .nav[data-mobilenav] .navburger{display:flex}
+.notiva-shell .navsheet{display:grid;gap:0;padding:6px clamp(20px,4vw,48px) 18px;border-top:1px solid var(--blue-stroke);background:rgba(254,253,253,.98)}
+.notiva-shell .navsheet .navlink{display:block;padding:15px 2px;font-size:16px;border-bottom:1px solid var(--blue-stroke)}
+.notiva-shell .navsheet .btn{margin-top:16px;width:100%;height:52px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:var(--radius-sm);background:var(--blue-400);color:var(--paper);font-family:inherit;font-size:16px;font-weight:600;cursor:pointer}
+}
+@media(max-width:400px){
+.notiva-shell .nav{height:66px}
+.notiva-shell .brand img{width:32px;height:32px}
+.notiva-shell .wordmark{font-size:18px}
+.notiva-shell .lang button{padding:6px 8px;font-size:12px}
+}

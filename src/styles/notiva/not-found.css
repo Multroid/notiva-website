@@ -1,0 +1,94 @@
+/* 404 page. No design-file counterpart, so this is composed from the existing
+   design-system primitives (page.css: .wrap, .eyebrow, h1, .lede, .btn, footer)
+   with only the few extra rules the layout needs. Scoped to .nv-404. */
+
+.nv-404 .nf {
+	display: flex;
+	align-items: center;
+	min-height: calc(100vh - 80px - 96px); /* header + footer */
+	padding: clamp(40px, 7vw, 96px) 0;
+}
+
+.nv-404 .nf .wrap {
+	display: flex;
+	align-items: flex-end;
+	gap: clamp(8px, 3vw, 40px);
+}
+
+.nv-404 .nf img {
+	height: clamp(150px, 22vw, 264px);
+	width: auto;
+	flex: 0 0 auto;
+	margin: 0 -18px;
+}
+
+.nv-404 .nf .txt {
+	min-width: 0;
+	padding-bottom: clamp(4px, 1.5vw, 18px);
+}
+
+/* the code sits where an .eyebrow normally does, so it inherits its rhythm */
+.nv-404 .nf-code {
+	font-family: var(--font-numeric), 'Inter', sans-serif;
+	font-size: clamp(52px, 8vw, 92px);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	color: var(--blue-border);
+}
+
+.nv-404 h1 {
+	margin-top: clamp(10px, 1.6vw, 18px);
+	max-width: 18ch;
+}
+
+.nv-404 .actions {
+	margin: clamp(24px, 3vw, 34px) 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+/* the pages that still exist while the site is pre-launch */
+.nv-404 .elsewhere {
+	margin: clamp(22px, 2.6vw, 30px) 0 0;
+	padding-top: 18px;
+	border-top: 1px solid var(--blue-stroke);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 8px 16px;
+	font-size: 13.5px;
+	font-weight: 500;
+	color: var(--neutral-800);
+}
+
+.nv-404 .elsewhere a {
+	font-weight: 600;
+}
+
+.nv-404 .elsewhere i {
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--blue-border);
+	display: block;
+}
+
+@media (max-width: 640px) {
+	.nv-404 .nf .wrap {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+	.nv-404 .nf img {
+		height: 132px;
+		margin: 0 -16px;
+	}
+	.nv-404 .actions .btn {
+		width: 100%;
+	}
+	.nv-404 .elsewhere i {
+		display: none;
+	}
+}

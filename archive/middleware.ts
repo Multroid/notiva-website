@@ -37,6 +37,12 @@ export async function middleware(request: NextRequest) {
     '/milestones',
     '/brand',
     '/business',
+    // Notiva public pages (src/app/(notiva))
+    '/coming-soon',
+    '/for-investors',
+    '/support',
+    '/merch',
+    '/basket',
   ]
 
   // Check if the path matches any public route

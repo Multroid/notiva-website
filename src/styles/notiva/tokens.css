@@ -1,0 +1,198 @@
+/* ─────────────────────────────────────────────────────────────
+   Notiva Design System — Core Tokens
+   Ported from Designs/Example designs/Notiva Design/assets/colors_and_type.css
+   Font families are wired to the next/font variables declared in
+   src/app/(notiva)/layout.tsx instead of @font-face / Google @import.
+   Element rules are scoped to .notiva-shell so they cannot leak into
+   the rest of the marketing site.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Primary Blue (brand) ─────────────────────── */
+  --blue-200:  #3D87FF;   /* focus ring / light interactive */
+  --blue-300:  #0060FB;   /* hover */
+  --blue-400:  #0047BA;   /* BRAND PRIMARY */
+  --blue-500:  #00286A;   /* deep text on blue-tint */
+  --blue-fill: #E6EDF8;   /* tinted field background */
+  --blue-stroke: #D9E3F5; /* subtle stroke */
+  --blue-border: #B0C6EA; /* 2px border on badges, chat */
+
+  /* ── Paper / Neutral whites ───────────────────── */
+  --paper:     #FAFAF8;
+  --white:     #FEFDFD;
+  --pure-white:#FFFFFF;
+
+  /* ── Ink / text ───────────────────────────────── */
+  --ink:       #101113;
+  --slate:     #2D3339;
+  --muted:     #898C8E;
+  --gray-500:  #7F7F7F;
+
+  /* ── Neutral scale ────────────────────────────── */
+  --neutral-200: #E8E8E8;
+  --neutral-300: #D2D2D2;
+  --neutral-400: #BBBBBB;
+  --neutral-500: #A4A4A4;
+  --neutral-600: #8E8E8E;
+  --neutral-700: #777777;
+  --neutral-800: #606060;
+  --neutral-900: #4A4A4A;
+  --neutral-1000:#333333;
+
+  /* ── Orange (accent) ──────────────────────────── */
+  --orange-200: #F58E6F;
+  --orange-300: #F05627;
+  --orange-400: #CA3A0E;
+  --orange-500: #8E290A;
+
+  /* ── Semantic ─────────────────────────────────── */
+  --red:        #F32735;
+  --red-fill:   #FDDFE1;
+  --green:      #1AC200;
+  --green-alt:  #1FC16B;
+  --yellow:     #FFDB43;
+  --yellow-alt: #DFB400;
+
+  /* ── Lilac decorative ─────────────────────────── */
+  --lilac-fill: #F3E7FF;
+  --lilac-mid:  #EAD4FF;
+  --lilac-300:  #C68DFF;
+  --lilac-500:  #8A38F5;
+
+  /* ── Multroid (parent brand) ──────────────────── */
+  --multroid-blue: #0033A1;
+
+  /* ── Type — families ──────────────────────────── */
+  --font-display: var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-tag:     var(--font-jakarta), 'Plus Jakarta Sans', 'Montserrat', sans-serif;
+  --font-numeric: var(--font-inter), 'Inter', 'Nimbus Sans', system-ui, sans-serif;
+  --font-mono:    ui-monospace, 'JetBrains Mono', monospace;
+
+  /* ── Type — weights ───────────────────────────── */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+  --fw-black:   900;
+
+  /* ── Type — sizes (heading) ───────────────────── */
+  --fs-h1: 72px;  --lh-h1: 108px;
+  --fs-h2: 56px;  --lh-h2: 84px;
+  --fs-h3: 46px;  --lh-h3: 69px;
+  --fs-h4: 38px;  --lh-h4: 57px;
+  --fs-h5: 32px;  --lh-h5: 48px;
+  --fs-h6: 26px;  --lh-h6: 39px;
+  --fs-h7: 22px;  --lh-h7: 33px;
+
+  /* ── Type — body ──────────────────────────────── */
+  --fs-b1: 18px;  --lh-b1: 27px;
+  --fs-b2: 16px;  --lh-b2: 24px;
+  --fs-b3: 14px;  --lh-b3: 21px;
+  --fs-b4: 12px;  --lh-b4: 18px;
+  --fs-b5: 10px;  --lh-b5: 15px;
+
+  /* ── Type — tag ───────────────────────────────── */
+  --fs-tag: 12px; --lh-tag: 12px;
+
+  /* ── Spacing ──────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  40px;
+  --space-8:  56px;
+  --space-9:  64px;
+  --space-10: 80px;
+
+  /* ── Radii ────────────────────────────────────── */
+  --radius-xs:  5px;
+  --radius-sm:  8px;
+  --radius-md:  10px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-pill: 999px;
+
+  /* ── Shadows ──────────────────────────────────── */
+  --shadow-sm:     0 3px 50px rgba(0,0,0,0.07);
+  --shadow-md:     0 4px 20px rgba(0,0,0,0.15);
+  --shadow-lg:     0 20px 50px -12px rgba(0,0,0,0.25);
+  --shadow-brand:  0 -27px 50px rgba(0,71,186,0.35);
+  --shadow-avatar: 0 4px 8px rgba(0,0,0,0.3);
+
+  /* ── Motion ───────────────────────────────────── */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 280ms;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Shell root — replaces the design system's `body` reset.
+   ───────────────────────────────────────────────────────────── */
+
+.notiva-shell,
+.notiva-shell *,
+.notiva-shell *::before,
+.notiva-shell *::after { box-sizing: border-box; }
+
+.notiva-shell {
+  /* The next/font variables (--font-jakarta / --font-inter) are declared on the
+     wrapper <div> rendered by NotivaProviders, and --font-montserrat on <body>;
+     neither is in scope at :root, so the :root copies above resolve to the
+     guaranteed-invalid value and every `font-family: var(--font-tag)` consumer
+     would be dropped at computed-value time. Re-declare them here, inside that
+     scope, so 'Plus Jakarta Sans' / 'Inter' actually apply. */
+  --font-display: var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-tag:     var(--font-jakarta), 'Plus Jakarta Sans', 'Montserrat', sans-serif;
+  --font-numeric: var(--font-inter), 'Inter', 'Nimbus Sans', system-ui, sans-serif;
+
+  font-family: var(--font-body);
+  color: var(--slate);
+  background: var(--pure-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Semantic type classes.
+   ───────────────────────────────────────────────────────────── */
+
+.notiva-shell .h1 { font-family: var(--font-display); font-weight: var(--fw-bold);     font-size: var(--fs-h1); line-height: var(--lh-h1); color: var(--ink); letter-spacing: -0.01em; }
+.notiva-shell .h2 { font-family: var(--font-display); font-weight: var(--fw-bold);     font-size: var(--fs-h2); line-height: var(--lh-h2); color: var(--ink); }
+.notiva-shell .h3 { font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: var(--fs-h3); line-height: var(--lh-h3); color: var(--ink); }
+.notiva-shell .h4 { font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: var(--fs-h4); line-height: var(--lh-h4); color: var(--ink); }
+.notiva-shell .h5 { font-family: var(--font-display); font-weight: var(--fw-semibold); font-size: var(--fs-h5); line-height: var(--lh-h5); color: var(--ink); }
+.notiva-shell .h6 { font-family: var(--font-display); font-weight: var(--fw-bold);     font-size: var(--fs-h6); line-height: var(--lh-h6); color: var(--ink); }
+.notiva-shell .h7 { font-family: var(--font-display); font-weight: var(--fw-bold);     font-size: var(--fs-h7); line-height: var(--lh-h7); color: var(--ink); }
+
+.notiva-shell .b1 { font-family: var(--font-body); font-weight: var(--fw-medium); font-size: var(--fs-b1); line-height: var(--lh-b1); color: var(--slate); }
+.notiva-shell .b2 { font-family: var(--font-body); font-weight: var(--fw-medium); font-size: var(--fs-b2); line-height: var(--lh-b2); color: var(--slate); }
+.notiva-shell .b3 { font-family: var(--font-body); font-weight: var(--fw-medium); font-size: var(--fs-b3); line-height: var(--lh-b3); color: var(--slate); }
+.notiva-shell .b4 { font-family: var(--font-body); font-weight: var(--fw-medium); font-size: var(--fs-b4); line-height: var(--lh-b4); color: var(--slate); }
+.notiva-shell .b5 { font-family: var(--font-body); font-weight: var(--fw-medium); font-size: var(--fs-b5); line-height: var(--lh-b5); color: var(--slate); }
+
+.notiva-shell .tag { font-family: var(--font-tag); font-weight: var(--fw-semibold); font-size: var(--fs-tag); line-height: 1; color: var(--ink); text-transform: none; }
+
+.notiva-shell .numeric { font-family: var(--font-numeric); font-weight: var(--fw-medium); }
+.notiva-shell .code    { font-family: var(--font-mono);    font-weight: var(--fw-bold); font-size: 14px; }
+
+.notiva-shell .wordmark {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  color: var(--blue-400);
+}
+
+/* Full-viewport lock used by the Coming Soon page (was html,body{overflow:hidden}). */
+html.notiva-locked,
+html.notiva-locked body { height: 100%; overflow: hidden; }
+@media (max-height: 760px), (max-width: 900px) {
+  html.notiva-locked,
+  html.notiva-locked body { height: auto; min-height: 100%; overflow: visible; }
+}

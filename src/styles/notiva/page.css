@@ -1,0 +1,46 @@
+/* Generated from notiva-page.css — scoped to .nv-page. Do not edit by hand. */
+.nv-page *{box-sizing:border-box}
+.nv-page{margin:0;background:var(--pure-white);color:var(--ink);font-family:var(--font-display),'Montserrat',sans-serif;-webkit-font-smoothing:antialiased}
+.nv-page a{color:var(--blue-400);text-decoration:none}
+.nv-page a:hover{color:var(--blue-300)}
+.nv-page img{max-width:100%}
+.nv-page :focus-visible{outline:2px solid var(--blue-200);outline-offset:2px}
+.nv-page .wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 clamp(18px,4vw,48px)}
+.nv-page .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:var(--radius-sm);font-family:inherit;font-size:15px;font-weight:600;line-height:1.2;text-align:center;cursor:pointer;transition:background 180ms var(--ease-out),color 180ms,transform 150ms,border-color 180ms}
+.nv-page .btn:active{transform:scale(.98)}
+.nv-page .btn-solid{border:0;background:var(--blue-400);color:var(--paper)}
+.nv-page .btn-solid:hover{background:#003A9A;color:var(--paper)}
+.nv-page .btn-ghost{border:2px solid var(--blue-400);background:transparent;color:var(--blue-400)}
+.nv-page .btn-ghost:hover{background:var(--blue-fill);color:var(--blue-400)}
+.nv-page .btn-paper{border:2px solid rgba(240,238,233,.5);background:transparent;color:var(--paper)}
+.nv-page .btn-paper:hover{border-color:var(--paper);color:var(--paper)}
+.nv-page .btn-paper-solid{border:0;background:var(--paper);color:var(--blue-400)}
+.nv-page .btn-paper-solid:hover{opacity:.88;color:var(--blue-400)}
+.nv-page section{padding:clamp(42px,5.5vw,80px) 0;border-top:1px solid var(--blue-stroke)}
+.nv-page section:first-of-type{border-top:0}
+.nv-page .eyebrow{display:flex;align-items:center;gap:10px;font-family:var(--font-tag),'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-400)}
+.nv-page .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange-300);flex:0 0 auto}
+.nv-page h1{margin:18px 0 0;max-width:22ch;font-size:clamp(33px,5.2vw,58px);line-height:1.05;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+.nv-page h2{margin:16px 0 0;max-width:28ch;font-size:clamp(25px,3.2vw,36px);line-height:1.13;font-weight:700;letter-spacing:-.022em;text-wrap:balance}
+.nv-page h3{margin:0;font-size:18px;line-height:1.3;font-weight:700;letter-spacing:-.01em}
+.nv-page .lede{margin:18px 0 0;max-width:62ch;font-size:clamp(16px,1.4vw,19px);line-height:1.58;font-weight:500;color:var(--neutral-800);text-wrap:pretty}
+.nv-page .body{margin:14px 0 0;max-width:64ch;font-size:16px;line-height:1.6;font-weight:500;color:var(--slate);text-wrap:pretty}
+.nv-page .fine{margin:16px 0 0;max-width:68ch;font-size:13px;line-height:1.6;font-weight:500;color:var(--neutral-700)}
+.nv-page .num{font-family:var(--font-numeric),'Inter',sans-serif;font-weight:700;letter-spacing:-.02em}
+.nv-page .field label{display:block;font-family:var(--font-tag),'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.nv-page .field input{width:100%;height:50px;padding:0 16px;border:2px solid var(--blue-stroke);border-radius:var(--radius-sm);background:var(--blue-fill);font-family:inherit;font-size:15px;font-weight:500;color:var(--ink)}
+.nv-page .field input::placeholder{color:var(--muted)}
+.nv-page .field input:focus{outline:none;border-color:var(--blue-400)}
+.nv-page .err{margin:12px 0 0;font-size:14px;font-weight:600;color:var(--red)}
+.nv-page footer{background:var(--blue-400);color:rgba(240,238,233,.6);padding:0 0 36px;font-size:13px}
+.nv-page footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding-top:26px;border-top:1px solid rgba(240,238,233,.2)}
+.nv-page footer a{color:rgba(240,238,233,.75)}
+.nv-page footer a:hover{color:var(--paper)}
+.nv-page .ov{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(16,17,19,.45);backdrop-filter:blur(4px)}
+.nv-page .ovcard{width:100%;max-width:440px;padding:clamp(24px,4vw,34px);border-radius:var(--radius-2xl);background:var(--white);box-shadow:var(--shadow-lg);text-align:center}
+.nv-page .ovcard img{width:76px;height:76px;object-fit:contain;margin:0 auto 16px;display:block}
+.nv-page .ovcard h3{font-size:23px;letter-spacing:-.02em}
+.nv-page .ovcard p{margin:12px 0 0;font-size:15px;line-height:1.6;font-weight:500;color:var(--slate)}
+.nv-page .ovcard .ovnote{margin-top:12px;font-size:13px;color:var(--neutral-700)}
+.nv-page .ovcard .btn{margin-top:22px;width:100%}
+.nv-page [hidden]{display:none!important}

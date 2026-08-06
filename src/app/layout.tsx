@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import ThemeProvider from "@/components/theme-provider";
 import { SessionProvider } from "@/components/session-provider";
@@ -41,24 +40,27 @@ export default function RootLayout({
 		   toggle swaps `lang` on the page shell client-side, it does not change
 		   the document language a crawler sees. */
 		<html lang="de" suppressHydrationWarning>
-			<head>
-				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-			</head>
+			{/* No preconnect to fonts.googleapis.com / fonts.gstatic.com.
+			    next/font/google downloads Montserrat, Plus Jakarta Sans and Inter at
+			    build time and serves them from /_next/static/media, so nothing is
+			    ever fetched from Google — the hints saved no round trip and only
+			    opened a TLS connection that handed the visitor's IP to Google. */}
 			<body className={`${montserrat.variable} font-montserrat antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
-				{/* Google Analytics */}
-				<Script
-					src="https://www.googletagmanager.com/gtag/js?id=G-BF5YGPRDQ7"
-					strategy="afterInteractive"
-				/>
-				<Script id="google-analytics" strategy="afterInteractive">
-					{`
-						window.dataLayer = window.dataLayer || [];
-						function gtag(){dataLayer.push(arguments);}
-						gtag('js', new Date());
-						gtag('config', 'G-BF5YGPRDQ7');
-					`}
-				</Script>
+				{/* No analytics here on purpose.
+				    Google Analytics 4 (G-BF5YGPRDQ7) used to load unconditionally at
+				    this point and set the _ga / _ga_BF5YGPRDQ7 cookies before the
+				    visitor agreed to anything. Analytics storage is not "strictly
+				    necessary" under § 25 Abs. 1 TDDDG, so it needs prior consent —
+				    which meant either a consent banner or removal.
+
+				    Replacement is PostHog on EU Cloud (Frankfurt), configured
+				    cookieless (persistence: 'memory', IP anonymised, no session
+				    replay). Because that touches no browser storage, § 25 does not
+				    apply and the site keeps working without a consent banner.
+
+				    Whatever lands here must stay consistent with § 8 of
+				    src/app/(notiva)/datenschutz/page.tsx and with the
+				    "DSGVO-konform by design" badge on the landing page. */}
 				<DynamicTitle />
 				<SessionProvider>
 					<ThemeProvider attribute="class" defaultTheme="light" enableSystem>

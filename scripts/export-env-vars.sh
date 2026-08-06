@@ -40,9 +40,15 @@ OUTPUT_FILE=${3:-.env.backup}
 
 echo -e "${BLUE}📥 Exporting environment variables from AWS Amplify${NC}"
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+# Amplify apps are region-scoped: the wrong region reports a healthy app as
+# "not found". The Notiva app is in eu-central-1, not the us-east-1 this script
+# used to hardcode. Override with AWS_REGION for a different account.
+REGION="${AWS_REGION:-${AWS_DEFAULT_REGION:-eu-central-1}}"
+
 echo -e "App ID: ${GREEN}$APP_ID${NC}"
 echo -e "Branch: ${GREEN}$BRANCH_NAME${NC}"
 echo -e "Output: ${GREEN}$OUTPUT_FILE${NC}"
+echo -e "Region: ${GREEN}$REGION${NC}"
 echo ""
 
 # Fetch branch details
@@ -51,7 +57,7 @@ echo -e "${BLUE}🔍 Fetching environment variables...${NC}"
 BRANCH_INFO=$(aws amplify get-branch \
     --app-id "$APP_ID" \
     --branch-name "$BRANCH_NAME" \
-    --region us-east-1 \
+    --region "$REGION" \
     --output json)
 
 # Extract environment variables

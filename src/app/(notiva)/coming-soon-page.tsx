@@ -310,7 +310,11 @@ export function ComingSoonPage(): React.JSX.Element {
 						<div className="trustrow">
 							<div>{t('DSGVO-konform by design', 'GDPR-compliant by design')}</div>
 							<i />
-							<div>{t('Daten in Deutschland gehostet', 'Data hosted in Germany')}</div>
+							{/* "EU", not "Deutschland": the lead database (waitlist and
+							    investor requests) is Supabase eu-west-1, Ireland. Still one
+							    jurisdiction for DSGVO purposes with no third-country
+							    transfer, but the narrower claim would not be true. */}
+							<div>{t('Daten in der EU gehostet', 'Data hosted in the EU')}</div>
 							<i />
 							<div>{t('Deine Daten bleiben deine', 'Your data stays yours')}</div>
 							<i />

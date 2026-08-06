@@ -28,6 +28,24 @@
 .notiva-shell [hidden]{display:none !important}
 
 /* ─────────────────────────────────────────────────────────────
+   Added after the port, for the states the original modal had no
+   markup for: a submit that can be in flight, the DSGVO opt-in
+   checkbox, and the honeypot.
+   ───────────────────────────────────────────────────────────── */
+.notiva-shell .nm-submit:disabled{background:var(--blue-200);cursor:progress}
+.notiva-shell .nm-submit:disabled:active{transform:none}
+.notiva-shell .nm-row input:disabled{opacity:.6;cursor:not-allowed}
+
+.notiva-shell .nm-consent{margin:16px 0 0;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;cursor:pointer}
+.notiva-shell .nm-consent input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--blue-400);cursor:pointer}
+.notiva-shell .nm-consent span{font-family:var(--font-display),Montserrat,sans-serif;font-size:13px;line-height:20px;font-weight:500;color:var(--neutral-800)}
+.notiva-shell .nm-consent a{color:var(--blue-400);font-weight:600;text-decoration:underline}
+
+/* Off-screen rather than display:none — a bot that respects `display:none`
+   would skip the field and defeat the point of having it. */
+.notiva-shell .nm-hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* ─────────────────────────────────────────────────────────────
    <ImageSlot> base box. The design's <image-slot> custom element
    carried these in its shadow-root :host rule
    (assets/image-slot.js line 291) rather than in any stylesheet, so

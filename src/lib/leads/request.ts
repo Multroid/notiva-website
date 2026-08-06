@@ -42,6 +42,13 @@ export function publicOrigin(req: Request): string {
 	}
 }
 
+/** Unsubscribe endpoint for a given row's stable token. Same origin rules as
+ *  publicOrigin — in particular it must never come from the Host header in
+ *  production, or the List-Unsubscribe header could be pointed at a third party. */
+export function unsubscribeUrl(req: Request, token: string): string {
+	return `${publicOrigin(req)}/api/waitlist/unsubscribe?token=${encodeURIComponent(token)}`;
+}
+
 /** Client IP behind Amplify's CloudFront distribution. x-forwarded-for is a
  *  comma-separated chain appended to by each hop, so the client is the first
  *  entry. Returns null rather than a bogus value when there is no header, so the

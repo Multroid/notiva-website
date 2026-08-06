@@ -20,7 +20,7 @@ import {
 	CONFIRM_TOKEN_TTL_DAYS,
 	type ConfirmResult,
 } from '@/lib/leads/constants';
-import { publicOrigin } from '@/lib/leads/request';
+import { publicOrigin, unsubscribeUrl } from '@/lib/leads/request';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -40,19 +40,24 @@ export async function GET(req: Request) {
 		/* One statement decides everything: the WHERE clause matches only an
 		   unconfirmed, unexpired token, so a replayed link cannot re-trigger the
 		   welcome email and an expired one cannot confirm. */
-		const rows = await sql<{ email: string; lang: 'de' | 'en'; source: string }[]>`
+		const rows = await sql<
+			{ email: string; lang: 'de' | 'en'; source: string; unsubscribe_token: string }[]
+		>`
 			update public.waitlist_signup
 			   set confirmed_at = now()
 			 where confirm_token = ${token}
 			   and confirmed_at is null
 			   and confirm_sent_at > now() - make_interval(days => ${CONFIRM_TOKEN_TTL_DAYS})
-			returning email, lang, source`;
+			returning email, lang, source, unsubscribe_token`;
 
 		if (rows.length > 0) {
 			const signup = rows[0];
 			/* Neither send should be able to fail the confirmation — the row is
 			   already confirmed, which is the part that matters legally. */
-			const welcome = waitlistWelcomeEmail(signup.lang);
+			const welcome = waitlistWelcomeEmail(
+				signup.lang,
+				unsubscribeUrl(req, signup.unsubscribe_token)
+			);
 			void sendEmail({ to: signup.email, ...welcome }).then((r) => {
 				if (!r.success) console.error('[waitlist] welcome email failed:', r.error);
 			});

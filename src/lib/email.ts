@@ -21,6 +21,10 @@ export type EmailNotification = {
   /** Where replies land. Set this on investor mail so answers reach the founder
    *  instead of the unmonitored no-reply mailbox. */
   replyTo?: string
+  /** Extra SMTP headers. Used for List-Unsubscribe / List-Unsubscribe-Post,
+   *  which Gmail and Yahoo have required from bulk senders since Feb 2024 and
+   *  which render the native "Unsubscribe" control next to the sender name. */
+  headers?: Record<string, string>
 }
 
 /**
@@ -39,7 +43,8 @@ export async function sendEmail(notification: EmailNotification) {
       subject: notification.subject,
       html: notification.html,
       text: notification.text,
-      replyTo: notification.replyTo
+      replyTo: notification.replyTo,
+      headers: notification.headers
     })
 
     /* The SDK resolves with { data, error } for API-level failures (unverified

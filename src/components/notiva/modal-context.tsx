@@ -25,7 +25,11 @@ import React, {
 	useState,
 } from 'react';
 import { useLang } from './lang-context';
-import { CONFIRM_RESULT_PARAM, type ConfirmResult } from '@/lib/leads/constants';
+import {
+	CONFIRM_RESULT_PARAM,
+	UNSUB_TOKEN_PARAM,
+	type ConfirmResult,
+} from '@/lib/leads/constants';
 
 export type NotivaModalMode = 'waitlist' | 'deck';
 
@@ -45,6 +49,14 @@ interface ModalStrings {
 	wExpiredC: string;
 	wBadT: string;
 	wBadC: string;
+	uAskT: string;
+	uAskC: string;
+	uAskBtn: string;
+	uDoneT: string;
+	uDoneC: string;
+	uBadT: string;
+	uBadC: string;
+	uResub: string;
 	dTitle: string;
 	dCopy: string;
 	dBtn: string;
@@ -89,6 +101,14 @@ const T: Record<'de' | 'en', ModalStrings> = {
 		wExpiredC: 'Bestätigungslinks gelten 14 Tage. Trag deine E-Mail einfach noch einmal ein.',
 		wBadT: 'Der Link funktioniert nicht.',
 		wBadC: 'Wir konnten diesen Bestätigungslink nicht zuordnen. Trag deine E-Mail noch einmal ein.',
+		uAskT: 'Von der Warteliste abmelden?',
+		uAskC: 'Wir nehmen deine Adresse dann von der Liste und schreiben dir nicht mehr. Du kannst dich jederzeit wieder eintragen.',
+		uAskBtn: 'Ja, abmelden',
+		uDoneT: 'Abgemeldet.',
+		uDoneC: 'Deine Adresse ist von der Warteliste entfernt. Wir schreiben dir nicht mehr.',
+		uBadT: 'Der Abmeldelink funktioniert nicht.',
+		uBadC: 'Wir konnten diesen Link nicht zuordnen. Schreib uns an team@notiva.de und wir nehmen dich von Hand von der Liste.',
+		uResub: 'Doch wieder dabei sein? <b>Erneut eintragen →</b>',
 		dTitle: 'Investoren-Deck anfragen',
 		dCopy: 'Deck und Finanzplan gehen nach einer kurzen Anfrage heraus. Wir antworten in der Regel innerhalb von zwei Werktagen.',
 		dBtn: 'Deck anfragen',
@@ -129,6 +149,14 @@ const T: Record<'de' | 'en', ModalStrings> = {
 		wExpiredC: 'Confirmation links last 14 days. Just enter your email once more.',
 		wBadT: 'That link does not work.',
 		wBadC: 'We could not match this confirmation link. Please enter your email again.',
+		uAskT: 'Unsubscribe from the waitlist?',
+		uAskC: 'We will take your address off the list and stop writing to you. You can sign up again at any time.',
+		uAskBtn: 'Yes, unsubscribe',
+		uDoneT: 'Unsubscribed.',
+		uDoneC: 'Your address has been removed from the waitlist. We will not write to you again.',
+		uBadT: 'That unsubscribe link does not work.',
+		uBadC: 'We could not match this link. Write to team@notiva.de and we will take you off the list by hand.',
+		uResub: 'Changed your mind? <b>Sign up again →</b>',
 		dTitle: 'Request the investor deck',
 		dCopy: 'The deck and financial plan go out after a short request. We normally reply within two working days.',
 		dBtn: 'Request the deck',
@@ -187,6 +215,8 @@ export function NotivaModalProvider({
 	const [consent, setConsent] = useState(false);
 	/* Hidden field; anything but "" means a bot filled the form in. */
 	const [hp, setHp] = useState('');
+	/* Held only while the 'unsub-ask' state is showing, so its button can POST. */
+	const [unsubToken, setUnsubToken] = useState<string | null>(null);
 
 	const nameRef = useRef<HTMLInputElement>(null);
 	const mailRef = useRef<HTMLInputElement>(null);
@@ -211,6 +241,7 @@ export function NotivaModalProvider({
 		setCompany('');
 		setConsent(false);
 		setHp('');
+		setUnsubToken(null);
 	}, []);
 
 	const open = useCallback(
@@ -256,11 +287,25 @@ export function NotivaModalProvider({
 		const raw = params.get(CONFIRM_RESULT_PARAM);
 		if (!raw) return;
 
-		const valid: ConfirmResult[] = ['confirmed', 'already', 'expired', 'invalid'];
+		const valid: ConfirmResult[] = [
+			'confirmed',
+			'already',
+			'expired',
+			'invalid',
+			'unsub-ask',
+			'unsubscribed',
+			'unsub-invalid',
+		];
 		if (!valid.includes(raw as ConfirmResult)) return;
 		const result = raw as ConfirmResult;
 
+		/* 'unsub-ask' is the only state that needs the token kept: its button has
+		   to POST it. Everything else is terminal. */
+		const ut = params.get(UNSUB_TOKEN_PARAM);
+		if (result === 'unsub-ask' && ut) setUnsubToken(ut);
+
 		params.delete(CONFIRM_RESULT_PARAM);
+		params.delete(UNSUB_TOKEN_PARAM);
 		const qs = params.toString();
 		window.history.replaceState(
 			null,
@@ -268,12 +313,39 @@ export function NotivaModalProvider({
 			window.location.pathname + (qs ? `?${qs}` : '') + window.location.hash
 		);
 
-		/* Always the waitlist copy: only the waitlist has a confirmation step. */
+		/* Always the waitlist copy: confirmation and unsubscribe both belong to it. */
 		setMode('waitlist');
 		viewRef.current = result;
 		setView(result);
 		setIsOpen(true);
 	}, []);
+
+	/* The 'unsub-ask' button. Separate from onSubmit because it posts a token
+	   rather than a form, and because the GET that got us here deliberately did
+	   not mutate anything. */
+	const confirmUnsubscribe = useCallback(async () => {
+		if (pending || !unsubToken) return;
+		setPending(true);
+		setErr(null);
+		try {
+			const res = await fetch('/api/waitlist/unsubscribe', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ token: unsubToken }),
+			});
+			if (res.ok) {
+				viewRef.current = 'unsubscribed';
+				setView('unsubscribed');
+				setUnsubToken(null);
+				return;
+			}
+			setErr(t.errServer);
+		} catch {
+			setErr(t.errNet);
+		} finally {
+			setPending(false);
+		}
+	}, [pending, unsubToken, t]);
 
 	const onSubmit = useCallback(
 		async (e: React.FormEvent<HTMLFormElement>) => {
@@ -356,6 +428,12 @@ export function NotivaModalProvider({
 				return t.wExpiredT;
 			case 'invalid':
 				return t.wBadT;
+			case 'unsub-ask':
+				return t.uAskT;
+			case 'unsubscribed':
+				return t.uDoneT;
+			case 'unsub-invalid':
+				return t.uBadT;
 		}
 	})();
 
@@ -373,11 +451,20 @@ export function NotivaModalProvider({
 				return t.wExpiredC;
 			case 'invalid':
 				return t.wBadC;
+			case 'unsub-ask':
+				return t.uAskC;
+			case 'unsubscribed':
+				return t.uDoneC;
+			case 'unsub-invalid':
+				return t.uBadC;
 		}
 	})();
 
 	/* An expired or unmatched link should hand back the form, not a dead end. */
 	const retryable = view === 'expired' || view === 'invalid';
+	/* After unsubscribing, offer the way back in — a re-signup runs the full
+	   double opt-in again, so it cannot be used to resurrect a dead consent. */
+	const offerResubscribe = view === 'unsubscribed';
 
 	return (
 		<ModalContext.Provider value={value}>
@@ -488,6 +575,23 @@ export function NotivaModalProvider({
 								{t.wBtn}
 							</button>
 						) : null}
+						{/* The opt-out itself. The GET that produced this state changed
+						    nothing, so this button is what actually withdraws consent. */}
+						{view === 'unsub-ask' ? (
+							<>
+								<button
+									className="nm-submit"
+									type="button"
+									disabled={pending}
+									onClick={confirmUnsubscribe}
+								>
+									{pending ? t.sending : t.uAskBtn}
+								</button>
+								<p className="nm-err" hidden={!err} role="alert">
+									{err}
+								</p>
+							</>
+						) : null}
 						<p className="nm-small" hidden={done}>
 							{deck ? t.dSmall : t.wSmall}
 						</p>
@@ -498,6 +602,15 @@ export function NotivaModalProvider({
 								dangerouslySetInnerHTML={{ __html: deck ? t.toWait : t.toDeck }}
 							/>
 						</div>
+						{offerResubscribe ? (
+							<div className="nm-switch">
+								<button
+									type="button"
+									onClick={reset}
+									dangerouslySetInnerHTML={{ __html: t.uResub }}
+								/>
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>

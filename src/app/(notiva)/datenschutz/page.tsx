@@ -148,14 +148,14 @@ export default function DatenschutzPage(): React.JSX.Element {
 						<T as="dt" de="Widerruf" en="Withdrawal" />
 						<T
 							as="dd"
-							de="Jederzeit über den Abmeldelink in jeder E-Mail oder per Nachricht an team@notiva.de. Der Widerruf gilt ab sofort; die Rechtmäßigkeit der Verarbeitung bis dahin bleibt unberührt."
-							en="At any time via the unsubscribe link in every email or by message to team@notiva.de. Withdrawal takes effect immediately; the lawfulness of processing up to that point is unaffected."
+							de="Jederzeit über den Abmeldelink am Fuß jeder Wartelisten-E-Mail, über die Abmelden-Schaltfläche deines E-Mail-Programms oder per Nachricht an team@notiva.de. Der Widerruf gilt ab sofort und braucht keine Begründung; die Rechtmäßigkeit der Verarbeitung bis dahin bleibt unberührt."
+							en="At any time via the unsubscribe link at the foot of every waitlist email, via your mail client's own unsubscribe button, or by message to team@notiva.de. Withdrawal takes effect immediately and needs no reason; the lawfulness of processing up to that point is unaffected."
 						/>
 						<T as="dt" de="Speicherdauer" en="Retention" />
 						<T
 							as="dd"
-							de="Bis zum Widerruf, spätestens jedoch bis zum Ende der Wartelistenphase. Nicht bestätigte Einträge löschen wir spätestens nach 14 Tagen — so lange ist der Bestätigungslink gültig."
-							en="Until withdrawal, and at the latest at the end of the waitlist phase. Unconfirmed entries are deleted after 14 days at the latest — that is how long the confirmation link is valid."
+							de="Bis zum Widerruf, spätestens jedoch bis zum Ende der Wartelistenphase. Nicht bestätigte Einträge löschen wir spätestens nach 14 Tagen — so lange ist der Bestätigungslink gültig. Nach einer Abmeldung behalten wir deine Adresse als Sperrvermerk, damit wir dir nicht versehentlich erneut schreiben; du kannst stattdessen die vollständige Löschung verlangen."
+							en="Until withdrawal, and at the latest at the end of the waitlist phase. Unconfirmed entries are deleted after 14 days at the latest — that is how long the confirmation link is valid. After an unsubscribe we keep your address as a suppression record so we cannot accidentally write to you again; you may instead request full deletion."
 						/>
 					</dl>
 				</div>

@@ -104,12 +104,18 @@ function shell({
 	body,
 	footNote,
 	lang,
+	unsubscribeUrl,
 }: {
 	preheader: string;
 	hero?: string;
 	body: string;
 	footNote: string;
 	lang: Lang;
+	/* Present only on marketing mail. The double-opt-in confirmation and the
+	   investor acknowledgement are transactional — there is nothing to leave
+	   yet in the first case, and the second is correspondence the recipient
+	   started — so neither carries one. */
+	unsubscribeUrl?: string;
 }): string {
 	const de = lang === 'de';
 	const site = siteUrl();
@@ -177,6 +183,15 @@ function shell({
     <p style="margin:10px 0 0;font-family:${FONT};font-size:12px;line-height:19px;color:${MUTED};">
       ${de ? 'Notiva · Deutschland' : 'Notiva · Germany'}
     </p>
+    ${
+			unsubscribeUrl
+				? `<p style="margin:14px 0 0;font-family:${FONT};font-size:12px;line-height:19px;color:${MUTED};">
+      <a href="${unsubscribeUrl}" style="color:${MUTED};text-decoration:underline;">${
+				de ? 'Von der Warteliste abmelden' : 'Unsubscribe from the waitlist'
+			}</a>
+    </p>`
+				: ''
+		}
   </td></tr>
 
 </table>
@@ -246,7 +261,7 @@ export function waitlistConfirmEmail(lang: Lang, confirmUrl: string) {
 // ---------------------------------------------------------------------------
 // Waitlist: welcome, after confirming
 // ---------------------------------------------------------------------------
-export function waitlistWelcomeEmail(lang: Lang) {
+export function waitlistWelcomeEmail(lang: Lang, unsubscribeUrl: string) {
 	const de = lang === 'de';
 
 	const subject = de ? 'Du bist auf der Notiva Warteliste' : 'You are on the Notiva waitlist';
@@ -270,8 +285,8 @@ export function waitlistWelcomeEmail(lang: Lang) {
 		button(`${siteUrl()}/support`, de ? 'Mitbauen' : 'Help build it');
 
 	const text = de
-		? `Bestätigt. Du bist dabei.\n\nWir melden uns, sobald dein früher Zugang bereit ist. Bis dahin schreiben wir nur, wenn es wirklich etwas zu sagen gibt.\n\nMitbauen: ${siteUrl()}/support\n\nNotiva · Deutschland`
-		: `Confirmed. You are in.\n\nWe will write when your early access is ready. Until then we only write when there is genuinely something to say.\n\nHelp build it: ${siteUrl()}/support\n\nNotiva · Germany`;
+		? `Bestätigt. Du bist dabei.\n\nWir melden uns, sobald dein früher Zugang bereit ist. Bis dahin schreiben wir nur, wenn es wirklich etwas zu sagen gibt.\n\nMitbauen: ${siteUrl()}/support\n\nAbmelden: ${unsubscribeUrl}\n\nNotiva · Deutschland`
+		: `Confirmed. You are in.\n\nWe will write when your early access is ready. Until then we only write when there is genuinely something to say.\n\nHelp build it: ${siteUrl()}/support\n\nUnsubscribe: ${unsubscribeUrl}\n\nNotiva · Germany`;
 
 	return {
 		subject,
@@ -280,11 +295,32 @@ export function waitlistWelcomeEmail(lang: Lang) {
 			hero: mascot('novi-wave.png', de ? 'Novi winkt' : 'Novi waving'),
 			body,
 			lang,
+			unsubscribeUrl,
 			footNote: de
 				? 'Du erhältst diese E-Mail, weil du deine Adresse für die Notiva Warteliste bestätigt hast. Du kannst dich jederzeit abmelden.'
 				: 'You are receiving this because you confirmed your address for the Notiva waitlist. You can unsubscribe at any time.',
 		}),
 		text,
+		headers: listUnsubscribeHeaders(unsubscribeUrl),
+	};
+}
+
+/**
+ * RFC 8058 one-click unsubscribe.
+ *
+ * List-Unsubscribe-Post is what upgrades the header from "a URL we might show"
+ * to the native Unsubscribe control Gmail and Yahoo render beside the sender —
+ * and which both have required from bulk senders since February 2024. The
+ * provider POSTs to the https URL, so it must work without any confirmation
+ * step, which is why POST /api/waitlist/unsubscribe acts immediately while the
+ * GET only asks.
+ *
+ * The mailto: is the fallback for clients that do not implement one-click.
+ */
+export function listUnsubscribeHeaders(unsubscribeUrl: string): Record<string, string> {
+	return {
+		'List-Unsubscribe': `<${unsubscribeUrl}>, <mailto:${FOUNDER_EMAIL}?subject=unsubscribe>`,
+		'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
 	};
 }
 

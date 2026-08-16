@@ -16,6 +16,9 @@ import { NotivaModalProvider } from './modal-context';
 import { SiteNotice } from './site-notice';
 
 import '@/styles/notiva/site-notice.css';
+/* Footer cookie-settings link + the /datenschutz declaration table. Loaded here
+   rather than per page because the footer is on almost every page in the group. */
+import '@/styles/notiva/cookiebot.css';
 /* Mobile rhythm + merch-card layout. Loaded here, at the layout level, rather
    than per page — its selectors lead with .notiva-shell so they out-specify
    the generated stylesheets they refine and do not depend on import order. */

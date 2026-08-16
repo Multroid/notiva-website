@@ -17,10 +17,13 @@ import '@/styles/notiva/legal.css';
 import React from 'react';
 import Link from 'next/link';
 
+import { CookieDeclaration } from '@/components/notiva/cookie-declaration';
+import { CookieSettingsLink } from '@/components/notiva/cookie-settings-link';
 import { NotivaHeader } from '@/components/notiva/notiva-header';
 import { NotivaFooter } from '@/components/notiva/notiva-footer';
 import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { T, useLang, useT } from '@/components/notiva/lang-context';
+import { cookiebotEnabled } from '@/lib/cookiebot';
 
 /* Placeholder the operator replaces. Kept as one component so every outstanding
    fact is greppable by class name and looks identical on the page. */
@@ -70,7 +73,7 @@ export default function DatenschutzPage(): React.JSX.Element {
 							['4. Spenden', '4. Donations'],
 							['5. Merch-Bestellungen', '5. Merch orders'],
 							['6. Hosting und Server-Logs', '6. Hosting and server logs'],
-							['7. Speicherung im Browser', '7. Storage in your browser'],
+							['7. Cookies und Speicherung im Browser', '7. Cookies and storage in your browser'],
 							['8. Analyse und Reichweitenmessung', '8. Analytics'],
 							['9. Empfänger', '9. Recipients'],
 							['10. Deine Rechte', '10. Your rights'],
@@ -284,11 +287,43 @@ export default function DatenschutzPage(): React.JSX.Element {
 			{/* 7 ------------------------------------------------------------ */}
 			<section>
 				<div className="wrap prose">
-					<T as="h2" de="7. Speicherung im Browser" en="7. Storage in your browser" />
+					<T
+						as="h2"
+						de="7. Cookies und Speicherung im Browser"
+						en="7. Cookies and storage in your browser"
+					/>
 					<T
 						as="p"
-						de="Diese Website setzt keine Cookies zu Werbe- oder Analysezwecken. Es gibt deshalb auch kein Cookie-Banner. Gespeichert wird nur, was für die von dir aufgerufenen Funktionen nötig ist:"
-						en="This website sets no cookies for advertising or analytics. That is why there is no cookie banner. Only what is necessary for the functions you use is stored:"
+						de="Diese Website setzt <b>keine Cookies zu Werbe- oder Analysezwecken</b>. Gespeichert wird nur, was für die von dir aufgerufenen Funktionen nötig ist. Damit das so bleibt und nachprüfbar ist, läuft auf dieser Website ein Einwilligungsbanner: Cookiebot blockiert alles, was nicht unbedingt erforderlich ist, bis du zustimmst — heute steht dort nichts zur Auswahl, was wir nicht ohnehin bräuchten."
+						en="This website sets <b>no cookies for advertising or analytics</b>. Only what is necessary for the functions you use is stored. To keep it that way and make it verifiable, a consent banner runs on this website: Cookiebot blocks everything that is not strictly necessary until you agree — today there is nothing on offer there that we would not need anyway."
+					/>
+
+					<T as="h3" de="Das Einwilligungsbanner" en="The consent banner" />
+					<T
+						as="p"
+						de="Das Banner stammt von <b>Cookiebot</b>, einem Dienst der Usercentrics A/S, Havnegade 39, 1058 Kopenhagen, Dänemark. Cookiebot verarbeitet in unserem Auftrag deine IP-Adresse (gekürzt), die Browserkennung, die aufgerufene Adresse und deine Auswahl — nur um deine Entscheidung zu speichern und sie später belegen zu können, wie es Art. 7 Abs. 1 DSGVO verlangt. Die Verarbeitung findet in der EU statt."
+						en="The banner comes from <b>Cookiebot</b>, a service of Usercentrics A/S, Havnegade 39, 1058 Copenhagen, Denmark. Acting on our instructions, Cookiebot processes your IP address (truncated), your browser identifier, the address you visited and your choice — solely to store your decision and be able to evidence it later, as Art. 7(1) GDPR requires. The processing takes place in the EU."
+					/>
+					{/* Sentence and button travel together — on a build with no CBID
+					    the promise of a one-click withdrawal would otherwise stand
+					    above nothing at all. */}
+					{cookiebotEnabled && (
+						<>
+							<T
+								as="p"
+								de="Deine Auswahl kannst du jederzeit ändern oder widerrufen, ohne Angabe von Gründen und mit einem Klick:"
+								en="You can change or withdraw your choice at any time, without giving reasons and with a single click:"
+							/>
+							<p className="nv-cookie-settings-cta">
+								<CookieSettingsLink />
+							</p>
+						</>
+					)}
+
+					<T
+						as="h3"
+						de="Was tatsächlich gespeichert wird"
+						en="What is actually stored"
 					/>
 					<dl>
 						<T as="dt" de="notiva.lang" en="notiva.lang" />
@@ -315,12 +350,30 @@ export default function DatenschutzPage(): React.JSX.Element {
 							de="Nur auf der Seite /support: Cookies von Stripe zur Betrugserkennung, siehe Abschnitt 4. __stripe_sid läuft nach 30 Minuten ab, __stripe_mid nach einem Jahr."
 							en="Only on the /support page: Stripe cookies for fraud detection, see section 4. __stripe_sid expires after 30 minutes, __stripe_mid after one year."
 						/>
+						<T as="dt" de="CookieConsent" en="CookieConsent" />
+						<T
+							as="dd"
+							de="Deine Antwort auf das Einwilligungsbanner, damit du nicht bei jedem Seitenaufruf erneut gefragt wirst und wir belegen können, wofür du dich entschieden hast. Cookie von Cookiebot, läuft nach zwölf Monaten ab."
+							en="Your answer to the consent banner, so you are not asked again on every page view and so we can evidence what you chose. Cookie set by Cookiebot, expires after twelve months."
+						/>
 					</dl>
 					<T
 						as="p"
-						de="Rechtsgrundlage für diese Einträge ist § 25 Abs. 2 Nr. 2 TDDDG: sie sind unbedingt erforderlich, damit der von dir gewünschte Dienst funktioniert, und brauchen deshalb keine Einwilligung. Für Analyse- oder Werbe-Cookies würde das nicht gelten — solche setzen wir nicht."
-						en="The legal basis for these entries is § 25(2)(2) TDDDG: they are strictly necessary for the service you requested to work and therefore need no consent. That would not apply to analytics or advertising cookies — we set none."
+						de="Rechtsgrundlage für diese Einträge ist § 25 Abs. 2 Nr. 2 TDDDG: sie sind unbedingt erforderlich, damit der von dir gewünschte Dienst funktioniert, und brauchen deshalb keine Einwilligung. Das gilt auch für das Einwilligungs-Cookie selbst — ohne es ließe sich deine Entscheidung nicht speichern. Für Analyse- oder Werbe-Cookies würde es nicht gelten; solche setzen wir nicht, und falls sich das ändert, werden sie über das Banner freigegeben und nicht vorher geladen."
+						en="The legal basis for these entries is § 25(2)(2) TDDDG: they are strictly necessary for the service you requested to work and therefore need no consent. That includes the consent cookie itself — without it your decision could not be stored. It would not apply to analytics or advertising cookies; we set none, and should that change they will be released through the banner rather than loaded beforehand."
 					/>
+
+					<T
+						as="h3"
+						de="Vollständige Cookie-Erklärung"
+						en="Full cookie declaration"
+					/>
+					<T
+						as="p"
+						de="Die folgende Liste wird von Cookiebot erzeugt und stammt aus einem monatlichen automatischen Scan dieser Website — sie ist damit auch dann noch aktuell, wenn der Text darüber es einmal nicht sein sollte."
+						en="The list below is generated by Cookiebot from a monthly automated scan of this website — so it stays current even if the text above should ever fall behind."
+					/>
+					<CookieDeclaration />
 				</div>
 			</section>
 
@@ -340,10 +393,15 @@ export default function DatenschutzPage(): React.JSX.Element {
 						de="Wir planen, die Reichweitenmessung mit PostHog wieder aufzunehmen, und zwar bewusst ohne Cookies: geplant sind die EU-Cloud in Frankfurt, keine dauerhafte Kennung im Browser, anonymisierte IP-Adressen und keine Sitzungsaufzeichnung. Weil dabei nicht auf Informationen in deinem Gerät zugegriffen wird, greift § 25 TDDDG nicht und es braucht kein Einwilligungsbanner. Rechtsgrundlage wäre unser berechtigtes Interesse an einer anonymen Statistik darüber, welche Inhalte gelesen werden, Art. 6 Abs. 1 lit. f DSGVO."
 						en="We plan to resume analytics with PostHog, deliberately without cookies: the plan is the EU cloud in Frankfurt, no persistent identifier in your browser, anonymised IP addresses and no session recording. Because that does not access information on your device, § 25 TDDDG does not apply and no consent banner is needed. The legal basis would be our legitimate interest in anonymous statistics about which content is read, Art. 6(1)(f) GDPR."
 					/>
+					<T
+						as="p"
+						de="Sollte es doch bei Cookies oder Session Replay bleiben, wird PostHog erst nach deiner Zustimmung im Einwilligungsbanner geladen (Kategorie „Statistiken&ldquo;, siehe Abschnitt 7) — ohne Zustimmung läuft es dann gar nicht."
+						en="Should it end up using cookies or session replay after all, PostHog will only load once you have agreed in the consent banner (category &ldquo;Statistics&rdquo;, see section 7) — without agreement it does not run at all."
+					/>
 					<p>
 						<Todo
-							de="Diesen Abschnitt bei der PostHog-Integration bestätigen oder korrigieren: tatsächlich gewählte Region, Speicherdauer, und ob es bei cookielosem Betrieb ohne Session Replay bleibt — sobald Cookies oder Replay dazukommen, ist ein Einwilligungsbanner zwingend"
-							en="Confirm or correct this section at integration time: the region actually chosen, the retention period, and whether it stays cookieless without session replay — as soon as cookies or replay are added, a consent banner becomes mandatory"
+							de="Diesen Abschnitt bei der PostHog-Integration bestätigen oder korrigieren: tatsächlich gewählte Region, Speicherdauer, und ob es bei cookielosem Betrieb ohne Session Replay bleibt"
+							en="Confirm or correct this section at integration time: the region actually chosen, the retention period, and whether it stays cookieless without session replay"
 						/>
 					</p>
 
@@ -426,6 +484,16 @@ export default function DatenschutzPage(): React.JSX.Element {
 									<td>Fourthwall</td>
 									<td>{t('Merch-Shop und Versand', 'Merch shop and shipping')}</td>
 									<td>{t('USA', 'USA')}</td>
+								</tr>
+								<tr>
+									<td>Cookiebot (Usercentrics A/S)</td>
+									<td>
+										{t(
+											'Einwilligungsbanner und Cookie-Erklärung',
+											'Consent banner and cookie declaration'
+										)}
+									</td>
+									<td>{t('Dänemark, EU', 'Denmark, EU')}</td>
 								</tr>
 								<tr>
 									<td>PostHog</td>

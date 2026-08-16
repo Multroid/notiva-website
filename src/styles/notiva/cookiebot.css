@@ -1,0 +1,55 @@
+/* Cookiebot — the two places the CMP shows up inside our own layout:
+   the "Cookie-Einstellungen" link in the footer, and the generated cookie
+   declaration on /datenschutz. The banner itself is styled in the Cookiebot
+   dashboard and is not reachable from here. */
+
+/* Sits next to the footer's right-hand line, so it has to read as a link
+   rather than a button — <button> only because it calls Cookiebot.renew()
+   and an href="#" would break the back button. */
+.nv-cookie-settings {
+	appearance: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font: inherit;
+	color: inherit;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	cursor: pointer;
+}
+
+/* Footer only — inside the dark bar the hover target is the paper white the
+   other footer links use. In the prose of /datenschutz the same button
+   inherits the body colour and needs no override. */
+footer .nv-cookie-settings:hover {
+	color: var(--paper);
+}
+
+.nv-cookie-settings-cta {
+	margin-top: 4px;
+}
+
+/* The footer wrap is `justify-content: space-between`, so the link joins the
+   right-hand column instead of becoming a third flex child that would push the
+   existing two apart. */
+.nv-footer-legal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 14px;
+	align-items: baseline;
+}
+
+/* cd.js ships its own table markup with inline styles for the cells but not
+   for overflow, and the declaration is wider than a phone. Same scroll
+   container the legal pages use for their own tables. */
+.nv-cookie-declaration {
+	max-width: 100%;
+	overflow-x: auto;
+	margin-top: 18px;
+	font-size: 14px;
+}
+
+.nv-cookie-declaration table {
+	width: 100%;
+}

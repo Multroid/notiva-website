@@ -427,8 +427,8 @@ export default function ForInvestorsPage(): React.JSX.Element {
 					<T as="div" className="eyebrow" de="Weg" en="Path" />
 					<T
 						as="h2"
-						de="Eine Firma in vier Stufen, nicht vier Firmen."
-						en="One company in four stages, not four companies."
+						de="Ein Vorhaben in vier Stufen, nicht vier Firmen."
+						en="One venture in four stages, not four companies."
 					/>
 					<div className="stages">
 						<div className="stage">

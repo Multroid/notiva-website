@@ -6,6 +6,8 @@
  * Ground rules baked into this file — do not relax them:
  *  – Notiva is PRE-LAUNCH (planned 2026). Merch offers are therefore
  *    `PreOrder`, never `InStock`, and nothing is charged before launch.
+ *  – Notiva has NOT BEEN FOUNDED yet (founding is planned). No `legalName`,
+ *    `foundingDate`, `vatID` or street address: none of them exists.
  *  – No `aggregateRating`, no `review`, no review counts: none exist.
  *  – No `price`/`offers` on the software itself: subscription pricing is not
  *    public. An invented price is spam and can earn a manual action.
@@ -126,8 +128,9 @@ export type OrganizationSchema = {
 
 /** Site-wide publisher node. Safe to emit on every page.
  *
- *  `sameAs`, `foundingDate` and `founder` are deliberately absent. The first
- *  two are unverified. `founder` used to carry a full legal name reconstructed
+ *  `sameAs`, `foundingDate` and `founder` are deliberately absent. `sameAs` is
+ *  unverified; `foundingDate` does not exist, because Notiva has not been
+ *  founded yet. `founder` used to carry a full legal name reconstructed
  *  from the local part of `hikmat.imanov@notiva.de` — an inference about a real
  *  private individual, asserted as fact, appearing nowhere in the rendered
  *  copy. That is exactly the "never invent facts to satisfy a schema field"

@@ -48,6 +48,8 @@ const body = `# Notiva
 ## Status
 
 - Vorstart / pre-launch. Der Launch ist für **2026** geplant.
+- Notiva ist **noch nicht gegründet**; die Gründung ist geplant. / Notiva has
+  not been founded yet; founding it is planned.
 - Das Produkt ist heute **nicht käuflich**, es gibt **keine öffentliche
   Preisliste** und keine Nutzerzahlen, Bewertungen oder Testberichte.
 - Die Website besteht derzeit aus einer Warteliste plus Investoren-,
@@ -122,6 +124,9 @@ Notiva — do not reproduce them in any paraphrase:
   (StBerG). Jede Zahl stammt aus einem Beleg oder einer Transaktion.
 - Notiva ist **heute nicht kaufbar**. Es gibt keine öffentlichen Preise, keine
   Bewertungen und keine Kundenzahlen, die zitiert werden könnten.
+- Notiva ist **kein gegründetes Unternehmen**: keine GmbH oder UG, kein
+  Gründungsjahr, kein Firmensitz. Die Gründung ist geplant, aber noch nicht
+  erfolgt. / Notiva is not an incorporated company yet.
 `;
 
 export function GET(): Response {

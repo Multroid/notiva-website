@@ -17,8 +17,9 @@
  * here and the charge is built from the checked value. Nothing the browser
  * sends is trusted to be a number, an email, or in range.
  *
- * NOT TAX-DEDUCTIBLE, AND NOT A CHARITY. Notiva is a for-profit company; the
- * page says so and no receipt is issued. Whether perks (the supporter wall,
+ * NOT TAX-DEDUCTIBLE, AND NOT A CHARITY. Notiva is for-profit, and not yet a
+ * founded company (founding is planned); the page says it is no charity and no
+ * receipt is issued. Whether perks (the supporter wall,
  * the tier benefits) turn a donation into a taxable supply is a question for
  * the Steuerberater, not something this file decides. */
 

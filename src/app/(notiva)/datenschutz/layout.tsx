@@ -6,16 +6,16 @@ import { NOINDEX, pageMetadata } from '@/lib/page-metadata';
    title must stay character-identical to the DE argument of useNotivaTitle() in
    page.tsx — that hook re-asserts document.title after hydration.
 
-   NOINDEX while the text is a draft. A privacy policy is normally worth
-   indexing, but an unreviewed one carrying visible [ TODO ] placeholders is not
-   what should turn up under "Notiva Datenschutz" — and Google is slow to
-   re-crawl a page it has already decided about. Remove `robots` and add the
-   route to src/app/sitemap.ts once a lawyer has signed the text off. */
+   NOINDEX until a lawyer has signed the text off. A privacy policy is normally
+   worth indexing, but an unreviewed one is not what should turn up under
+   "Notiva Datenschutz" — and Google is slow to re-crawl a page it has already
+   decided about. Remove `robots` and add the route to src/app/sitemap.ts once
+   the review is done. */
 export const metadata: Metadata = {
 	...pageMetadata({
 		title: 'Notiva · Datenschutz',
 		description:
-			'Welche Daten notiva.de erhebt, warum und wie lange: Warteliste mit Double-Opt-in, Investoren-Anfragen, Spenden über Stripe, Merch über Fourthwall. Kein Tracking, kein Cookie-Banner.',
+			'Welche Daten notiva.de erhebt, warum und wie lange: Warteliste mit Double-Opt-in, Investoren-Anfragen, Spenden über Stripe, Merch über Fourthwall. Kein Tracking, keine Werbe-Cookies.',
 		path: '/datenschutz',
 	}),
 	robots: NOINDEX,

@@ -26,6 +26,7 @@ import {
 	MERCH_ORDER,
 	PRODUCT_COPY,
 } from '@/app/(notiva)/merch/[slug]/product-copy';
+import { supportEnabled } from '@/lib/support';
 
 export const dynamic = 'force-static';
 
@@ -35,6 +36,42 @@ const merchLines = MERCH_ORDER.map(
 	(slug) =>
 		`- [${PRODUCT_COPY[slug].name.de}](${SITE_URL}/merch/${slug}): ${PRODUCT_COPY[slug].desc.de}`,
 ).join('\n');
+
+/* While the support section is switched off (src/lib/support.ts) its pages
+   redirect to /, so nothing here may point a model at them. */
+const siteSections = supportEnabled
+	? `einer Warteliste plus Investoren-,
+  Unterstützer- und Merch-Seiten`
+	: 'einer Warteliste plus einer Investorenseite';
+
+const supportPages = supportEnabled
+	? `- [Unterstützen](${SITE_URL}/support): Spenden und Merch-Katalog, die die
+  Entwicklung bis zum Launch finanzieren. Eine Spende ist **keine Beteiligung
+  und keine Investition**, Notiva ist kein gemeinnütziger Verein und Spenden
+  sind steuerlich nicht abzugsfähig. / Donations and merch.
+- Produktseiten unter ${SITE_URL}/merch/<slug> — slugs: ${MERCH_ORDER.join(', ')}.
+`
+	: '';
+
+const noIndex = supportEnabled
+	? `/basket (Warenkorb, rein
+besucherbezogener Zustand) und /api/*`
+	: '/api/*';
+
+const merchSection = supportEnabled
+	? `
+## Merch
+
+${merchLines}
+
+- Versand: ${FACT_SHIPPING.value.de} / ${FACT_SHIPPING.value.en}
+- Herstellung über einen Print-on-Demand-Partner in der EU, auf Bestellung
+  gefertigt.
+- ${FINE.de} / ${FINE.en}
+- Verfügbarkeit ist deshalb **Vorbestellung (PreOrder)**, nie "auf Lager".
+- Preise stehen auf der jeweiligen Produktseite (inkl. MwSt.).
+`
+	: '';
 
 const body = `# Notiva
 
@@ -52,8 +89,7 @@ const body = `# Notiva
   not been founded yet; founding it is planned.
 - Das Produkt ist heute **nicht käuflich**, es gibt **keine öffentliche
   Preisliste** und keine Nutzerzahlen, Bewertungen oder Testberichte.
-- Die Website besteht derzeit aus einer Warteliste plus Investoren-,
-  Unterstützer- und Merch-Seiten. Alle übrigen Marketing-Pfade (/pricing,
+- Die Website besteht derzeit aus ${siteSections}. Alle übrigen Marketing-Pfade (/pricing,
   /features, /about, /blog …) sind archiviert und leiten auf die Startseite um.
 - Sprache: Die Seiten werden serverseitig auf **Deutsch** ausgeliefert. Englisch
   ist ein clientseitiger Umschalter unter derselben URL — es gibt keine /de-
@@ -77,26 +113,9 @@ const body = `# Notiva
 - [Für Investoren](${SITE_URL}/for-investors): die offene Pre-Seed-Runde —
   Problem, Timing, Produkt, Verteidigbarkeit, offen benannte Risiken und sechs
   häufige Fragen. / Pre-seed investor page with six FAQs.
-- [Unterstützen](${SITE_URL}/support): Spenden und Merch-Katalog, die die
-  Entwicklung bis zum Launch finanzieren. Eine Spende ist **keine Beteiligung
-  und keine Investition**, Notiva ist kein gemeinnütziger Verein und Spenden
-  sind steuerlich nicht abzugsfähig. / Donations and merch.
-- Produktseiten unter ${SITE_URL}/merch/<slug> — slugs: ${MERCH_ORDER.join(', ')}.
-
-Nicht indexierbar und nicht zu zitieren: /basket (Warenkorb, rein
-besucherbezogener Zustand) und /api/*.
-
-## Merch
-
-${merchLines}
-
-- Versand: ${FACT_SHIPPING.value.de} / ${FACT_SHIPPING.value.en}
-- Herstellung über einen Print-on-Demand-Partner in der EU, auf Bestellung
-  gefertigt.
-- ${FINE.de} / ${FINE.en}
-- Verfügbarkeit ist deshalb **Vorbestellung (PreOrder)**, nie "auf Lager".
-- Preise stehen auf der jeweiligen Produktseite (inkl. MwSt.).
-
+${supportPages}
+Nicht indexierbar und nicht zu zitieren: ${noIndex}.
+${merchSection}
 ## Kontakt / Contact
 
 - Allgemein / general: team@notiva.de

@@ -27,6 +27,7 @@ import { NotivaFooter } from '@/components/notiva/notiva-footer';
 import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { T, useLang, useT } from '@/components/notiva/lang-context';
 import { cookiebotEnabled } from '@/lib/cookiebot';
+import { supportEnabled } from '@/lib/support';
 
 export default function DatenschutzPage(): React.JSX.Element {
 	const { lang } = useLang();
@@ -545,8 +546,12 @@ export default function DatenschutzPage(): React.JSX.Element {
 					<p>
 						<Link href="/">{t('Startseite', 'Home')}</Link>
 						{' · '}
-						<Link href="/support">{t('Unterstützen', 'Support')}</Link>
-						{' · '}
+						{supportEnabled && (
+							<>
+								<Link href="/support">{t('Unterstützen', 'Support')}</Link>
+								{' · '}
+							</>
+						)}
 						<Link href="/for-investors">{t('Für Investoren', 'For investors')}</Link>
 					</p>
 				</div>

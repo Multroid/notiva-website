@@ -7,6 +7,8 @@
 import React from 'react';
 import Link from 'next/link';
 
+import { supportEnabled } from '@/lib/support';
+
 import { NotivaHeader } from './notiva-header';
 import { NotivaFooter } from './notiva-footer';
 import { Novi } from './novi';
@@ -44,9 +46,11 @@ export function NotFoundView(): React.JSX.Element {
 							<Link className="btn btn-solid" href="/">
 								{t('Zurück zur Startseite', 'Back to the home page')}
 							</Link>
-							<Link className="btn btn-ghost" href="/support">
-								{t('Unterstützen', 'Support us')}
-							</Link>
+							{supportEnabled && (
+								<Link className="btn btn-ghost" href="/support">
+									{t('Unterstützen', 'Support us')}
+								</Link>
+							)}
 						</div>
 						<div className="elsewhere">
 							<span>{t('Auch schon da:', 'Already here:')}</span>
@@ -54,8 +58,12 @@ export function NotFoundView(): React.JSX.Element {
 								{t('Für Investoren', 'For Investors')}
 							</Link>
 							<i />
-							<Link href="/support#merch">{t('Merch', 'Merch')}</Link>
-							<i />
+							{supportEnabled && (
+								<>
+									<Link href="/support#merch">{t('Merch', 'Merch')}</Link>
+									<i />
+								</>
+							)}
 							<a href="mailto:team@notiva.de">team@notiva.de</a>
 						</div>
 					</div>

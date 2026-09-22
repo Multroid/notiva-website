@@ -17,6 +17,7 @@ import { NotivaHeader } from '@/components/notiva/notiva-header';
 import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { ImageSlot } from '@/components/notiva/image-slot';
 import { Novi, NOVI_POSES } from '@/components/notiva/novi';
+import { supportEnabled } from '@/lib/support';
 
 import '@/styles/notiva/coming-soon.css';
 import './coming-soon-shell.css';
@@ -276,36 +277,38 @@ export function ComingSoonPage(): React.JSX.Element {
 							>
 								{t('Auf die Warteliste', 'Join the waitlist')}
 							</button>
-							<div className="ctaplus">
-								<T
-									as={Link}
-									href="/support"
-									className="cta-sub"
-									de="<b>✦</b> Bau mit uns: Merch und Spenden →"
-									en="<b>✦</b> Build it with us: merch and donations →"
-								/>
-								{/* Decorative merch peek — 88x88 and 66x84 cards that
-								    .peek{display:none} hides below 900px, so `lazy`
-								    also means narrow viewports never fetch them. */}
-								<div className="peek" aria-hidden="true">
-									<div className="pk shirt" title="Novi T-Shirt">
-										<ImageSlot
-												src="/notiva/uploads/firefly-tshirt-design.webp"
-												width={224}
-												height={224}
-												loading="lazy"
-											/>
-									</div>
-									<div className="pk stick" title="Novi Sticker-Set">
-										<ImageSlot
-												src="/notiva/uploads/adobe-firefly-stickers.webp"
-												width={179}
-												height={224}
-												loading="lazy"
-											/>
+							{supportEnabled && (
+								<div className="ctaplus">
+									<T
+										as={Link}
+										href="/support"
+										className="cta-sub"
+										de="<b>✦</b> Bau mit uns: Merch und Spenden →"
+										en="<b>✦</b> Build it with us: merch and donations →"
+									/>
+									{/* Decorative merch peek — 88x88 and 66x84 cards that
+									    .peek{display:none} hides below 900px, so `lazy`
+									    also means narrow viewports never fetch them. */}
+									<div className="peek" aria-hidden="true">
+										<div className="pk shirt" title="Novi T-Shirt">
+											<ImageSlot
+													src="/notiva/uploads/firefly-tshirt-design.webp"
+													width={224}
+													height={224}
+													loading="lazy"
+												/>
+										</div>
+										<div className="pk stick" title="Novi Sticker-Set">
+											<ImageSlot
+													src="/notiva/uploads/adobe-firefly-stickers.webp"
+													width={179}
+													height={224}
+													loading="lazy"
+												/>
+										</div>
 									</div>
 								</div>
-							</div>
+							)}
 						</div>
 						<div className="trustrow">
 							<div>{t('DSGVO-konform by design', 'GDPR-compliant by design')}</div>

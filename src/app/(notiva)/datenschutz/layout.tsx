@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 	...pageMetadata({
 		title: 'Notiva · Datenschutz',
 		description:
-			'Welche Daten notiva.de erhebt, warum und wie lange: Warteliste mit Double-Opt-in, Investoren-Anfragen, Spenden über Stripe, Merch über Fourthwall. Kein Tracking, keine Werbe-Cookies.',
+			'Welche Daten notiva.de erhebt, warum und wie lange: Warteliste mit Double-Opt-in und Investoren-Anfragen. Kein Tracking, keine Werbe-Cookies.',
 		path: '/datenschutz',
 	}),
 	robots: NOINDEX,

@@ -9,6 +9,12 @@
    left out. The pages themselves stay in the tree untouched; set this to true
    to restore the section.
 
+   Off also means /datenschutz says nothing about donations or merch, and the
+   basket no longer writes to localStorage. Before switching back on, restore
+   the Stripe and Fourthwall sections, the notiva.basket and __stripe_* storage
+   entries and both recipients-table rows to the privacy policy from git
+   history — the site must not process what the policy does not declare.
+
    Imported by next.config.ts, so this file must stay free of imports. */
 
 export const supportEnabled: boolean = false;

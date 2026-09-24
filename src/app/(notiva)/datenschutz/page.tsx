@@ -4,13 +4,16 @@
    Structured to Art. 13 DSGVO, in the same DE/EN pattern as the rest of the
    (notiva) group.
 
-   TEMPLATE, NOT FINAL TEXT. Everything describing the software is accurate and
-   was read off this codebase (see the recipients table). Everything describing
-   the *company* — legal name, address, who represents it, which supervisory
-   authority is competent — is a <span className="todo"> placeholder, because
-   only the operator knows it and a guessed Verantwortlicher is worse than a
-   visibly blank one. The draft banner stays until a lawyer has signed the text
-   off; layout.tsx keeps the page out of the index until then. */
+   Everything describing the software is accurate and was read off this
+   codebase (see the recipients table). Notiva has not been founded yet, so §1
+   names no company, no legal form and no seat, and §8 no competent authority:
+   none of them exists. Do not invent one — when the company is founded, add it
+   here together with the postal address Art. 13 Abs. 1 lit. a DSGVO expects.
+
+   The earlier draft of this page, with a visible placeholder at every open
+   point, stays on the dev branch together with the list of what is still
+   outstanding. layout.tsx keeps the page out of the index until a lawyer has
+   signed the text off. */
 
 import '@/styles/notiva/legal.css';
 
@@ -18,22 +21,17 @@ import React from 'react';
 import Link from 'next/link';
 
 import { CookieDeclaration } from '@/components/notiva/cookie-declaration';
-import { CookieSettingsLink } from '@/components/notiva/cookie-settings-link';
+import { CookieSettingsLink, useCookiebotReady } from '@/components/notiva/cookie-settings-link';
 import { NotivaHeader } from '@/components/notiva/notiva-header';
 import { NotivaFooter } from '@/components/notiva/notiva-footer';
 import { useNotivaTitle } from '@/components/notiva/use-notiva-title';
 import { T, useLang, useT } from '@/components/notiva/lang-context';
-import { cookiebotEnabled } from '@/lib/cookiebot';
-
-/* Placeholder the operator replaces. Kept as one component so every outstanding
-   fact is greppable by class name and looks identical on the page. */
-function Todo({ de, en }: { de: string; en: string }): React.JSX.Element {
-	return <T className="todo" de={`[ ${de} ]`} en={`[ ${en} ]`} />;
-}
+import { supportEnabled } from '@/lib/support';
 
 export default function DatenschutzPage(): React.JSX.Element {
 	const { lang } = useLang();
 	const t = useT();
+	const cookiebotReady = useCookiebotReady();
 
 	useNotivaTitle('Notiva · Datenschutz', 'Notiva · Privacy');
 
@@ -48,35 +46,20 @@ export default function DatenschutzPage(): React.JSX.Element {
 					<T
 						as="p"
 						className="lede"
-						de="Diese Seite erklärt, welche personenbezogenen Daten notiva.de erhebt, warum, auf welcher Rechtsgrundlage und wie lange sie gespeichert werden. Notiva ist vor dem Start: die Website verarbeitet heute Wartelisten-Anmeldungen, Investorenanfragen, Spenden und Merch-Bestellungen — und misst keine Reichweite."
-						en="This page explains what personal data notiva.de collects, why, on what legal basis, and for how long it is kept. Notiva is pre-launch: today the website processes waitlist signups, investor enquiries, donations and merch orders — and runs no analytics."
+						de="Diese Seite erklärt, welche personenbezogenen Daten notiva.de erhebt, warum, auf welcher Rechtsgrundlage und wie lange sie gespeichert werden. Notiva ist vor dem Start: die Website verarbeitet heute Wartelisten-Anmeldungen und Investorenanfragen — und misst keine Reichweite."
+						en="This page explains what personal data notiva.de collects, why, on what legal basis, and for how long it is kept. Notiva is pre-launch: today the website processes waitlist signups and investor enquiries — and runs no analytics."
 					/>
-
-					<div className="draft">
-						<T
-							as="h2"
-							de="Entwurf — noch nicht rechtlich geprüft"
-							en="Draft — not yet reviewed by a lawyer"
-						/>
-						<T
-							as="p"
-							de="Diese Fassung ist eine Vorlage. Die Angaben zur Technik sind korrekt und aus dem Quellcode dieser Website abgeleitet. Die orange markierten Stellen müssen noch ausgefüllt werden, und der Text muss vor dem Start von einer Rechtsanwältin oder einem Rechtsanwalt geprüft werden. Bis dahin ist diese Seite nicht für Suchmaschinen freigegeben."
-							en="This version is a template. The technical statements are accurate and derived from this website's source code. The passages highlighted in orange still need to be filled in, and the text must be reviewed by a lawyer before launch. Until then this page is not released to search engines."
-						/>
-					</div>
 
 					<ul className="toc">
 						{[
 							['1. Verantwortlicher', '1. Controller'],
 							['2. Warteliste', '2. Waitlist'],
 							['3. Investoren-Anfragen', '3. Investor enquiries'],
-							['4. Spenden', '4. Donations'],
-							['5. Merch-Bestellungen', '5. Merch orders'],
-							['6. Hosting und Server-Logs', '6. Hosting and server logs'],
-							['7. Cookies und Speicherung im Browser', '7. Cookies and storage in your browser'],
-							['8. Analyse und Reichweitenmessung', '8. Analytics'],
-							['9. Empfänger', '9. Recipients'],
-							['10. Deine Rechte', '10. Your rights'],
+							['4. Hosting und Server-Logs', '4. Hosting and server logs'],
+							['5. Cookies und Speicherung im Browser', '5. Cookies and storage in your browser'],
+							['6. Analyse und Reichweitenmessung', '6. Analytics'],
+							['7. Empfänger', '7. Recipients'],
+							['8. Deine Rechte', '8. Your rights'],
 						].map(([de, en]) => (
 							<li key={de}>
 								<T de={de} en={en} />
@@ -92,31 +75,14 @@ export default function DatenschutzPage(): React.JSX.Element {
 					<T as="h2" de="1. Verantwortlicher" en="1. Controller" />
 					<T
 						as="p"
-						de="Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne von Art. 4 Nr. 7 DSGVO ist:"
-						en="The controller for data processing on this website within the meaning of Art. 4(7) GDPR is:"
+						de="Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne von Art. 4 Nr. 7 DSGVO ist das Team hinter Notiva. Notiva ist noch kein gegründetes Unternehmen; die Gründung ist geplant. Deshalb stehen hier noch kein Firmenname, keine Rechtsform und kein Sitz."
+						en="The controller for data processing on this website within the meaning of Art. 4(7) GDPR is the team behind Notiva. Notiva has not been founded as a company yet; founding one is planned. That is why no company name, legal form or registered office appears here."
 					/>
-					<p>
-						<Todo
-							de="Vollständiger Firmenname und Rechtsform, Straße und Hausnummer, PLZ und Ort, Land, vertreten durch"
-							en="Full company name and legal form, street address, postcode and city, country, represented by"
-						/>
-					</p>
 					<T
 						as="p"
 						de={`Für Fragen zum Datenschutz und zur Ausübung deiner Rechte: <a href="mailto:team@notiva.de">team@notiva.de</a>.`}
 						en={`For privacy questions and to exercise your rights: <a href="mailto:team@notiva.de">team@notiva.de</a>.`}
 					/>
-					<T
-						as="h3"
-						de="Datenschutzbeauftragter"
-						en="Data protection officer"
-					/>
-					<p>
-						<Todo
-							de="Entweder Kontaktdaten des Datenschutzbeauftragten, oder die Feststellung, dass keiner bestellt werden muss — nach § 38 BDSG erst ab 20 Personen, die ständig personenbezogene Daten verarbeiten"
-							en="Either the DPO's contact details, or a statement that none is required — under § 38 BDSG only from 20 persons continuously processing personal data"
-						/>
-					</p>
 				</div>
 			</section>
 
@@ -195,8 +161,8 @@ export default function DatenschutzPage(): React.JSX.Element {
 						<T as="dt" de="Speicherdauer" en="Retention" />
 						<T
 							as="dd"
-							de={`Für die Dauer der Finanzierungsrunde und danach, solange ein Kontakt für Folgerunden sinnvoll ist, höchstens jedoch <span class="todo">[ Frist festlegen, z. B. 24 Monate ]</span> nach dem letzten Kontakt. Handels- und steuerrechtliche Aufbewahrungspflichten bleiben unberührt.`}
-							en={`For the duration of the financing round and afterwards for as long as contact for follow-on rounds is meaningful, but at most <span class="todo">[ set a period, e.g. 24 months ]</span> after the last contact. Statutory commercial and tax retention duties are unaffected.`}
+							de="Für die Dauer der Finanzierungsrunde und danach, solange ein Kontakt für Folgerunden sinnvoll ist; anschließend löschen wir die Anfrage. Handels- und steuerrechtliche Aufbewahrungspflichten bleiben unberührt."
+							en="For the duration of the financing round and afterwards for as long as contact for follow-on rounds is meaningful; after that we delete the enquiry. Statutory commercial and tax retention duties are unaffected."
 						/>
 					</dl>
 				</div>
@@ -205,46 +171,7 @@ export default function DatenschutzPage(): React.JSX.Element {
 			{/* 4 ------------------------------------------------------------ */}
 			<section>
 				<div className="wrap prose">
-					<T as="h2" de="4. Spenden" en="4. Donations" />
-					<T
-						as="p"
-						de="Spenden auf /support werden über Stripe abgewickelt. Deine Zahlungsdaten — Kartennummer, IBAN und Ähnliches — gibst du direkt bei Stripe ein. Sie erreichen unsere Server nicht und wir speichern sie nicht. Wir erhalten von Stripe nur die Information, dass und in welcher Höhe eine Zahlung erfolgt ist, sowie die zugehörige Vorgangsnummer."
-						en="Donations on /support are processed by Stripe. You enter your payment data — card number, IBAN and the like — directly with Stripe. It does not reach our servers and we do not store it. From Stripe we receive only that a payment was made and its amount, plus the associated transaction reference."
-					/>
-					<T
-						as="p"
-						de="Beim Aufruf der Seite <b>/support</b> lädt dein Browser bereits Code von js.stripe.com — nicht erst, wenn du auf Bezahlen klickst. Stripe erhält dabei deine IP-Adresse und setzt die Cookies <b>__stripe_mid</b> und <b>__stripe_sid</b>, die Stripe zur Betrugserkennung braucht. Auf allen anderen Seiten dieser Website passiert das nicht. Stripe ist als Zahlungsdienstleister zugleich eigener Verantwortlicher; Einzelheiten in der Datenschutzerklärung von Stripe."
-						en="Opening the page <b>/support</b> already loads code from js.stripe.com — not only when you click to pay. Stripe thereby receives your IP address and sets the cookies <b>__stripe_mid</b> and <b>__stripe_sid</b>, which Stripe needs for fraud detection. This does not happen on any other page of this website. As a payment institution Stripe is also its own controller; see Stripe's privacy policy for details."
-					/>
-					<T
-						as="p"
-						de="Rechtsgrundlage ist die Durchführung der von dir gewünschten Zahlung, Art. 6 Abs. 1 lit. b DSGVO. Zahlungsbelege bewahren wir nach § 147 AO und § 257 HGB zehn Jahre auf. Notiva ist keine gemeinnützige Organisation: Spenden sind nicht steuerlich abzugsfähig und wir stellen keine Zuwendungsbestätigung aus."
-						en="The legal basis is performing the payment you requested, Art. 6(1)(b) GDPR. Payment records are kept for ten years under § 147 AO and § 257 HGB. Notiva is not a charity: donations are not tax-deductible and we issue no donation receipt."
-					/>
-				</div>
-			</section>
-
-			{/* 5 ------------------------------------------------------------ */}
-			<section>
-				<div className="wrap prose">
-					<T as="h2" de="5. Merch-Bestellungen" en="5. Merch orders" />
-					<T
-						as="p"
-						de="Der Shop wird von Fourthwall betrieben. Der Warenkorb entsteht in deinem Browser; sobald du zur Kasse gehst, wechselst du auf eine von Fourthwall betriebene Seite. Lieferadresse und Zahlungsdaten gibst du dort ein, nicht bei uns. Fourthwall ist für die Abwicklung der Bestellung verantwortlich und sitzt in den USA."
-						en="The shop is operated by Fourthwall. The basket is built in your browser; as soon as you check out you move to a page operated by Fourthwall. You enter delivery address and payment data there, not with us. Fourthwall is responsible for fulfilling the order and is based in the USA."
-					/>
-					<T
-						as="p"
-						de="Rechtsgrundlage ist die Erfüllung des Kaufvertrags, Art. 6 Abs. 1 lit. b DSGVO. Zur Übermittlung in die USA siehe Abschnitt 9."
-						en="The legal basis is performance of the purchase contract, Art. 6(1)(b) GDPR. On transfers to the USA see section 9."
-					/>
-				</div>
-			</section>
-
-			{/* 6 ------------------------------------------------------------ */}
-			<section>
-				<div className="wrap prose">
-					<T as="h2" de="6. Hosting und Server-Logs" en="6. Hosting and server logs" />
+					<T as="h2" de="4. Hosting und Server-Logs" en="4. Hosting and server logs" />
 					<T
 						as="p"
 						de="Diese Website wird bei AWS Amplify gehostet. Beim Aufruf einer Seite verarbeitet der Server technisch notwendige Verbindungsdaten: IP-Adresse, Zeitpunkt, aufgerufene URL, übertragene Datenmenge, Referrer und User-Agent. Diese Daten sind nötig, damit die Seite ausgeliefert werden kann, und dienen der Sicherheit und Stabilität des Betriebs."
@@ -260,12 +187,6 @@ export default function DatenschutzPage(): React.JSX.Element {
 						de="Die Server stehen in der AWS-Region eu-central-1 (Frankfurt am Main), also in Deutschland."
 						en="The servers are located in AWS region eu-central-1 (Frankfurt am Main), that is, in Germany."
 					/>
-					<p>
-						<Todo
-							de="Aufbewahrungsdauer der Server-Logs angeben, sobald in Amplify geprüft"
-							en="State the server log retention period once checked in Amplify"
-						/>
-					</p>
 					<T
 						as="h3"
 						de="Wo die Daten liegen"
@@ -284,13 +205,13 @@ export default function DatenschutzPage(): React.JSX.Element {
 				</div>
 			</section>
 
-			{/* 7 ------------------------------------------------------------ */}
+			{/* 5 ------------------------------------------------------------ */}
 			<section>
 				<div className="wrap prose">
 					<T
 						as="h2"
-						de="7. Cookies und Speicherung im Browser"
-						en="7. Cookies and storage in your browser"
+						de="5. Cookies und Speicherung im Browser"
+						en="5. Cookies and storage in your browser"
 					/>
 					<T
 						as="p"
@@ -304,10 +225,10 @@ export default function DatenschutzPage(): React.JSX.Element {
 						de="Das Banner stammt von <b>Cookiebot</b>, einem Dienst der Usercentrics A/S, Havnegade 39, 1058 Kopenhagen, Dänemark. Cookiebot verarbeitet in unserem Auftrag deine IP-Adresse (gekürzt), die Browserkennung, die aufgerufene Adresse und deine Auswahl — nur um deine Entscheidung zu speichern und sie später belegen zu können, wie es Art. 7 Abs. 1 DSGVO verlangt. Die Verarbeitung findet in der EU statt."
 						en="The banner comes from <b>Cookiebot</b>, a service of Usercentrics A/S, Havnegade 39, 1058 Copenhagen, Denmark. Acting on our instructions, Cookiebot processes your IP address (truncated), your browser identifier, the address you visited and your choice — solely to store your decision and be able to evidence it later, as Art. 7(1) GDPR requires. The processing takes place in the EU."
 					/>
-					{/* Sentence and button travel together — on a build with no CBID
-					    the promise of a one-click withdrawal would otherwise stand
-					    above nothing at all. */}
-					{cookiebotEnabled && (
+					{/* Sentence and button travel together — whenever Cookiebot is not
+					    up (no CBID, blocked, domain not authorised) the promise of a
+					    one-click withdrawal would otherwise stand above nothing at all. */}
+					{cookiebotReady && (
 						<>
 							<T
 								as="p"
@@ -332,23 +253,11 @@ export default function DatenschutzPage(): React.JSX.Element {
 							de="Deine Sprachwahl (Deutsch oder Englisch), damit die Seite beim nächsten Besuch in derselben Sprache erscheint. Local Storage, bleibt bis du sie löschst."
 							en="Your language choice (German or English), so the site appears in the same language on your next visit. Local storage, kept until you delete it."
 						/>
-						<T as="dt" de="notiva.basket" en="notiva.basket" />
-						<T
-							as="dd"
-							de="Der Inhalt deines Merch-Warenkorbs, damit er beim Seitenwechsel nicht verloren geht. Local Storage, bleibt bis du sie löschst."
-							en="The contents of your merch basket, so it is not lost when you move between pages. Local storage, kept until you delete it."
-						/>
 						<T as="dt" de="next-auth.callback-url" en="next-auth.callback-url" />
 						<T
 							as="dd"
 							de="Ein technisches Cookie des Anmeldesystems, das diese Website mit der Notiva-App teilt. Vor dem Start ist hier keine Anmeldung möglich; es enthält dann keine personenbezogenen Daten."
 							en="A technical cookie of the sign-in system that this website shares with the Notiva app. Before launch no sign-in is possible here, in which case it contains no personal data."
-						/>
-						<T as="dt" de="__stripe_mid, __stripe_sid" en="__stripe_mid, __stripe_sid" />
-						<T
-							as="dd"
-							de="Nur auf der Seite /support: Cookies von Stripe zur Betrugserkennung, siehe Abschnitt 4. __stripe_sid läuft nach 30 Minuten ab, __stripe_mid nach einem Jahr."
-							en="Only on the /support page: Stripe cookies for fraud detection, see section 4. __stripe_sid expires after 30 minutes, __stripe_mid after one year."
 						/>
 						<T as="dt" de="CookieConsent" en="CookieConsent" />
 						<T
@@ -363,24 +272,30 @@ export default function DatenschutzPage(): React.JSX.Element {
 						en="The legal basis for these entries is § 25(2)(2) TDDDG: they are strictly necessary for the service you requested to work and therefore need no consent. That includes the consent cookie itself — without it your decision could not be stored. It would not apply to analytics or advertising cookies; we set none, and should that change they will be released through the banner rather than loaded beforehand."
 					/>
 
-					<T
-						as="h3"
-						de="Vollständige Cookie-Erklärung"
-						en="Full cookie declaration"
-					/>
-					<T
-						as="p"
-						de="Die folgende Liste wird von Cookiebot erzeugt und stammt aus einem monatlichen automatischen Scan dieser Website — sie ist damit auch dann noch aktuell, wenn der Text darüber es einmal nicht sein sollte."
-						en="The list below is generated by Cookiebot from a monthly automated scan of this website — so it stays current even if the text above should ever fall behind."
-					/>
-					<CookieDeclaration />
+					{/* Same gate: cd.js answers an unauthorised domain by printing
+					    Cookiebot's raw English error where the table should be. */}
+					{cookiebotReady && (
+						<>
+							<T
+								as="h3"
+								de="Vollständige Cookie-Erklärung"
+								en="Full cookie declaration"
+							/>
+							<T
+								as="p"
+								de="Die folgende Liste wird von Cookiebot erzeugt und stammt aus einem monatlichen automatischen Scan dieser Website — sie ist damit auch dann noch aktuell, wenn der Text darüber es einmal nicht sein sollte."
+								en="The list below is generated by Cookiebot from a monthly automated scan of this website — so it stays current even if the text above should ever fall behind."
+							/>
+							<CookieDeclaration />
+						</>
+					)}
 				</div>
 			</section>
 
-			{/* 8 ------------------------------------------------------------ */}
+			{/* 6 ------------------------------------------------------------ */}
 			<section>
 				<div className="wrap prose">
-					<T as="h2" de="8. Analyse und Reichweitenmessung" en="8. Analytics" />
+					<T as="h2" de="6. Analyse und Reichweitenmessung" en="6. Analytics" />
 					<T
 						as="p"
 						de="Derzeit findet auf dieser Website <b>keine Reichweitenmessung</b> statt. Google Analytics war früher eingebunden und wurde entfernt, weil es Cookies gesetzt hat, bevor jemand zustimmen konnte. Die Cookies <b>_ga</b> und <b>_ga_BF5YGPRDQ7</b> werden nicht mehr gesetzt; bereits vorhandene laufen von selbst ab und du kannst sie jederzeit in den Browsereinstellungen löschen."
@@ -395,15 +310,9 @@ export default function DatenschutzPage(): React.JSX.Element {
 					/>
 					<T
 						as="p"
-						de="Sollte es doch bei Cookies oder Session Replay bleiben, wird PostHog erst nach deiner Zustimmung im Einwilligungsbanner geladen (Kategorie „Statistiken&ldquo;, siehe Abschnitt 7) — ohne Zustimmung läuft es dann gar nicht."
-						en="Should it end up using cookies or session replay after all, PostHog will only load once you have agreed in the consent banner (category &ldquo;Statistics&rdquo;, see section 7) — without agreement it does not run at all."
+						de="Sollte es doch bei Cookies oder Session Replay bleiben, wird PostHog erst nach deiner Zustimmung im Einwilligungsbanner geladen (Kategorie „Statistiken&ldquo;, siehe Abschnitt 5) — ohne Zustimmung läuft es dann gar nicht."
+						en="Should it end up using cookies or session replay after all, PostHog will only load once you have agreed in the consent banner (category &ldquo;Statistics&rdquo;, see section 5) — without agreement it does not run at all."
 					/>
-					<p>
-						<Todo
-							de="Diesen Abschnitt bei der PostHog-Integration bestätigen oder korrigieren: tatsächlich gewählte Region, Speicherdauer, und ob es bei cookielosem Betrieb ohne Session Replay bleibt"
-							en="Confirm or correct this section at integration time: the region actually chosen, the retention period, and whether it stays cookieless without session replay"
-						/>
-					</p>
 
 					<T as="h3" de="Was wir nicht tun" en="What we do not do" />
 					<ul>
@@ -426,10 +335,10 @@ export default function DatenschutzPage(): React.JSX.Element {
 				</div>
 			</section>
 
-			{/* 9 ------------------------------------------------------------ */}
+			{/* 7 ------------------------------------------------------------ */}
 			<section>
 				<div className="wrap prose">
-					<T as="h2" de="9. Empfänger" en="9. Recipients" />
+					<T as="h2" de="7. Empfänger" en="7. Recipients" />
 					<T
 						as="p"
 						de="Wir setzen die folgenden Dienstleister ein. Mit allen bestehen Verträge zur Auftragsverarbeitung nach Art. 28 DSGVO; bei Anbietern aus den USA stützt sich die Übermittlung auf die EU-Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO und, soweit der Anbieter zertifiziert ist, auf das EU-US Data Privacy Framework nach Art. 45 DSGVO."
@@ -476,16 +385,6 @@ export default function DatenschutzPage(): React.JSX.Element {
 									<td>{t('Irland (eu-west-1), EU', 'Ireland (eu-west-1), EU')}</td>
 								</tr>
 								<tr>
-									<td>Stripe</td>
-									<td>{t('Abwicklung von Spenden', 'Processing donations')}</td>
-									<td>{t('Irland und USA', 'Ireland and USA')}</td>
-								</tr>
-								<tr>
-									<td>Fourthwall</td>
-									<td>{t('Merch-Shop und Versand', 'Merch shop and shipping')}</td>
-									<td>{t('USA', 'USA')}</td>
-								</tr>
-								<tr>
 									<td>Cookiebot (Usercentrics A/S)</td>
 									<td>
 										{t(
@@ -510,19 +409,13 @@ export default function DatenschutzPage(): React.JSX.Element {
 							</tbody>
 						</table>
 					</div>
-					<p>
-						<Todo
-							de="Vor Veröffentlichung bestätigen: AVV mit jedem Anbieter abgeschlossen, Verzeichnis der Verarbeitungstätigkeiten angelegt, je Anbieter geprüft, ob er im Data Privacy Framework zertifiziert ist, und bei Anbietern mit EU-Region geklärt, ob die US-Muttergesellschaft auf die EU-Daten zugreifen kann — davon hängt ab, ob zusätzlich Standardvertragsklauseln nötig sind"
-							en="Confirm before publishing: DPA signed with each provider, record of processing activities created, checked for each provider whether it is certified under the Data Privacy Framework, and for providers with an EU region clarified whether the US parent company can access the EU data — that determines whether standard contractual clauses are additionally required"
-						/>
-					</p>
 				</div>
 			</section>
 
-			{/* 10 ----------------------------------------------------------- */}
+			{/* 8 ------------------------------------------------------------ */}
 			<section>
 				<div className="wrap prose">
-					<T as="h2" de="10. Deine Rechte" en="10. Your rights" />
+					<T as="h2" de="8. Deine Rechte" en="8. Your rights" />
 					<T
 						as="p"
 						de="Dir stehen gegenüber uns die folgenden Rechte zu. Eine Nachricht an team@notiva.de genügt, eine Begründung brauchst du nicht."
@@ -567,15 +460,9 @@ export default function DatenschutzPage(): React.JSX.Element {
 					/>
 					<T
 						as="p"
-						de="Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, insbesondere bei der Behörde deines Aufenthaltsorts oder der für uns zuständigen Behörde:"
-						en="You may also complain to a data protection supervisory authority, in particular the authority where you live or the one competent for us:"
+						de="Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), insbesondere bei der Behörde deines gewöhnlichen Aufenthaltsorts, deines Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes."
+						en="You may also lodge a complaint with a data protection supervisory authority (Art. 77 GDPR), in particular the authority of your habitual residence, your place of work or the place of the alleged infringement."
 					/>
-					<p>
-						<Todo
-							de="Zuständige Aufsichtsbehörde nach Firmensitz eintragen, mit Anschrift und Website"
-							en="Enter the competent supervisory authority for the company's seat, with address and website"
-						/>
-					</p>
 					<T
 						as="h3"
 						de="Änderungen dieser Erklärung"
@@ -586,10 +473,12 @@ export default function DatenschutzPage(): React.JSX.Element {
 						de="Wir passen diese Erklärung an, wenn sich die Website oder die eingesetzten Dienste ändern. Zum Start von Notiva wird sie vollständig überarbeitet, weil dann deutlich mehr Daten verarbeitet werden als heute."
 						en="We adapt this policy when the website or the services used change. It will be fully revised at the Notiva launch, because considerably more data will be processed then than today."
 					/>
-					<p className="updated">
-						{t('Stand: ', 'Last updated: ')}
-						<Todo de="Datum der ersten Veröffentlichung" en="date of first publication" />
-					</p>
+					<T
+						as="p"
+						className="updated"
+						de="Stand: September 2026"
+						en="Last updated: September 2026"
+					/>
 					<T
 						as="p"
 						de={`Zurück zur <a href="/">Startseite</a>.`}
@@ -600,8 +489,12 @@ export default function DatenschutzPage(): React.JSX.Element {
 					<p>
 						<Link href="/">{t('Startseite', 'Home')}</Link>
 						{' · '}
-						<Link href="/support">{t('Unterstützen', 'Support')}</Link>
-						{' · '}
+						{supportEnabled && (
+							<>
+								<Link href="/support">{t('Unterstützen', 'Support')}</Link>
+								{' · '}
+							</>
+						)}
 						<Link href="/for-investors">{t('Für Investoren', 'For investors')}</Link>
 					</p>
 				</div>
@@ -610,8 +503,8 @@ export default function DatenschutzPage(): React.JSX.Element {
 			<NotivaFooter
 				left={{ de: 'Notiva · Deutschland', en: 'Notiva · Germany' }}
 				right={{
-					de: 'Entwurf. Diese Fassung ist noch nicht rechtlich geprüft.',
-					en: 'Draft. This version has not yet been reviewed by a lawyer.',
+					de: 'Keine Cookies zu Werbe- oder Analysezwecken.',
+					en: 'No cookies for advertising or analytics.',
 				}}
 			/>
 		</div>

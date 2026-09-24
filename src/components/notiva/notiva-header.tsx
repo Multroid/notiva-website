@@ -17,6 +17,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { supportEnabled } from '@/lib/support';
 import { useLang, useT } from './lang-context';
 import { useNotivaModal } from './modal-context';
 
@@ -259,12 +260,16 @@ export function NotivaHeader({
 			icon: <IconInvestors />,
 			active: current === 'investors',
 		},
-		{
-			href: '/support',
-			label: supportLabel,
-			icon: <IconSupport />,
-			active: current === 'support',
-		},
+		...(supportEnabled
+			? [
+					{
+						href: '/support',
+						label: supportLabel,
+						icon: <IconSupport />,
+						active: current === 'support',
+					},
+				]
+			: []),
 	];
 
 	/* `sheet` only adds the trailing chevron — everything else is one set of

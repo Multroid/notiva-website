@@ -13,6 +13,8 @@
  */
 import 'server-only';
 
+import { supportEnabled } from '@/lib/support';
+
 import { EMAIL_ASSETS, type EmailAsset } from './email-assets';
 
 type Lang = 'de' | 'en';
@@ -176,9 +178,13 @@ function shell({
     <p style="margin:10px 0 0;font-family:${FONT};font-size:12px;line-height:19px;color:${MUTED};">
       <a href="${site}" style="color:${MUTED};text-decoration:underline;">notiva.de</a>
       &nbsp;·&nbsp;
-      <a href="${site}/datenschutz" style="color:${MUTED};text-decoration:underline;">${de ? 'Datenschutz' : 'Privacy'}</a>
+      <a href="${site}/datenschutz" style="color:${MUTED};text-decoration:underline;">${de ? 'Datenschutz' : 'Privacy'}</a>${
+				supportEnabled
+					? `
       &nbsp;·&nbsp;
-      <a href="${site}/support" style="color:${MUTED};text-decoration:underline;">${de ? 'Unterstützen' : 'Support us'}</a>
+      <a href="${site}/support" style="color:${MUTED};text-decoration:underline;">${de ? 'Unterstützen' : 'Support us'}</a>`
+					: ''
+			}
     </p>
     <p style="margin:10px 0 0;font-family:${FONT};font-size:12px;line-height:19px;color:${MUTED};">
       ${de ? 'Notiva · Deutschland' : 'Notiva · Germany'}
@@ -277,16 +283,21 @@ export function waitlistWelcomeEmail(lang: Lang, unsubscribeUrl: string) {
 				? 'Wir melden uns, sobald dein früher Zugang bereit ist. Bis dahin schreiben wir nur, wenn es wirklich etwas zu sagen gibt — kein wöchentlicher Newsletter.'
 				: 'We will write when your early access is ready. Until then we only write when there is genuinely something to say — no weekly newsletter.'
 		) +
-		paragraph(
-			de
-				? `Wenn du früher mitbauen willst: <a href="${siteUrl()}/support" style="color:${BLUE};font-weight:600;text-decoration:underline;">Merch und Spenden</a> werden direkt Entwicklungszeit, und Pilotnutzer bekommen zuerst Zugang.`
-				: `If you want to help sooner: <a href="${siteUrl()}/support" style="color:${BLUE};font-weight:600;text-decoration:underline;">merch and donations</a> turn straight into development time, and pilot users get access first.`
-		) +
-		button(`${siteUrl()}/support`, de ? 'Mitbauen' : 'Help build it');
+		(supportEnabled
+			? paragraph(
+					de
+						? `Wenn du früher mitbauen willst: <a href="${siteUrl()}/support" style="color:${BLUE};font-weight:600;text-decoration:underline;">Merch und Spenden</a> werden direkt Entwicklungszeit, und Pilotnutzer bekommen zuerst Zugang.`
+						: `If you want to help sooner: <a href="${siteUrl()}/support" style="color:${BLUE};font-weight:600;text-decoration:underline;">merch and donations</a> turn straight into development time, and pilot users get access first.`
+				) + button(`${siteUrl()}/support`, de ? 'Mitbauen' : 'Help build it')
+			: '');
+
+	const helpLine = supportEnabled
+		? `${de ? 'Mitbauen' : 'Help build it'}: ${siteUrl()}/support\n\n`
+		: '';
 
 	const text = de
-		? `Bestätigt. Du bist dabei.\n\nWir melden uns, sobald dein früher Zugang bereit ist. Bis dahin schreiben wir nur, wenn es wirklich etwas zu sagen gibt.\n\nMitbauen: ${siteUrl()}/support\n\nAbmelden: ${unsubscribeUrl}\n\nNotiva · Deutschland`
-		: `Confirmed. You are in.\n\nWe will write when your early access is ready. Until then we only write when there is genuinely something to say.\n\nHelp build it: ${siteUrl()}/support\n\nUnsubscribe: ${unsubscribeUrl}\n\nNotiva · Germany`;
+		? `Bestätigt. Du bist dabei.\n\nWir melden uns, sobald dein früher Zugang bereit ist. Bis dahin schreiben wir nur, wenn es wirklich etwas zu sagen gibt.\n\n${helpLine}Abmelden: ${unsubscribeUrl}\n\nNotiva · Deutschland`
+		: `Confirmed. You are in.\n\nWe will write when your early access is ready. Until then we only write when there is genuinely something to say.\n\n${helpLine}Unsubscribe: ${unsubscribeUrl}\n\nNotiva · Germany`;
 
 	return {
 		subject,

@@ -8,6 +8,7 @@ import type { MetadataRoute } from 'next';
    sitemap physically cannot list a product that has no page (or miss a new
    one). */
 import { MERCH_ORDER } from '@/app/(notiva)/merch/[slug]/product-copy';
+import { supportEnabled } from '@/lib/support';
 
 const SITE_URL = process.env.NEXT_PUBLIC_MARKETING_URL || 'https://notiva.de';
 
@@ -80,6 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 	/* Deliberately absent: /basket (per-visitor state, noindex), the 404 routes,
 	   /api/**, and every archived marketing path — those 307 to / and a sitemap
-	   listing redirects is a crawl-budget leak. */
-	return [landing, investors, support, ...merch];
+	   listing redirects is a crawl-budget leak. The same goes for /support and
+	   the PDPs while the support section is switched off (src/lib/support.ts). */
+	return [landing, investors, ...(supportEnabled ? [support, ...merch] : [])];
 }

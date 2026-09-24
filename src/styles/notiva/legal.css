@@ -55,15 +55,6 @@
 .nv-legal tbody tr:last-child td{border-bottom:0}
 .nv-legal tbody td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
 
-/* Draft banner. Deliberately loud: this page is a scaffold until a lawyer has
-   read it, and it must be impossible to mistake for finished text. */
-.nv-legal .draft{margin:24px 0 0;padding:18px 20px;border:2px solid var(--orange-300);border-radius:var(--radius-md);background:var(--orange-200)}
-.nv-legal .draft h2{margin:0 0 6px;font-size:17px}
-.nv-legal .draft p{margin:6px 0 0;font-size:15px;color:var(--neutral-900)}
-
-/* Inline marker for a fact only the operator can supply. */
-.nv-legal .todo{display:inline;padding:1px 7px;border-radius:var(--radius-xs);background:var(--orange-200);border:1px dashed var(--orange-400);font-family:var(--font-mono),ui-monospace,monospace;font-size:.86em;font-weight:600;color:var(--neutral-1000);white-space:normal}
-
 .nv-legal .toc{margin:18px 0 0;padding:0;list-style:none;columns:2;column-gap:32px}
 .nv-legal .toc li{margin:5px 0;break-inside:avoid}
 @media (max-width:640px){.nv-legal .toc{columns:1}}

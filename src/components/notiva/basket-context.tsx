@@ -41,6 +41,7 @@ import {
 } from '@/lib/merch';
 import type { Catalogue, CatalogueEntry } from '@/lib/fourthwall/catalogue';
 import { isLive, variantFor } from '@/lib/fourthwall/catalogue';
+import { supportEnabled } from '@/lib/support';
 
 import { useLang } from './lang-context';
 
@@ -167,8 +168,13 @@ export function NotivaBasketProvider({
 	const [hydrated, setHydrated] = useState(false);
 	const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	/* hydrate — effect only, so SSR and first client render agree on [] */
+	/* hydrate — effect only, so SSR and first client render agree on []
+
+	   Neither effect touches localStorage while the shop is switched off. The
+	   provider wraps every page, so otherwise every visit would write an empty
+	   notiva.basket.v1 that /datenschutz no longer declares. */
 	useEffect(() => {
+		if (!supportEnabled) return;
 		const stored = readStored();
 		if (stored.length) setLines(stored);
 		setHydrated(true);
@@ -176,7 +182,7 @@ export function NotivaBasketProvider({
 
 	/* persist — never before hydration, or we would wipe a stored basket */
 	useEffect(() => {
-		if (!hydrated) return;
+		if (!hydrated || !supportEnabled) return;
 		try {
 			window.localStorage.setItem(LS_BASKET, JSON.stringify(lines));
 		} catch {

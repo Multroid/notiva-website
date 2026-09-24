@@ -1,13 +1,16 @@
 import type { NextConfig } from "next";
 import path from "path";
 
+import { SUPPORT_PATHS, supportEnabled } from "./src/lib/support";
+
 // Consumer app URL for auth redirects
 // Local: http://localhost:3000, Production: https://app.notiva.de
 const CONSUMER_APP_URL = process.env.NEXT_PUBLIC_CONSUMER_APP_URL || "http://localhost:3000";
 
 // Pre-launch: the site serves only the Coming Soon landing page and the
-// investor / support / merch pages. Every other marketing route has been moved
-// to archive/ (see archive/README.md) and is redirected to the landing page.
+// investor page, plus support / merch / basket while supportEnabled is on
+// (src/lib/support.ts). Every other marketing route has been moved to archive/
+// (see archive/README.md) and is redirected to the landing page.
 // Deliberately NOT permanent — these URLs come back at relaunch, and a cached
 // 301 would be very hard to undo.
 const ARCHIVED_MARKETING_PATHS = [
@@ -26,6 +29,11 @@ const ARCHIVED_MARKETING_PATHS = [
   "/security",
   "/use-cases",
 ];
+
+// Switched-off pages get the same temporary redirect as the archived ones.
+const PARKED_PATHS = supportEnabled
+  ? ARCHIVED_MARKETING_PATHS
+  : [...ARCHIVED_MARKETING_PATHS, ...SUPPORT_PATHS];
 
 const nextConfig: NextConfig = {
   // AWS Amplify Next.js SSR - do not use standalone output
@@ -134,8 +142,8 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: false,
       },
-      // Archived marketing pages -> landing page (self and any sub-path)
-      ...ARCHIVED_MARKETING_PATHS.flatMap((path) => [
+      // Archived / switched-off pages -> landing page (self and any sub-path)
+      ...PARKED_PATHS.flatMap((path) => [
         { source: path, destination: "/", permanent: false },
         { source: `${path}/:path*`, destination: "/", permanent: false },
       ]),

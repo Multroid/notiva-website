@@ -184,6 +184,10 @@ const T: Record<'de' | 'en', ModalStrings> = {
 
 const MAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/* Shared with the inline form on event pages (waitlist-form.tsx), so both
+   surfaces validate alike and record the exact same consent wording. */
+export { T as MODAL_STRINGS, MAIL_RE };
+
 /* 'form' while editing, 'sent' once the POST succeeded, or one of the outcomes
    the confirmation link redirects back with. */
 type View = 'form' | 'sent' | ConfirmResult;

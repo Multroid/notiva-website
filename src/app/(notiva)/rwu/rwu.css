@@ -1,0 +1,234 @@
+/* /rwu event page. Composed from page.css primitives (.wrap, .eyebrow, h1,
+   .lede, footer) and the modal's .nm-* field rules; only layout and the card
+   live here. Selectors lead with .notiva-shell so they out-rank rhythm.css
+   (.notiva-shell.nv-page section/.lede) on phones, as that file does. */
+
+.notiva-shell.nv-rwu {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background: var(--pure-white);
+	color: var(--ink);
+	font-family: var(--font-display), 'Montserrat', sans-serif;
+}
+
+.notiva-shell.nv-rwu .rwu {
+	flex: 1 0 auto;
+	display: flex;
+	align-items: center;
+	padding: clamp(40px, 6vw, 96px) 0 clamp(56px, 7vw, 112px);
+	background:
+		radial-gradient(60% 50% at 85% 20%, rgba(61, 135, 255, 0.1), transparent 70%),
+		var(--pure-white);
+}
+
+/* Desktop: copy left, card right. Phone: intro, card, then the points — the
+   card has to be on the first screen after a scan. */
+.notiva-shell.nv-rwu .rwu-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+	grid-template-areas:
+		'intro card'
+		'points card';
+	column-gap: clamp(40px, 6vw, 96px);
+	row-gap: 32px;
+}
+
+.notiva-shell.nv-rwu .rwu-intro {
+	grid-area: intro;
+	align-self: end;
+}
+.notiva-shell.nv-rwu .rwu-card {
+	grid-area: card;
+	align-self: center;
+}
+.notiva-shell.nv-rwu .rwu-points {
+	grid-area: points;
+	align-self: start;
+}
+
+.notiva-shell.nv-rwu h1 em {
+	font-style: normal;
+	color: var(--blue-400);
+}
+
+/* ── points ───────────────────────────────────────────────────────── */
+
+.notiva-shell.nv-rwu .rwu-points ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 14px;
+}
+
+.notiva-shell.nv-rwu .rwu-points li {
+	display: grid;
+	grid-template-columns: 28px minmax(0, 1fr);
+	align-items: center;
+	gap: 14px;
+	font-size: 16px;
+	line-height: 1.45;
+	font-weight: 600;
+	color: var(--slate);
+}
+
+.notiva-shell.nv-rwu .rwu-points li s {
+	width: 28px;
+	height: 28px;
+	display: grid;
+	place-items: center;
+	border-radius: var(--radius-sm);
+	background: var(--blue-fill);
+	border: 1px solid var(--blue-border);
+}
+
+.notiva-shell.nv-rwu .rwu-points li svg {
+	width: 16px;
+	height: 16px;
+	fill: none;
+	stroke: var(--blue-400);
+	stroke-width: 2.4;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.notiva-shell.nv-rwu .rwu-trust {
+	margin-top: 26px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 14px;
+	font-family: var(--font-tag), 'Plus Jakarta Sans', sans-serif;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--neutral-800);
+}
+
+.notiva-shell.nv-rwu .rwu-trust i {
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--blue-border);
+}
+
+/* ── card ─────────────────────────────────────────────────────────── */
+
+.notiva-shell.nv-rwu .wl-card {
+	position: relative;
+	margin-top: 64px; /* headroom for Novi */
+	padding: clamp(26px, 3.4vw, 40px);
+	background: var(--white);
+	border: 1px solid var(--blue-stroke);
+	border-radius: var(--radius-2xl);
+	box-shadow:
+		0 -18px 44px -14px rgba(0, 71, 186, 0.22),
+		0 3px 50px rgba(0, 0, 0, 0.07);
+}
+
+/* Novi leans over the top edge of the card. */
+.notiva-shell.nv-rwu .wl-novi {
+	position: absolute;
+	right: 14px;
+	top: 0;
+	height: 124px;
+	width: auto;
+	transform: translateY(-72%);
+	pointer-events: none;
+}
+
+.notiva-shell.nv-rwu .wl-title {
+	margin: 0;
+	padding-right: 96px; /* clear of Novi's feet */
+	font-size: clamp(24px, 3vw, 30px);
+	line-height: 1.12;
+	font-weight: 700;
+	letter-spacing: -0.015em;
+	color: var(--ink);
+	outline: none;
+}
+
+.notiva-shell.nv-rwu .wl-copy {
+	margin: 12px 0 0;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 500;
+	color: var(--slate);
+}
+
+.notiva-shell.nv-rwu .wl-card .nm-rows {
+	margin-top: 22px;
+}
+
+.notiva-shell.nv-rwu .wl-again {
+	margin: 20px 0 0;
+	width: 100%;
+	min-height: 50px;
+	border: 2px solid var(--blue-400);
+	border-radius: var(--radius-sm);
+	background: transparent;
+	color: var(--blue-400);
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 180ms var(--ease-out);
+}
+
+.notiva-shell.nv-rwu .wl-again:hover {
+	background: var(--blue-fill);
+}
+
+/* ── phone ────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+	.notiva-shell.nv-rwu .rwu {
+		align-items: flex-start;
+	}
+	.notiva-shell.nv-rwu .rwu-grid {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			'intro'
+			'card'
+			'points';
+		row-gap: 8px;
+		max-width: 560px;
+	}
+	.notiva-shell.nv-rwu .rwu-points {
+		margin-top: 28px;
+	}
+}
+
+@media (max-width: 560px) {
+	.notiva-shell.nv-rwu .rwu {
+		padding: 28px 0 56px;
+	}
+	.notiva-shell.nv-rwu .eyebrow {
+		font-size: 11px;
+	}
+	.notiva-shell.nv-rwu h1 {
+		margin-top: 14px;
+		font-size: 31px;
+	}
+	.notiva-shell.nv-rwu .rwu-intro .lede {
+		margin-top: 14px;
+		font-size: 15.5px;
+		line-height: 1.55;
+	}
+	.notiva-shell.nv-rwu .wl-card {
+		margin-top: 58px;
+		padding: 24px 20px 22px;
+	}
+	.notiva-shell.nv-rwu .wl-novi {
+		height: 104px;
+		right: 8px;
+	}
+	.notiva-shell.nv-rwu .wl-title {
+		padding-right: 80px;
+	}
+	.notiva-shell.nv-rwu .rwu-points li {
+		font-size: 15px;
+	}
+}

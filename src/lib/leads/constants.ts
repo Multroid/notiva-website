@@ -11,6 +11,16 @@ export const CONFIRM_RESULT_PARAM = 'nv';
  *  which would be a far more sensitive thing to put in browser history. */
 export const UNSUB_TOKEN_PARAM = 'ut';
 
+/** Event landing pages behind a QR code (campus booths, talks, fairs), keyed
+ *  by the `source` the form sends — the page's pathname. Everyone at such an
+ *  event tends to be on the same Wi-Fi, which is often one NAT and therefore
+ *  one public IP, so the normal per-IP cap would refuse the sixth person at
+ *  the booth. Signups from these sources get EVENT_SIGNUPS_PER_HOUR instead.
+ *  `source` is client-supplied, so a bot can claim it too; the cost is a
+ *  higher ceiling on confirmation mails per IP, not unconfirmed list entries. */
+export const EVENT_SOURCES: ReadonlySet<string> = new Set(['/rwu']);
+export const EVENT_SIGNUPS_PER_HOUR = 60;
+
 export type ConfirmResult =
 	| 'confirmed'
 	| 'already'

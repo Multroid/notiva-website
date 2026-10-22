@@ -78,6 +78,7 @@ const OWN_TITLE_PREFIXES = [
   "/support",
   "/merch",
   "/basket",
+  "/rwu",
 ]
 
 function ownsItsTitle(pathname: string): boolean {

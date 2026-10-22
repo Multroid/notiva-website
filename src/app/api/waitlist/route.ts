@@ -12,6 +12,7 @@ import { NextResponse } from 'next/server';
 
 import { isDbConfigured, sql } from '@/lib/db';
 import { sendEmail } from '@/lib/email';
+import { EVENT_SIGNUPS_PER_HOUR, EVENT_SOURCES } from '@/lib/leads/constants';
 import { waitlistConfirmEmail } from '@/lib/leads/emails';
 import { clientIp, isFlooding, leadError, publicOrigin, userAgent } from '@/lib/leads/request';
 import { waitlistInput } from '@/lib/leads/schema';
@@ -49,7 +50,8 @@ export async function POST(req: Request) {
 	const { email, lang, source, consentText } = parsed.data;
 	const ip = clientIp(req);
 
-	if (await isFlooding('waitlist_signup', ip, { max: 5, windowMinutes: 60 })) {
+	const max = EVENT_SOURCES.has(source) ? EVENT_SIGNUPS_PER_HOUR : 5;
+	if (await isFlooding('waitlist_signup', ip, { max, windowMinutes: 60 })) {
 		return leadError('rate_limited', 429);
 	}
 
